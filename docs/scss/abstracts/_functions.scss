@@ -1,0 +1,33 @@
+@function pxToRem($px) {
+    @if($FONT_SIZE <= abs($px) + 5px) {
+        @return calc(round(($px / $FONT_SIZE) * 100) / 100) * 1rem;
+    }
+    @return $px;
+}
+@function calculateValue($val) {
+    
+    @if type-of($val) == "list" {
+        
+        $isImportant: false;
+        $temp: ();
+        @each $elem in $val {
+            @if(type-of($elem) == 'number') {
+                $temp: append($temp, pxToRem($elem));
+            }
+            @else if(type-of($elem) == 'string' and $elem == '!important') {
+                 $isImportant: true;
+            }
+        }
+        @if($isImportant) {
+            $temp: append($temp, !important);
+        }
+
+        @return $temp;
+    }
+    @else {
+        @return pxToRem($val);
+    }
+}
+
+
+    

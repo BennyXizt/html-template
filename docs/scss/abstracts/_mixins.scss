@@ -1,0 +1,54 @@
+@mixin line-height($lh, $fsz) {
+    $original: calc($lh / $fsz);
+
+    line-height: calc(round($original * 100) / 100);
+}
+
+@mixin rem($initial, $additional: null) {
+    @if not($PIXELS_ONLY) {
+        @if type-of($initial) == "map" {
+            @each $prop, $val in $initial {
+                #{$prop}: calculateValue($val);
+            }
+        }
+        @else if $additional != null {
+            #{$initial}: calculateValue($additional);
+        }
+        @else {
+            @error "Missing second argument or incorrect usage of rem mixin.";
+        }
+    }
+    @else {
+        @if type-of($initial) == "map" {
+            @each $prop, $val in $initial {
+                #{$prop}: $val;
+            }
+        }
+        @else if $additional != null {
+            #{$initial}: $additional;
+        }
+        @else {
+            @error "Missing second argument or incorrect usage of rem mixin.";
+        }
+    }
+}
+
+@mixin transform($args...) {
+  -webkit-transform: #{$args};
+  -moz-transform: #{$args};
+  -ms-transform: #{$args};
+  -o-transform: #{$args};
+  transform: #{$args}; 
+}
+
+
+@mixin media($breakpoint, $type: min) {
+  $size: map-get($MEDIA, $breakpoint);
+  @if $size {
+    @media (#{$type}-width: #{$size}) {
+      @content;
+    }
+  } @else {
+    @warn "Нет брейкпоинта #{$breakpoint} в $MEDIA.";
+  }
+}

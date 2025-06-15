@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" href="./css/index.css" />
+ </head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+   
+
+<button class="123__burger burger-menu">
+    <span></span>
+</button>
+</header>
+        <main class="page">
+            <ul class="list">
+                <li >
+                    <span style="background-color: red;">FIRST ELEMENT</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li>
+                    <span>Child its a Child</span>
+                </li>
+                <li >
+                    <span style="background-color: blue;">LAST ELEMENT</span>
+                </li>
+            </ul>
+        </main>
+        <footer class="footer">
+
+            <style>
+                ul {
+                    display: flex;
+                    flex-flow: column wrap;
+                    gap: 10px;
+                }
+                li span {
+                    display: block;
+                    width: 300px;
+                    height: 200px;
+                    background-color: rgb(196, 167, 167);
+                    position: relative;
+                    left: -100dvw;
+                    transition: left .3s ease-in-out;
+                }
+
+                li.animate span {
+                    left: 0;
+                }
+            </style>
+</footer>
+    </div>
+    <script type="module" src="./js/index.js" defer></script>
+</body>
+</html>

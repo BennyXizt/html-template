@@ -1,0 +1,11 @@
+<%
+    let btnClass = ''
+
+    if(typeof block !== 'undefined' && block)
+        btnClass = `${block}__burger `
+
+%>
+
+<button class="<%=btnClass%>burger-menu">
+    <span></span>
+</button>
