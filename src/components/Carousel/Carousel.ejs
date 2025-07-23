@@ -1,0 +1,29 @@
+<% 
+    var blockCSS =  'carousel'
+    var carouselImages = undefined
+
+    if(typeof block !== 'undefined' && block) {
+        blockCSS = `${block}__carousel carousel`
+    }
+    if(typeof images !== 'undefined' && images) {
+        carouselImages = images
+    }
+    
+
+    images = undefined
+%>
+
+<% if(typeof carouselImages !== 'undefined') { %>
+    <article class="<%= blockCSS %>">
+        <% for(const image of carouselImages) { %>
+            <div class="carousel__item">
+                 <%- include('../Image/Image.ejs', {
+                    image_component: {
+                        block: 'carousel',
+                        img: image
+                    } 
+                }) %>
+            </div>           
+        <% } %>
+    </article>
+<% } %>

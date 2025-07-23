@@ -1,0 +1,246 @@
+@use "sass:meta";
+@use "sass:map";
+@use "sass:math";
+@use "sass:list";
+
+@mixin clamp($initial, $additional: null) {
+    $restriction: $HEADERS_CLAMP_WIDTH;
+    $important: null;
+
+    @if meta.type-of($initial) == "map" {
+        @each $prop, $val in $initial {
+            $important: null;
+            @if meta.type-of($val) == "list" {
+                @if meta.type-of(list.nth($val, 1)) == 'list' and meta.type-of(list.nth($val, 2)) == 'list' {
+                    $clampList: ();
+                    @each $elem in $val {
+                        @if list.length($elem) == 1 {
+                            $tempVal: list.nth($elem, 1);
+                            @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                                $important: $tempVal;
+                            }
+                        }
+                        @else {                            
+                            $max: list.nth($elem, 1);
+                            $min: list.nth($elem, 2);
+
+                            @if list.length($elem) == 3 {
+                                $restriction: list.nth($elem, 3);
+                            }
+
+                            $clampList: list.append($clampList, calculateClamp($min, $max, $restriction));
+                        }                      
+                        
+                    }
+                    #{$prop}: if($important == '!important', $clampList!important, $clampList);
+                }
+                @else {                    
+                    $max: list.nth($val, 1);
+                    $min: list.nth($val, 2);
+
+                    @if list.length($val) == 3 {
+                        $tempVal: list.nth($val, 3);
+
+                        @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                            $important: $tempVal;
+                        }
+                        @else {
+                            $restriction: $tempVal;
+                        }                
+                    }
+                    @else if list.length($val) == 4 {
+                        $restriction: list.nth($val, 3);
+                        $tempVal: list.nth($val, 4);
+
+                        @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                            $important: $tempVal;
+                        }                                    
+                    }
+                    #{$prop}: if($important == '!important', calculateClamp($min, $max, $restriction)!important, calculateClamp($min, $max, $restriction));
+                }
+            }
+        }
+    }
+    @else if $additional != null {   
+        @if meta.type-of(list.nth($additional, 1)) == 'list' and meta.type-of(list.nth($additional, 2)) == 'list' {
+            $clampList: ();
+            @each $elem in $additional {                
+                @if list.length($elem) == 1 {
+                    $tempVal: list.nth($elem, 1);
+                    @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                        $important: $tempVal;
+                    }
+                }
+                @else {                            
+                    $max: list.nth($elem, 1);
+                    $min: list.nth($elem, 2);
+
+                    @if list.length($elem) == 3 {
+                        $restriction: list.nth($elem, 3);
+                    }
+
+                    $clampList: list.append($clampList, calculateClamp($min, $max, $restriction));
+                }                      
+                
+            }
+            #{$initial}: if($important == '!important', $clampList!important, $clampList);
+}     
+        @else {                        
+            $max: list.nth($additional, 1);
+            $min: list.nth($additional, 2);
+
+            @if list.length($additional) == 3 {
+                $tempVal: list.nth($additional, 3);
+
+                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                    $important: $tempVal;
+                }
+                @else {
+                    $restriction: $tempVal;
+                }                
+            }
+            @else if list.length($additional) == 4 {
+                $restriction: list.nth($additional, 3);
+                $tempVal: list.nth($additional, 4);
+
+                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                    $important: $tempVal;
+                }                                    
+            }
+            #{$initial}: if($important == '!important', calculateClamp($min, $max, $restriction)!important, calculateClamp($min, $max, $restriction));
+        }
+               
+    }
+}
+@mixin line-height($lh, $fsz) {
+    $original: calc($lh / $fsz);
+
+    line-height: calc(round($original * 100) / 100);
+}
+
+@mixin rem($initial, $additional: null, $base: null) {
+    @if not(map.get($SETTINGS, pixels_only)) {
+        @if meta.type-of($initial) == "map" {
+            @each $prop, $val in $initial {
+                #{$prop}: calculateValue($val);
+            }
+        }
+        @else if $additional != null {
+            @if($base != null) {
+                #{$initial}: calculateValue($additional, $base);
+            }
+            @else {
+                #{$initial}: calculateValue($additional);
+            }
+        }
+        @else {
+            @error "Missing second argument or incorrect usage of rem mixin.";
+        }
+    }
+    @else {
+        @if meta.type-of($initial) == "map" {
+            @each $prop, $val in $initial {
+                #{$prop}: $val;
+            }
+        }
+        @else if $additional != null {
+            #{$initial}: $additional;
+        }
+        @else {
+            @error "Missing second argument or incorrect usage of rem mixin.";
+        }
+    }
+}
+
+@mixin transform($args...) {
+  -webkit-transform: #{$args};
+  -moz-transform: #{$args};
+  -ms-transform: #{$args};
+  -o-transform: #{$args};
+  transform: #{$args}; 
+}
+
+@mixin media($breakpoint, $type: min) {
+  $size: map.get(map.get($CONTAINER, $breakpoint), width);
+  @if $size {
+    @media (#{$type}-width: #{$size}) {
+      @content;
+    }
+  } @else {
+    @warn "Нет брейкпоинта #{$breakpoint} в $MEDIA.";
+  }
+}
+
+@mixin text_adaptive($type, $map) {
+    $font_size: map.get($map, font_size);
+    $line_height: map.get($map, line_height);
+    $font_weight: map.get($map, font_weight);
+    $mediaType: if(map.get($SETTINGS, mobile_first), min, max);    
+
+    #{$type} {
+        font-weight: $font_weight;
+        overflow-wrap: break-word;
+        word-break: normal;
+        text-wrap: pretty;
+        @include rem(font-size, $font_size);
+
+        @if not math.is-unitless($line_height) {
+            @include line-height($line_height, $font_size);
+        }
+        @else {
+            line-height: $line_height;
+        }
+    }
+
+    @supports (font-size: clamp(1rem, 2vw, 2rem)) {
+        $map_container: map.get($map, clamp);
+
+        @if($map_container != null) {
+            #{$type} {
+                $max: math.max(map.get(map.get($map, clamp), font_size), $font_size);
+                $min: math.min(map.get(map.get($map, clamp), font_size), $font_size);
+
+                $modificator: 0.01 * map.get(map.get($map, clamp), width);
+
+                $preffered: math.div($max, $modificator) + vw;
+                
+                $max: pxToRem($max);
+                $min: pxToRem($min);
+
+                font-size: clamp($min, $preffered, $max);
+            }      
+        }
+    }
+
+    @supports not (font-size: clamp(1rem, 2vw, 2rem)) {
+        $map_container: map.get($map, media);
+        
+        @if($map_container != null) {
+            #{$type} {
+                @each $media, $multiplier in map.get($map, media) {
+                    @include media($media, $mediaType) {                    
+                        @if math.is-unitless($multiplier) {
+                            @include rem(font-size, ($font_size * $multiplier));
+                        }
+                        @else {
+                            @include rem(font-size, $multiplier);
+                        }                    
+                    }
+                }
+            }
+        }
+       
+    }
+
+    @supports (hyphens: auto) {
+        #{$type} {
+            hyphens: auto;
+        }
+    }
+
+    @supports (text-wrap: balance) {
+        #{$type} {
+            text-wrap: balance;
+        }
+    }
+} 

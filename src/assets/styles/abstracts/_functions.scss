@@ -1,0 +1,75 @@
+@use "sass:meta";
+@use "sass:map";
+@use "sass:list";
+@use "sass:math";
+
+@function calculateClamp($min, $max, $restriction) {
+    $modificator: 0.01 * $restriction;
+    $preffered: math.div($max, $modificator) + vw;
+    $min: pxToRem($min);
+    $max: pxToRem($max);
+    
+    @return clamp($min, $preffered, $max);
+}
+@function pxToRem($px, $base: null) {
+    @if math.unit($px) != 'px' {
+        @return $px;
+    }       
+
+    @if(map.get($BASE, font_size) <= abs($px) + 5px and not map.get($SETTINGS, pixels_only)) {
+       @if $base != null {
+         @return calc(round(($px / $base) * 100) / 100) * 1rem;
+       }
+       @else {
+         @return calc(round(($px / map.get($BASE, font_size)) * 100) / 100) * 1rem;
+       }
+    }
+    @return $px;
+}
+@function calculateValue($val, $base: null) {
+    
+   @if $base != null {
+    @if meta.type-of($val) == "list" {
+        $isImportant: false;
+        $temp: ();
+        @each $elem in $val {
+            @if(meta.type-of($elem) == 'number') {
+                $temp: list.append($temp, pxToRem($elem, $base));
+            }
+            @else if(meta.type-of($elem) == 'string' and $elem == '!important') {
+                 $isImportant: true;
+            }
+        }
+        @if($isImportant) {
+            $temp: list.append($temp, !important);
+        }
+
+        @return $temp;
+    }
+    @else {
+        @return pxToRem($val, $base);
+    }
+   }
+   @else {
+     @if meta.type-of($val) == "list" {
+        $isImportant: false;
+        $temp: ();
+        @each $elem in $val {
+            @if(meta.type-of($elem) == 'number') {
+                $temp: list.append($temp, pxToRem($elem));
+            }
+            @else if(meta.type-of($elem) == 'string' and $elem == '!important') {
+                 $isImportant: true;
+            }
+        }
+        @if($isImportant) {
+            $temp: list.append($temp, !important);
+        }
+
+        @return $temp;
+    }
+    @else {
+        @return pxToRem($val);
+    }
+   }
+}

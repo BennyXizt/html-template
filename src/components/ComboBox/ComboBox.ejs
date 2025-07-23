@@ -1,0 +1,95 @@
+<%
+// Компонент ComboBox: выпадающий список с поиском и подсветкой совпадений
+// - Обрабатывает клики и ввод пользователя
+// - Фильтрует список по всему тексту (default) или по первой букве (firstLetter)
+// - Поддерживает иконки очистки и открытия списка
+// - Настраивается через объект настроек ComboBoxSettings
+//
+// Использование:
+//
+// ComboBox({
+//     event: e,                       // объект события (клик, ввод и т.п.)
+//     searchType: SearchType.default  // режим поиска: default или firstLetter
+// })
+//
+// Пример вызова в обработчике события:
+//
+// document.addEventListener('click', (e) => {
+//   ComboBox({
+//     event: e,
+//     searchType: SearchType.default
+//   })
+// })
+//
+// В шаблоне (EJS) подключается так:
+//
+// <\%- include('./src/components/ComboBox/ComboBox.ejs', {
+//   combobox_component: {
+//     label: 'Выберите город',
+//     placeholder: 'Начните вводить',
+//     icons: {
+//       input_close: { src: './media/icons/xmark.svg', alt: 'Очистить' },
+//       input_dispose: { src: './media/icons/arrow.svg', alt: 'Открыть' },
+//       p: { src: './media/icons/plus.svg', alt: 'Добавить' }
+//     },
+//     data: [
+//       { flag: 'de', city: 'Deutschland' },
+//       { flag: 'fr', city: 'France' },
+//       { flag: 'es', city: 'España' }
+//     ]
+//   }
+// }) %>
+%>
+
+
+
+<% if(typeof combobox_component !== 'undefined' && combobox_component) { %>
+
+<%
+ let 
+     input_id = `cb${Math.random().toString(36).slice(2, 8)}-${new Date().getTime()}`,
+     input_placeholder = null,
+     input_prestyled = null
+
+ if(typeof combobox_component.id !== 'undefined' && combobox_component.id)
+    input_id = `${combobox_component.id}`
+ if(typeof combobox_component.placeholder !== 'undefined' && combobox_component.placeholder)
+    input_placeholder = `placeholder='${combobox_component.placeholder}'`
+ if(typeof combobox_component.prestyled !== 'undefined' && combobox_component.prestyled)
+    input_prestyled = `data-fsc-combobox-prestyled data-fsc-combobox-prestyledType=${combobox_component.prestyled}`
+%>
+
+<article data-fsc-combobox-id=<%=input_id%>  <%=input_prestyled%> data-fsc-combobox-collapsed="false" >
+    <% if(typeof combobox_component.label !== 'undefined' && combobox_component.label) { %>
+        <label for=<%= input_id %>><%= combobox_component.label %></label>
+    <% } %>
+    <input type="text" id=<%= input_id %> <%-input_placeholder %> data-fsc-combobox>
+    <% if (
+        (typeof combobox_component.icons !== 'undefined' && combobox_component.icons) &&
+        (typeof combobox_component.icons.input_dispose !== 'undefined' && combobox_component.icons.input_dispose)
+    ) { %>
+        <img src=<%= combobox_component.icons.input_dispose.src %> alt=<%= combobox_component.icons.input_dispose.alt %> data-fsc-combobox-input-icon-dispose data-fsc-combobox>
+    <% } %>
+      <% if(
+        (typeof combobox_component.icons !== 'undefined' && combobox_component.icons) &&
+        (typeof combobox_component.icons.input_close !== 'undefined' && combobox_component.icons.input_close)
+      ) { %>
+        <img src=<%= combobox_component.icons.input_close.src %> alt=<%= combobox_component.icons.input_close.alt %> data-fsc-combobox-input-icon-close data-fsc-combobox>
+    <% } %>
+    <% if(typeof combobox_component.data !== 'undefined' && combobox_component.data) { %>
+        <ul>
+            <% for(const obj of combobox_component.data) { %>
+                <li data-fsc-combobox-item>
+                    <p>
+                        <%=Object.values(obj).join(' ') %>
+                        <% if(typeof combobox_component.icons.p !== 'undefined' && combobox_component.icons.p) { %>
+                            <img src=<%= combobox_component.icons.p.src %> alt=<%= combobox_component.icons.p.alt %>  data-fsc-combobox-item data-fsc-combobox-p-icon >
+                        <% } %>
+                    </p>
+                </li>
+            <% } %> 
+        </ul>
+    <% } %>
+</article>
+
+<% } %>

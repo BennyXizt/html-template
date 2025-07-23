@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<% if(typeof seo.lang !== 'undefined' && seo.lang) { %>
+   <html lang="<%= seo.lang %>">
+<% } else { %>
+   <html lang="en">
+<% } %>
+<head>
+   <%- include('./src/ejs/layout/head.ejs') %>
+</head>
+<body>
+    <div class="wrapper">
+        <%- include('./src/ejs/layout/header.ejs', {
+            homePage: 'true'
+        })%>
+        <main class="layout"></main>
+        <footer class="footer"></footer>
+    </div>
+    <script type="module" src="/src/ts/main.ts"></script>
+</body>
+</html>

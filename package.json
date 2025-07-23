@@ -1,8 +1,21 @@
 {
+  "name": "arik",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "node ./build-html.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "dependencies": {
-    "ejs": "^3.1.10"
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.27",
+    "@types/node": "^24.0.10",
+    "dotenv": "^17.0.1",
+    "fluent-ffmpeg": "^2.1.3",
+    "sass": "^1.89.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-ejs": "^1.7.0"
   }
 }

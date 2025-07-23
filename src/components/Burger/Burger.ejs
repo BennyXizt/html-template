@@ -1,0 +1,11 @@
+<% 
+    var sectionCSS =  'burger'
+
+    if(typeof block !== 'undefined' && block) {
+        sectionCSS = `${block}__burger burger`
+    }
+%>
+
+<button class="<%=sectionCSS%>">
+    <span></span>
+</button>

@@ -1,0 +1,25 @@
+<div class="header__menu menu">
+    <nav class="menu__body">
+        <% if(typeof list !== 'undefined' && list) { %>
+            <ul class="menu__list">
+                <% for(const item of list) { %>
+                    <% if(typeof activePage !== 'undefined' && activePage) { %>
+                        <% if(activePage === item.ancor) { %>
+                            <li class="menu__item">
+                                <a href="<%= item.href %>" class="menu__link menu__link--active"><%= item.ancor %></a>
+                            </li>
+                        <% } else { %>
+                            <li class="menu__item">
+                                <a href="<%= item.href %>" class="menu__link"><%= item.ancor %></a>
+                            </li>
+                        <% } %>
+                    <% } else { %>
+                        <li class="menu__item">
+                            <a href="<%= item.href %>" class="menu__link"><%= item.ancor %></a>
+                        </li>
+                    <% } %>
+                <% } %>
+            </ul>
+        <% } %>
+    </nav>
+</div>
