@@ -33,11 +33,11 @@ export default defineConfig({
         }
     }),
     // ViteWatchSVGFolderPlugin({
-    //   relativePath: process.env.VITE_DUMMY_FILE_RELATIVE_PATH!,
-    //   nameOfTheOutputFile: process.env.VITE_DUMMY_FILE_NAME!,
+    //   relativePath: '../../../public/media/icons',
+    //   nameOfTheOutputFile: 'sprite.svg',
     //   dummy: {
-    //     destination:  process.env.VITE_DUMMY_SVG_DESTINATION!,
-    //     fileName:  process.env.VITE_DUMMY_SVG_FILE_NAME!
+    //     destination:  '../../dummy',
+    //     fileName:  'fontIcons.html'
     //   } 
     // }),
     // ViteWatchFontsFolderPlugin({
