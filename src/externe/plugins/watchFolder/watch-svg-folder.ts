@@ -31,7 +31,7 @@ export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, lan
                                 viewbox = watchedFile.match(/viewBox="([^"]+)/)?.[1],
                                 dArray = watchedFile.match(/d="([Mm][^"]+")/g),
                                 name = basename(filePath).slice(0, -4).toLowerCase().replace(/\s/g, '-'),
-                                destFile = `${watchDir}\\${nameOfTheOutputFile}`
+                                destFile = `${watchDir}/${nameOfTheOutputFile}`
 
                             if(!fs.existsSync(destFile) || fs.statSync(destFile).size === 0 && dArray) {
                                
@@ -63,7 +63,7 @@ export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, lan
                                 if(dummy) {
                                     const
                                         dummyDestination = resolve(__dirname, dummy.destination), 
-                                        dummyFile = `${dummyDestination}\\${dummy.fileName}`
+                                        dummyFile = `${dummyDestination}/${dummy.fileName}`
                                     
                                     updateDummySVGPage({watchedFile: destFile, dummyFile: dummyFile, id: name, translation: translation})
                                 }

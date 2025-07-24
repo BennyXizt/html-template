@@ -1,8 +1,8 @@
 <header class="header">
     <div class="header__container container">
         <div class="header__body">
-            <% if(typeof homePage !== 'undefined' && homePage) { %>
-                <%if(homePage === 'true') { %>
+            <% if(typeof header_component.homePage !== 'undefined' && header_component.homePage) { %>
+                <%if(header_component.homePage === true) { %>
                     
                 <% } else { %>
                     <a href="./index.html" class="header__link-logo">
@@ -10,7 +10,7 @@
                     </a>
                 <% } %>
             <% } %>
-            <%- include('../../components/HeaderMenu/HeaderMenu.ejs', {
+            <%- include('../../externe/components/HeaderMenu/HeaderMenu.ejs', {
                 list: [
                     {'href': '#', 'ancor': 'TEST'},
                     {'href': '#', 'ancor': 'TEST'},
@@ -19,7 +19,7 @@
                     {'href': '#', 'ancor': 'TEST'},
                 ]
             }) %>
-            <%- include('../../components/Burger/Burger.ejs', {
+            <%- include('../../externe/components/Burger/Burger.ejs', {
                 block: 'header'
             })%>
         </div>

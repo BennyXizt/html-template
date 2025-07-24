@@ -1,17 +1,25 @@
 import { defineConfig } from 'vite'
 import { config } from 'dotenv';
-import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './src/plugins/watchFolder'
+import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './src/externe/plugins/watchFolder'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
+import { resolve } from 'path'
 
 config()
 
+
+
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './'), 
+    },
+  },
   css: {
     postcss: {}
   },
   plugins: [
      ViteEjsPlugin({
-      seo: {
+      head_component: {
         lang: 'en',
         title: 'My App',
         description: 'Default project description',
@@ -20,26 +28,26 @@ export default defineConfig({
       }
     }),
     ViteWatchEJSFolderPlugin({
-      relativePath: '../../ejs/views/',
+      relativePath: `${__dirname}/src/ejs/views/`,
       outputDestination: {
          root: {
            fileName: 'index.ejs',
-           fileDestination: '../../../index.html'
+           fileDestination: `${__dirname}/index.html`
          },
          test: {
            fileName: 'test.ejs',
-           fileDestination: '../../../test.html'
+           fileDestination: `${__dirname}/src/externe/pages/test.html`
          }
         }
     }),
-    // ViteWatchSVGFolderPlugin({
-    //   relativePath: '../../../public/media/icons',
-    //   nameOfTheOutputFile: 'sprite.svg',
-    //   dummy: {
-    //     destination:  '../../dummy',
-    //     fileName:  'fontIcons.html'
-    //   } 
-    // }),
+    ViteWatchSVGFolderPlugin({
+      relativePath: `${__dirname}/public/media/icons/`,
+      nameOfTheOutputFile: 'sprite.svg',
+      dummy: {
+        destination:  `${__dirname}/src/externe/pages/`,
+        fileName:  'fontIcons.html'
+      } 
+    }),
     // ViteWatchFontsFolderPlugin({
     //   relativePath: '../../assets/fonts',
     //   outputDestination: '../../assets/styles/base/_fonts.scss'
@@ -47,8 +55,4 @@ export default defineConfig({
     // ViteWatchVideoFolderPlugin({
     //   relativePath: '../../public/media/video',
     //   // outputVideoDirectory: '../../public/media/converted',
-    //   // outputVideoFormat: [".mp4"],
-    //   posterDirectory: '../../public/media/image/poster'
-    // })
-  ]
-})
+    //   // outputVideoFormat: [

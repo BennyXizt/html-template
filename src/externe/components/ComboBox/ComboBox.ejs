@@ -43,7 +43,11 @@
 
 
 
-<% if(typeof combobox_component !== 'undefined' && combobox_component) { %>
+<% 
+   if(typeof combobox_component === 'undefined' || !combobox_component)
+        return
+    
+%>
 
 <%
  let 
@@ -91,5 +95,3 @@
         </ul>
     <% } %>
 </article>
-
-<% } %>

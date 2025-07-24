@@ -1,16 +1,32 @@
 <!DOCTYPE html>
-<% if(typeof seo.lang !== 'undefined' && seo.lang) { %>
-   <html lang="<%= seo.lang %>">
+<% if(typeof head_component.lang !== 'undefined' && head_component.lang) { %>
+   <html lang="<%= head_component.lang %>">
 <% } else { %>
    <html lang="en">
 <% } %>
 <head>
-   <%- include('./src/ejs/layout/head.ejs') %>
+   <%- include('./src/externe/components/Head/Head.ejs') %>
 </head>
 <body>
+    <%- include('./src/externe/components/DummyAside/DummyAside.ejs', {
+        dummy_aside_component: {
+            ul: [
+                {
+                    label: 'Font Icons',
+                    href: './src/externe/pages/fontIcons.html'
+                },
+                {
+                    label: 'Test Page',
+                    href: './src/externe/pages/test.html'
+                },
+            ]
+        }
+    }) %>
     <div class="wrapper">
         <%- include('./src/ejs/layout/header.ejs', {
-            homePage: 'true'
+            header_component: {
+                homePage: true
+            }
         })%>
         <main class="layout"></main>
         <footer class="footer"></footer>

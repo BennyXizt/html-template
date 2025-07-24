@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "Chillax";
+  src: url("./fonts/Chillax-Regular.woff") format("woff"),
+    url("./fonts/Chillax-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+body {
+    font-family: 'Chillax';
+    font-weight: 400;
+    color: rgba(218, 197, 167, .60);
+    background-color: #0e0e0e;
+}
+
+section {
+    margin-bottom: 120px;
+    outline: 2px solid rgb(255, 0, 0);
+
+    .outer {
+        // padding: 15px;
+        background-color: rgb(108, 255, 213);
+    }
+    .inner {
+        background-color: #0e0e0e;
+    }
+}
+
+[data-fs-dummy-aside] {
+    z-index: 9999999;
+    position: fixed;
+    top: 50%;
+    left: 10px;
+    transform: translate(0, -50%);
+    background-color: #000000;
+    color: wheat;
+    width: 10px;
+    height: 30px;
+    overflow: hidden;
+    transition: all .4s ease-in-out;
+   
+    ul {
+        margin-top: 15px;
+        display: flex;
+        gap: 30px;
+        flex-flow: column wrap;
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            width: max-content;
+            height: max-content;
+            padding: 30px;
+        }
+    }
+}

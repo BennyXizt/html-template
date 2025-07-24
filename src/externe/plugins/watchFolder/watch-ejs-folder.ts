@@ -30,6 +30,9 @@ export function ViteWatchEJSFolderPlugin({relativePath, outputDestination, langu
 
             server.watcher.add(watchDir);
             server.watcher.on('change', (changedFile) => {
+                console.log(changedFile);
+                console.log(watchDir);
+                
                 if (!changedFile.startsWith(watchDir) ) 
                     return
 

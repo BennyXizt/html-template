@@ -1,5 +1,6 @@
+import '../externe/test.scss'
 import '../assets/styles/main.scss'
-import { BurgerMenu } from '../components'
+import { BurgerMenu } from '../externe/components'
 
 
 window.addEventListener('click', function(e) {

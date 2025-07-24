@@ -1,12 +1,15 @@
 <% 
+    if(typeof carousel_component === 'undefined' || !carousel_component)
+        return
+
     var blockCSS =  'carousel'
     var carouselImages = undefined
 
-    if(typeof block !== 'undefined' && block) {
-        blockCSS = `${block}__carousel carousel`
+    if(typeof carousel_component.block !== 'undefined' && carousel_component.block) {
+        blockCSS = `${carousel_component.block}__carousel carousel`
     }
-    if(typeof images !== 'undefined' && images) {
-        carouselImages = images
+    if(typeof carousel_component.images !== 'undefined' && carousel_component.images) {
+        carouselImages = carousel_component.images
     }
     
 
