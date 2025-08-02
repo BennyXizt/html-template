@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import { config } from 'dotenv';
-import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './src/externe/plugins/watchFolder'
+import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './externe/plugins/watchFolder'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { resolve } from 'path'
 
@@ -11,7 +11,8 @@ config()
 export default defineConfig({
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': resolve(__dirname, 'src'),
+      '~': resolve(__dirname, 'externe')
     },
   },
   css: {
@@ -36,7 +37,7 @@ export default defineConfig({
          },
          test: {
            fileName: 'test.ejs',
-           fileDestination: `${__dirname}/src/externe/pages/test.html`
+           fileDestination: `${__dirname}/externe/pages/test.html`
          }
         }
     }),
