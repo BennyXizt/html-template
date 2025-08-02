@@ -1,0 +1,1 @@
+type MarqueeDirection = 'top' | 'left' | 'right' | 'bottom'

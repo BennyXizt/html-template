@@ -11,7 +11,7 @@ config()
 export default defineConfig({
   resolve: {
     alias: {
-      '@': resolve(__dirname, './'), 
+      '@': resolve(__dirname, 'src')
     },
   },
   css: {
@@ -55,4 +55,8 @@ export default defineConfig({
     // ViteWatchVideoFolderPlugin({
     //   relativePath: '../../public/media/video',
     //   // outputVideoDirectory: '../../public/media/converted',
-    //   // outputVideoFormat: [
+    //   // outputVideoFormat: [".mp4"],
+    //   posterDirectory: '../../public/media/image/poster'
+    // })
+  ]
+})
