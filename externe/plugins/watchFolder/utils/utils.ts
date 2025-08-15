@@ -99,9 +99,6 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                     </li>
                     ${rewriteFile.slice(lastIndex)}
                 `.trim()
-        
-
-             console.log(fileContent)
              
              fs.writeFileSync(dummyFile, fileContent, 'utf-8')   
              translation.fileHasBeenUpdated(dummyFile)
