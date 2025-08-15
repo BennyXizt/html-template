@@ -50,8 +50,8 @@ export default defineConfig({
       } 
     }),
     ViteWatchFontsFolderPlugin({
-      relativePath: '../../assets/fonts',
-      outputDestination: '../../assets/styles/base/_fonts.scss'
+      relativePath: `${__dirname}/src/assets/fonts`,
+      outputDestination: `${__dirname}/src/assets/styles/base/_fonts.scss`
     }),
     ViteWatchVideoFolderPlugin({
       relativePath: '../../public/media/video',

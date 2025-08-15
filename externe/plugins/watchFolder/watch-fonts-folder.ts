@@ -104,7 +104,7 @@ export function ViteWatchFontsFolderPlugin({relativePath, outputDestination, lan
 
             server.watcher.add(watchDir);
             server.watcher.on('add', (filePath) => {
-                if (filePath.startsWith(watchDir) ) {
+                if (dirname(filePath) === watchDir) {
                     translation.newFileAdded(filePath)
                     
                     setTimeout(() => {
