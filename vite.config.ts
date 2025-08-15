@@ -27,6 +27,10 @@ export default defineConfig({
         keywords: 'vite, ejs, scss, javascript',
         author: 'Your Name'
       }
+    }, {
+      ejs: {
+        views: [resolve(__dirname)]
+      }
     }),
     ViteWatchEJSFolderPlugin({
       relativePath: `${__dirname}/src/ejs/views/`,
