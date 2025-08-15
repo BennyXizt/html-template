@@ -1,6 +1,6 @@
 import type { Plugin, ViteDevServer } from 'vite'
 import { fileURLToPath } from 'url'
-import { resolve, dirname, basename } from 'path'
+import { resolve, dirname, basename, extname } from 'path'
 import fs from 'fs'
 import type { SVGFolderInterface} from './types/plugin.interface'
 import { SVGFolderTranslation } from './i18n'
@@ -21,7 +21,7 @@ export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, lan
 
             server.watcher.add(watchDir);
             server.watcher.on('add', (filePath) => {
-                if (filePath.startsWith(watchDir) && !basename(filePath)?.includes(nameOfTheOutputFile)) {
+                if (dirname(filePath) === watchDir && !basename(filePath)?.includes(nameOfTheOutputFile) && extname(filePath) === '.svg') {
                     translation.newFileAdded(filePath)    
                         
                     setTimeout(() => {
@@ -99,7 +99,7 @@ export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, lan
                                         if(dummy) {
                                             const
                                                 dummyDestination = resolve(__dirname, dummy.destination), 
-                                                dummyFile = `${dummyDestination}\\${dummy.fileName}`
+                                                dummyFile = `${dummyDestination}/${dummy.fileName}`
                                             
                                             updateDummySVGPage({watchedFile: destFile, dummyFile: dummyFile, id: name, translation: translation})
                                         }

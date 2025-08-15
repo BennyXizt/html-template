@@ -45,19 +45,19 @@ export default defineConfig({
       relativePath: `${__dirname}/public/media/icons/`,
       nameOfTheOutputFile: 'sprite.svg',
       dummy: {
-        destination:  `${__dirname}/src/externe/pages/`,
+        destination:  `${__dirname}/externe/pages/`,
         fileName:  'fontIcons.html'
       } 
     }),
-    // ViteWatchFontsFolderPlugin({
-    //   relativePath: '../../assets/fonts',
-    //   outputDestination: '../../assets/styles/base/_fonts.scss'
-    // }),
-    // ViteWatchVideoFolderPlugin({
-    //   relativePath: '../../public/media/video',
-    //   // outputVideoDirectory: '../../public/media/converted',
-    //   // outputVideoFormat: [".mp4"],
-    //   posterDirectory: '../../public/media/image/poster'
-    // })
+    ViteWatchFontsFolderPlugin({
+      relativePath: '../../assets/fonts',
+      outputDestination: '../../assets/styles/base/_fonts.scss'
+    }),
+    ViteWatchVideoFolderPlugin({
+      relativePath: '../../public/media/video',
+      outputVideoDirectory: '../../public/media/converted',
+      outputVideoFormat: [".mp4"],
+      posterDirectory: '../../public/media/image/poster'
+    })
   ]
 })
