@@ -10,8 +10,8 @@ const rl = readline.createInterface({
 
 rl.question('Придумайте название компонента: ', (componentName) => {
   const 
-    ejsDir = resolve(`${process.cwd()}/src/ejs/`),
-    scssDir = resolve(`${process.cwd()}/src/assets/styles/`)
+    ejsDir = resolve(process.cwd(), "src/ejs"),
+    scssDir = resolve(process.cwd(), "src/assets/styles")
    
     if(fs.existsSync(`${ejsDir}/components/${componentName}`)) 
     {
