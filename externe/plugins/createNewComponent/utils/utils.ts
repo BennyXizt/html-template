@@ -25,9 +25,9 @@ export function updateMainSCSS({scssDir, componentName, fs}) {
     fs.writeFileSync(outputFile, fileContent, 'utf-8')  
 }
 
-export function createEJSFile({ejsDir,componentName,fs}) {
+export function createEJSFile({ejsDir, componentName, fs}) {
     const
-        ejsFile = `${ejsDir}/${componentName}.ejs`,
+        ejsFile = `${ejsDir}/components/${componentName}.ejs`,
         ejsFileContent = 
             `
                 <% if(typeof ${componentName}_component !== 'undefined' && ${componentName}_component) {
@@ -41,7 +41,7 @@ export function createEJSFile({ejsDir,componentName,fs}) {
     fs.writeFileSync(ejsFile, ejsFileContent, 'utf-8')
 }
 
-export function createSCSSFile({scssDir,componentName,fs}) {
+export function createSCSSFile({scssDir, componentName, fs}) {
     const
         scssFile = `${scssDir}/components/_${componentName}.scss`,
         scssFileContent = 
@@ -50,4 +50,27 @@ export function createSCSSFile({scssDir,componentName,fs}) {
         `.trim()
 
     fs.writeFileSync(scssFile, scssFileContent, 'utf-8')  
+}
+
+export function updateTestEJSFile({ejsDir, componentName, fs}) {
+    const
+        data = fs.readFileSync(`${ejsDir}/views/test.ejs`, 'utf-8'),
+        ejsFile = `${ejsDir}/views/test.ejs`,
+        lastIndex = data.lastIndexOf('</section>'),
+        fileContent = 
+        data.slice(0, lastIndex + '</section>'.length).trim() + '\n\t' +
+        `
+        <section class='${componentName}_component'>
+        <div class="outer container">
+            <div class="inner">
+                <h6 class="text-center">${componentName.toUpperCase()} Component</h6>
+                <div class="flex items-center gap-x-2">
+                    // Change Me
+                </div>
+            </div>
+        </div>\n\t</section>
+        `.trim() + '\n\t' +
+        data.slice(lastIndex + '</section>'.length).trim()
+
+    fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
 }
