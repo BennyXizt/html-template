@@ -19,4 +19,29 @@
                                 block: 'header',
                                 img: {
                                     src: '/media/...',
-                  
+                                    alt: 'website-logo'
+                                }
+                            }
+                        })%>
+                    </a>
+                <% } %>
+            <% } %>
+            <%- include('../HeaderMenu/HeaderMenu.ejs', {
+                header_menu_component: {
+                    list: [
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                    ]
+                }
+            }) %>
+            <%- include('../Burger/Burger.ejs', {
+                burger_component: {
+                    block: 'header'
+                }
+            })%>
+        </div>
+    </div>
+</header>
