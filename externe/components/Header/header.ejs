@@ -3,10 +3,26 @@
         <div class="header__body">
             <% if(typeof header_component.homePage !== 'undefined' && header_component.homePage) { %>
                 <%if(header_component.homePage === true) { %>
-                    
+                    <%- include('../Image/Image.ejs', {
+                        image_component: {
+                            block: 'header',
+                            img: {
+                                src: '/media/...',
+                                alt: 'website-logo'
+                            }
+                        }
+                    })%>
                 <% } else { %>
                     <a href="./index.html" class="header__link-logo">
-                       
+                        <%- include('../Image/Image.ejs', {
+                            image_component: {
+                                block: 'header',
+                                img: {
+                                    src: '/media/...',
+                                    alt: 'website-logo'
+                                }
+                            }
+                        })%>
                     </a>
                 <% } %>
             <% } %>
