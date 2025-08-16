@@ -11,13 +11,15 @@
                 <% } %>
             <% } %>
             <%- include('../HeaderMenu/HeaderMenu.ejs', {
-                list: [
-                    {'href': '#', 'ancor': 'TEST'},
-                    {'href': '#', 'ancor': 'TEST'},
-                    {'href': '#', 'ancor': 'TEST'},
-                    {'href': '#', 'ancor': 'TEST'},
-                    {'href': '#', 'ancor': 'TEST'},
-                ]
+                header_menu_component: {
+                    list: [
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'TEST'},
+                    ]
+                }
             }) %>
             <%- include('../Burger/Burger.ejs', {
                 block: 'header'
