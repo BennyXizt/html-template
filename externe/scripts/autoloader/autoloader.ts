@@ -12,7 +12,7 @@ export function autoloader() {
                 if (loadedModules.has(moduleName)) continue
 
                 try {
-                    const module = await import(`@/externe/plugins/${moduleName}/${moduleName}.ts`)
+                    const module = await import(`@/externe/scripts/${moduleName}/${moduleName}.ts`)
                     module[moduleName](el)
                     loadedModules.add(moduleName)
                 } catch (err) {                                     

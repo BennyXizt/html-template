@@ -1,7 +1,7 @@
 import '~/test.scss'
 import '@/assets/styles/main.scss'
 import { BurgerMenu } from '~/components'
-import { autoloader } from '~/plugins/autoloader/autoloader'
+import { autoloader } from '~/scripts/autoloader/autoloader'
 
 window.addEventListener('click', function(e) {
     const 
