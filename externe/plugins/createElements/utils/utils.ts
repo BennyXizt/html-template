@@ -1,33 +1,33 @@
 
 
-export function updateMainSCSS({scssDir, componentName, fs}) {
+export function updateMainSCSS({scssDir, blockType, componentName, fs}) {
     let fileContent: string
 
     const 
         data = fs.readFileSync(`${scssDir}/main.scss`, 'utf-8'),
         outputFile = `${scssDir}/main.scss`,
-        startIndex = data.lastIndexOf('// internal components START'),
-        lastIndex = data.lastIndexOf('// internal components END'),
-        slicedText = data.slice(startIndex + '// internal components START'.length, lastIndex).trim()
+        startIndex = data.lastIndexOf(`// internal ${blockType} START`),
+        lastIndex = data.lastIndexOf(`// internal ${blockType} END`),
+        slicedText = data.slice(startIndex + `// internal ${blockType} START`.length, lastIndex).trim()
         
     if(slicedText.length == 0) {
             fileContent = 
             `
-            ${data.slice(0, startIndex + '// internal components START'.length).trim()}\n@import\n\t'./components/${componentName}';\n${data.slice(lastIndex).trim()}
+            ${data.slice(0, startIndex + `// internal ${blockType} START`.length).trim()}\n@import\n\t'./${blockType}/${componentName}';\n${data.slice(lastIndex).trim()}
             `.trim()   
     }
     else {
             fileContent = 
             `
-            ${data.slice(0, startIndex + '// internal components START'.length).trim()}\n${slicedText.slice(0, -1)},\n\t'./components/${componentName}';\n${data.slice(lastIndex).trim()}
+            ${data.slice(0, startIndex + `// internal ${blockType} START`.length).trim()}\n${slicedText.slice(0, -1)},\n\t'./${blockType}/${componentName}';\n${data.slice(lastIndex).trim()}
             `.trim()   
     }
     fs.writeFileSync(outputFile, fileContent, 'utf-8')  
 }
 
-export function createEJSFile({ejsDir, componentName, fs}) {
+export function createEJSFile({ejsDir, blockType, componentName, fs}) {
     const
-        ejsFile = `${ejsDir}/components/${componentName}.ejs`,
+        ejsFile = `${ejsDir}/${blockType}/${componentName}.ejs`,
         ejsFileContent = 
             `
                 <% if(typeof ${componentName}_component !== 'undefined' && ${componentName}_component) {
@@ -37,16 +37,16 @@ export function createEJSFile({ejsDir, componentName, fs}) {
             }\n%>\n<div class="<%=blockCSS%>"></div>\n<% } %>
             `.trim()
 
-    fs.mkdirSync(ejsDir, { recursive: true })
+    fs.mkdirSync(`${ejsDir}/${blockType}`, { recursive: true })
     fs.writeFileSync(ejsFile, ejsFileContent, 'utf-8')
 }
 
-export function createSCSSFile({scssDir, componentName, fs}) {
+export function createSCSSFile({scssDir, blockType, componentName, fs}) {
     const
-        scssFile = `${scssDir}/components/_${componentName}.scss`,
+        scssFile = `${scssDir}/${blockType}/_${componentName}.scss`,
         scssFileContent = 
         `
-            .${componentName} {\n\n}
+            @use 'sass:map';\n\n.${componentName} {\n\n}
         `.trim()
 
     fs.writeFileSync(scssFile, scssFileContent, 'utf-8')  

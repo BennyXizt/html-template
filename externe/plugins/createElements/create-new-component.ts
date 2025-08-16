@@ -11,7 +11,8 @@ const rl = readline.createInterface({
 rl.question('Придумайте название компонента: ', (componentName) => {
   const 
     ejsDir = resolve(process.cwd(), "src/ejs"),
-    scssDir = resolve(process.cwd(), "src/assets/styles")
+    scssDir = resolve(process.cwd(), "src/assets/styles"),
+    blockType = 'components'
    
     if(fs.existsSync(`${ejsDir}/components/${componentName}`)) 
     {
@@ -21,9 +22,9 @@ rl.question('Придумайте название компонента: ', (com
         return
     }
 
-    createSCSSFile({scssDir, componentName, fs})
-    createEJSFile({ejsDir, componentName, fs})
-    updateMainSCSS({scssDir, componentName, fs})
+    createSCSSFile({scssDir, blockType, componentName, fs})
+    createEJSFile({ejsDir, blockType, componentName, fs})
+    updateMainSCSS({scssDir, blockType, componentName, fs})
     updateTestEJSFile({ejsDir, componentName, fs})
     
     console.log(`Компонент ${componentName} создан!`)
