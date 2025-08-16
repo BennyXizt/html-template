@@ -30,12 +30,13 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
         ejsFile = `${ejsDir}/${blockType}/${componentName}.ejs`,
         ejsFileContent = 
             `
-                <% if(typeof ${componentName}_component !== 'undefined' && ${componentName}_component) {
-            var blockCSS = '${componentName}'
-            if(typeof ${componentName}_component.block !== 'undefined' && ${componentName}_component.block) {
-                blockCSS = \`\${componentName.block}__${componentName} ${componentName}\`
-            }\n%>\n<div class="<%=blockCSS%>"></div>\n<% } %>
-            `.trim()
+                <%\n\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n\t\treturn\n\t}
+            `.trim() +
+            `\n\n\tvar blockCSS = '${componentName}'` + 
+            `\n\tif(typeof ${componentName}_component.block !== 'undefined' && ${componentName}_component.block) {` +
+            `\n\t\tblockCSS = \`\${componentName.block}__${componentName} ${componentName}\`` + 
+            `\n\t}\n%>` +
+            `\n\n<div class="<%=blockCSS%>">\n\n</div>`
 
     fs.mkdirSync(`${ejsDir}/${blockType}`, { recursive: true })
     fs.writeFileSync(ejsFile, ejsFileContent, 'utf-8')
