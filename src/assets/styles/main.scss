@@ -11,12 +11,17 @@
         './base/typography',
         './base/base';
 
-// @import 
-//         'layout';
+// internal layout START
+// internal layout END
 
 @import 
         '../../../externe/components/Burger/Burger',
         '../../../externe/components/HeaderMenu/HeaderMenu',
         '../../../externe/components/Header/Header';
 
-// internal comp
+// internal components START
+// internal components END
+
+// @import
+//         'pages'
+
