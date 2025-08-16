@@ -63,4 +63,17 @@ body {
     @else if map.get($SETTINGS, responsive_type) == 2 {
       max-width: 100%;
 
-      @each $type, $
+      @each $type, $props in $CONTAINER {
+        @include media($type) {
+          $padding-x: map.get($props, padding-x);
+          $max-width: map.get($props, max-width);
+
+          @include rem((
+            max-width: ($max-width + $padding-x),
+            padding: 0 ($padding-x / 2)
+          ))
+        }
+      }
+    }
+   
+}
