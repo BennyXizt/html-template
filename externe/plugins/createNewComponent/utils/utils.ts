@@ -13,13 +13,13 @@ export function updateMainSCSS({scssDir, componentName, fs}) {
     if(slicedText.length == 0) {
             fileContent = 
             `
-            ${data.slice(0, startIndex + '// internal components START'.length).trim()}\n@import\n\t'./component/${componentName}';\n${data.slice(lastIndex).trim()}
+            ${data.slice(0, startIndex + '// internal components START'.length).trim()}\n@import\n\t'./components/${componentName}';\n${data.slice(lastIndex).trim()}
             `.trim()   
     }
     else {
             fileContent = 
             `
-            ${data.slice(0, startIndex + '// internal components START'.length).trim()}\n${slicedText.slice(0, -1)},\n\t'./component/${componentName}';\n${data.slice(lastIndex).trim()}
+            ${data.slice(0, startIndex + '// internal components START'.length).trim()}\n${slicedText.slice(0, -1)},\n\t'./components/${componentName}';\n${data.slice(lastIndex).trim()}
             `.trim()   
     }
     fs.writeFileSync(outputFile, fileContent, 'utf-8')  
