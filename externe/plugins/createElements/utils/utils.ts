@@ -44,7 +44,7 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
         case 'layout': {
             ejsFileContent = 
                 `<%\n\n%>` + 
-                `\n\n<section class="<%=blockCSS%>">\n\t<div class="${componentName}__container container">` +
+                `\n\n<section class="${componentName}">\n\t<div class="${componentName}__container container">` +
                 `\n\n\t</div>\n</section>` 
             break
         }
