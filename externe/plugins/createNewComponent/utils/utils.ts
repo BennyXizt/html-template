@@ -65,7 +65,11 @@ export function updateTestEJSFile({ejsDir, componentName, fs}) {
             <div class="inner">
                 <h6 class="text-center">${componentName.toUpperCase()} Component</h6>
                 <div class="flex items-center gap-x-2">
-                    // Change Me
+                    <%- include('src/ejs/components/${componentName}.ejs', {
+                        ${componentName}_component: {
+                            
+                        }
+                    })%>
                 </div>
             </div>
         </div>\n\t</section>

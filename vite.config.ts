@@ -61,7 +61,4 @@ export default defineConfig({
       relativePath: '../../public/media/video',
       outputVideoDirectory: '../../public/media/converted',
       outputVideoFormat: [".mp4"],
-      posterDirectory: '../../public/media/image/poster'
-    })
-  ]
-})
+    
