@@ -22,8 +22,8 @@ rl.question('Придумайте название секции: ', (componentNa
         return
     }
 
-    // createSCSSFile({scssDir, blockType, componentName, fs})
-    // updateMainSCSS({scssDir, blockType, componentName, fs})
+    createSCSSFile({scssDir, blockType, componentName, fs})
+    updateMainSCSS({scssDir, blockType, componentName, fs})
     createEJSFile({ejsDir, blockType, componentName, fs})
     
     console.log(`Секция ${componentName} создана!`)
