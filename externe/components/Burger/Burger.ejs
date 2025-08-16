@@ -1,7 +1,8 @@
 <% 
-    if(typeof burger_component === 'undefined' || !burger_component)
+    if(typeof burger_component === 'undefined' || !burger_component) {
         return
-
+    }
+       
     var sectionCSS =  'burger'
 
     if(typeof burger_component.block !== 'undefined' && burger_component.block) {

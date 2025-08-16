@@ -7,18 +7,18 @@
                         image_component: {
                             block: 'header',
                             img: {
-                                src: '/media/...',
+                                src: '/media/icons/logo/logo.svg',
                                 alt: 'website-logo'
                             }
                         }
                     })%>
                 <% } else { %>
                     <a href="./index.html" class="header__link-logo">
-                        <%- include('../Image/Image.ejs', {
+                       <%- include('../Image/Image.ejs', {
                             image_component: {
                                 block: 'header',
                                 img: {
-                                    src: '/media/...',
+                                    src: '/media/icons/logo/logo.svg',
                                     alt: 'website-logo'
                                 }
                             }
@@ -29,14 +29,20 @@
             <%- include('../HeaderMenu/HeaderMenu.ejs', {
                 header_menu_component: {
                     list: [
-                        {'href': '#', 'ancor': 'TEST'},
-                        {'href': '#', 'ancor': 'TEST'},
-                        {'href': '#', 'ancor': 'TEST'},
-                        {'href': '#', 'ancor': 'TEST'},
-                        {'href': '#', 'ancor': 'TEST'},
+                        {'href': '#', 'ancor': 'Services'},
+                        {'href': '#', 'ancor': 'Work'},
+                        {'href': '#', 'ancor': 'About'},
+                        {'href': '#', 'ancor': 'Blog'},
+                        {'href': '#', 'ancor': 'Pages'},
                     ]
                 }
             }) %>
+            <%-include('src/ejs/components/button.ejs', {
+                button_component: {
+                    label: 'Let’s talk',
+                    style: 'alternative'
+                }
+            })%>
             <%- include('../Burger/Burger.ejs', {
                 burger_component: {
                     block: 'header'

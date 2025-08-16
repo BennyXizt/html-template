@@ -1,3 +1,95 @@
+@use 'sass:map';
+
 .header {
     position: relative;
+    
+    &__body {
+        margin: 0 auto;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        border: 1px solid map.get($COLORS, border_default);
+        border-radius: 2px;
+        @include rem((
+            padding: 12px,
+            margin-top: 48px
+        ));
+        backdrop-filter: blur(30px);
+        background: map.get($COLORS, background_muted);
+
+        & > * {
+            @include rem(margin-left, 8px);
+            &:first-child {
+                margin-left: unset;
+            }
+        }
+    }
+    &__menu {
+        @extend %textMeta;
+        text-transform: uppercase;
+        
+        flex: 1;
+        @include rem((
+            margin-left: 16px,
+            padding: 5px 0
+        ));
+    }
+
+    @include media(tablet) {
+        &__burger {
+            display: none;
+        }
+        &__body {
+            width: max-content;
+        }
+    }
+    @include media(desktop) {
+        &__body {
+            @include rem(padding, 12px 12px 12px 24px);
+
+            & > * {
+                @include rem(margin-left, 16px);
+            }
+         }
+         &__menu {
+            @include rem((
+                margin-left: 32px,
+                padding: 10px 0,
+            ));
+         }
+    }
+
+    @supports (font-size: clamp(1px,1px,1px)) {
+        &__body {
+            @include clamp(padding-left, 24px 12px);
+
+            & > * {
+                @include clamp(margin-left, 16px 8px);
+            }
+        }
+        &__menu {
+            @include clamp((
+                margin-left: 32px 16px,
+                padding-top: 10px 5px,
+                padding-bottom: 10px 5px
+            ));
+        }
+    }
+}
+
+.menu {
+    &__list {
+        @include rem(gap, 10px);
+    }
+   
+    @include media(desktop) {
+        &__list {
+            @include rem(gap, 20px);
+        }
+    }
+    @supports (font-size: clamp(1px,1px,1px)) {
+        &__list {
+            @include clamp(gap, 20px 10px);
+        }
+    }
 }

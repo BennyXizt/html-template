@@ -29,8 +29,10 @@
 %>
 
 <% 
-    if(typeof image_component === 'undefined' || !image_component)
+    if(typeof image_component === 'undefined' || !image_component) {
         return
+    }
+        
 
     var figureCSS =  ''
     var displayType = undefined
