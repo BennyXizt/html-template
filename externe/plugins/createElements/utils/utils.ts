@@ -26,22 +26,29 @@ export function updateMainSCSS({scssDir, blockType, componentName, fs}) {
 }
 
 export function createEJSFile({ejsDir, blockType, componentName, fs}) {
-    const
-        ejsFile = `${ejsDir}/${blockType}/${componentName}.ejs`,
-        ejsFileContent = 
-            `
+    let ejsFileContent
+    const ejsFile = `${ejsDir}/${blockType}/${componentName}.ejs`
+
+    switch(blockType) {
+        case 'components': {
+            ejsFileContent = `
                 <%\n\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n\t\treturn\n\t}
-            `.trim() +
-            `\n\n\tvar blockCSS = '${componentName}'` + 
-            `\n\tif(typeof ${componentName}_component.block !== 'undefined' && ${componentName}_component.block) {` +
-            `\n\t\tblockCSS = \`\${componentName.block}__${componentName} ${componentName}\`` + 
-            `\n\t}\n%>` +
-            (
-                 blockType === 'components' ? 
-                    `\n\n<div class="<%=blockCSS%>">\n\n</div>` :
-                    `\n\n<section class="<%=blockCSS%>">\n\t<div class="${componentName}__container container">` +
-                    `\n\n\t</div>\n</section>` 
-            )
+                `.trim() +
+                `\n\n\tvar blockCSS = '${componentName}'` + 
+                `\n\tif(typeof ${componentName}_component.block !== 'undefined' && ${componentName}_component.block) {` +
+                `\n\t\tblockCSS = \`\${componentName.block}__${componentName} ${componentName}\`` + 
+                `\n\t}\n%>` + 
+                `\n\n<div class="<%=blockCSS%>">\n\n</div>`
+            break
+        }
+        case 'layout': {
+            ejsFileContent = 
+                `<%\n\n%>` + 
+                `\n\n<section class="<%=blockCSS%>">\n\t<div class="${componentName}__container container">` +
+                `\n\n\t</div>\n</section>` 
+            break
+        }
+    }
 
     fs.mkdirSync(`${ejsDir}/${blockType}`, { recursive: true })
     fs.writeFileSync(ejsFile, ejsFileContent, 'utf-8')

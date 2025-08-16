@@ -22,8 +22,8 @@ rl.question('Придумайте название компонента: ', (com
         return
     }
 
-    createSCSSFile({scssDir, blockType, componentName, fs})
     createEJSFile({ejsDir, blockType, componentName, fs})
+    createSCSSFile({scssDir, blockType, componentName, fs})
     updateMainSCSS({scssDir, blockType, componentName, fs})
     updateTestEJSFile({ejsDir, componentName, fs})
     
