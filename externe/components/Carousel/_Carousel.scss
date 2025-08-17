@@ -1,4 +1,4 @@
-.carousel {
+[data-fsc-marquee-carousel] {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -16,4 +16,14 @@
             transform: translate3d(0, 0, 0);
         }
     }
+}
+
+.carousel {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%);
+}
+[data-fsc-marquee] {
+    will-change: transform;
+    display: flex;
+    align-items: center;
 }

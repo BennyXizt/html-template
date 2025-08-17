@@ -1,3 +1,30 @@
+<%
+//   Компонент <Carousel>: карусель изображений с поддержкой бесшовного скролла (marquee)
+//   Использует <ul> и <li> для структуры слайдов и подключает компонент <Image> для каждого элемента
+  
+//   Основные особенности:
+//   1. carousel_component.block — имя блока для модификации CSS-классов (по умолчанию 'carousel')
+//   2. carousel_component.images — массив объектов изображений, каждый объект должен содержать атрибуты для <Image>:
+//      - src, alt, width, height, loading, decoding, srcset и type
+//   3. Внутренний <ul class="carousel__inner"> получает атрибут data-fsc-marquee для инициализации скролла
+//   4. Каждый <li class="carousel__item"> содержит один компонент <Image> с переданными параметрами
+  
+//   Пример использования компонента:
+//   <\%- include('Carousel.ejs', {
+//        carousel_component: {
+//            block: 'clients',
+//            images: {
+//              src: 'src',
+//              alt: 'alt',
+//              width: 600,
+//              height: 400,
+//              loading: 'lazy',
+//              decoding: 'async'
+//          },
+//        }
+//    }) %>
+%>
+
 <% 
     if(typeof carousel_component === 'undefined' || !carousel_component) {
         return
@@ -12,22 +39,21 @@
     if(typeof carousel_component.images !== 'undefined' && carousel_component.images) {
         carouselImages = carousel_component.images
     }
-    
-
-    images = undefined
 %>
 
 <% if(typeof carouselImages !== 'undefined') { %>
     <article class="<%= blockCSS %>">
-        <% for(const image of carouselImages) { %>
-            <div class="carousel__item">
+       <ul class="carousel__inner" data-fsc-marquee>
+         <% for(const image of carouselImages) { %>
+            <li class="carousel__item" data-fsc-marquee-item>
                  <%- include('../Image/Image.ejs', {
                     image_component: {
                         block: 'carousel',
                         img: image
                     } 
                 }) %>
-            </div>           
+            </li>           
         <% } %>
+       </ul>
     </article>
 <% } %>
