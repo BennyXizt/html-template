@@ -19,7 +19,7 @@ export default defineConfig({
         '**/.DS_Store',        
         '**/*.tmp',           
         '**/.vscode/**',
-        '**/public/**'    
+        // '**/public/**'    
       ],
       usePolling: true,      
       interval: 1000          
