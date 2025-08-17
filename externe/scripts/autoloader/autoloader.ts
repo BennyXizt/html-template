@@ -12,13 +12,12 @@ export function autoloader() {
                 if (loadedModules.has(moduleName)) continue
 
                 try {
-                    const module = await import(`@/externe/scripts/${moduleName}/${moduleName}.ts`)
+                    const module = await import(`~/scripts/${moduleName}/${moduleName}.ts`)
                     module[moduleName](el)
                     loadedModules.add(moduleName)
-                } catch (err) {                                     
-                     console.log(`@/plugins/${moduleName}/${moduleName}.ts`);   
-                    console.error(`❌ Component "${moduleName}" failed to load`, err)
-                   
+                } catch (err) {                                    
+                    console.log(`@/plugins/${moduleName}/${moduleName}.ts`);   
+                    console.warn(`❌ Component "${moduleName}" failed to load`, err)
                 }            
             }
         }
