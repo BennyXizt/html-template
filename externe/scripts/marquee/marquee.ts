@@ -1,4 +1,18 @@
+/**
+ * marquee.ts
+ * Компонент бесшовной карусели/марки с горизонтальным скроллом.
+ *
+ * Поддерживаемые атрибуты `data-fsc-marquee-*`:
+ * - data-fsc-marquee — инициализирует элемент как карусель
+ * - data-fsc-marquee-speed — скорость движения в px/сек (по умолчанию 1000)
+ * - data-fsc-marquee-direction — направление движения: 'left' или 'right' (по умолчанию 'left')
+ * - data-fsc-marquee-start — начальное смещение в px (по умолчанию 0)
+ * - data-fsc-marquee-item — отдельный элемент карусели
+ */
+
+
 import { MarqueeElementInterface } from "./types/plugin.interface"
+import { MarqueeDirection } from "./types/plugin.type"
 
 const marqueeElements: MarqueeElementInterface[] = []
 let animationStarted = false
@@ -9,29 +23,27 @@ export function marquee() {
     for (const root of elements) {
         if (root.getAttribute('data-fsc-marquee-initialized')) continue
 
-        root.style.willChange = 'transform'
         const 
             speed = root.getAttribute('data-fsc-marquee-speed') ? parseInt(root.getAttribute('data-fsc-marquee-speed')!) : 1000,
-            direction = root.getAttribute('data-fsc-marquee-direction') ? root.getAttribute('data-fsc-marquee-direction') : 'left',
-            isVertical = direction === 'left' || direction === 'right',
-            offset = root.getAttribute('data-fsc-marquee-start') ? parseInt(root.getAttribute('data-fsc-marquee-start')!) : isVertical ? root.offsetWidth : root.parentElement!.offsetHeight,
-            childrens = root.querySelectorAll('[data-fsc-marquee-item]')
-
-        let 
-            childrensWidth = Array.from(childrens).reduce((acc, prev) => acc + (prev as HTMLElement).offsetWidth, 0)
-
-        marqueeElements.push({ element: root, speed, offset, direction: (direction as MarqueeDirection)! })       
+            direction: MarqueeDirection  = root.getAttribute('data-fsc-marquee-direction') ? root.getAttribute('data-fsc-marquee-direction') : 'left',
+            // isHorizontal = direction === 'left' || direction === 'right',
+            offset = root.getAttribute('data-fsc-marquee-start') ? parseInt(root.getAttribute('data-fsc-marquee-start')!) : 0,
+            childrens = root.querySelectorAll('[data-fsc-marquee-item]'),
+            gap = Number.parseInt(getComputedStyle(root).columnGap)
         
-        if(childrens.length > 0) {
-            let index = 0
-            while(root.offsetWidth > childrensWidth) {
-                childrensWidth += (childrens[index] as HTMLElement).offsetWidth
+        const childrensWidth = Array.from(childrens).reduce(
+            (acc, el) => acc + (el as HTMLElement).getBoundingClientRect().width,
+        0) + gap * (childrens.length - 1)
 
-                root.appendChild(childrens[index].cloneNode(true))
-                
-                index = index + 1 < childrens.length ? index + 1 : 0
-            }
+        const childrenArray = Array.from(childrens) as HTMLElement[]
+
+        for(const child of childrenArray) {
+            const clone = child.cloneNode(true) as HTMLElement
+            clone.setAttribute('data-fsc-marquee-clone', '')
+            root.appendChild(clone)
         }
+    
+        marqueeElements.push({root, childrensWidth, gap, speed, offset, direction})
 
         root.setAttribute('data-fsc-marquee-initialized', 'true')
     }
@@ -43,45 +55,25 @@ export function marquee() {
 }
 
 function step() {
-    for (const item of marqueeElements) {        
-        if(item.direction === 'left' || item.direction === 'right') {
-            if(item.direction === 'left') {
-                item.offset -= item.speed / 1000
-
-                if (item.offset < -item.element.offsetWidth) 
-                    item.offset = item.element.parentElement!.offsetWidth
+    for (const marqueeElement of marqueeElements) {   
+        if(marqueeElement.direction === 'left') {
+            marqueeElement.offset -= marqueeElement.speed / 1000
+        
+            if (marqueeElement.offset < -marqueeElement.childrensWidth) {
+                marqueeElement.offset = marqueeElement.gap
             }
-            else {
-                item.offset += item.speed / 1000
 
-                if (item.offset > item.element.offsetWidth) 
-                    item.offset = -item.element.parentElement!.offsetWidth
-            
-            }                
-    
-            item.element.style.transform = `translate3d(${item.offset}px, 0, 0)`
+            marqueeElement.root.style.transform = `translate3d(${marqueeElement.offset}px, 0, 0)`
         }
-        else {
-            if(item.direction === 'top') {
-                item.offset -= item.speed / 1000
-
-                console.log(`${item.offset} < ${item.element.offsetHeight}`);
-                
-
-                if (item.offset < item.element.offsetHeight) 
-                    item.offset = item.element.parentElement!.offsetHeight
+        else if(marqueeElement.direction === 'right') {
+            marqueeElement.offset += marqueeElement.speed / 1000
+        
+            if (marqueeElement.offset >= marqueeElement.gap) {
+                marqueeElement.offset = -marqueeElement.childrensWidth
             }
-            else {
-                item.offset += item.speed / 1000
 
-                if (item.offset > item.element.offsetHeight) 
-                    item.offset = -item.element.parentElement!.offsetHeight
-            
-            }                
-    
-            item.element.style.transform = `translate3d(0, ${item.offset}px, 0)`
+            marqueeElement.root.style.transform = `translate3d(${marqueeElement.offset}px, 0, 0)`
         }
-           
     }
 
     requestAnimationFrame(step)

@@ -1,1 +1,1 @@
-type MarqueeDirection = 'top' | 'left' | 'right' | 'bottom'
+export type MarqueeDirection = 'top' | 'left' | 'right' | 'bottom'
