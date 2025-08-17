@@ -9,6 +9,30 @@ config()
 
 
 export default defineConfig({
+  server: {
+    watch: {
+      ignored: [
+        '**/node_modules/**',
+        '**/.git/**',
+        '**/dist/**',
+        '**/build/**',
+        '**/.DS_Store',        
+        '**/*.tmp',           
+        '**/.vscode/**',
+        '**/public/**'    
+      ],
+      usePolling: true,      
+      interval: 1000          
+    },
+    hmr: {
+      overlay: false,     
+      // timeout: 3000     
+    }
+  },
+  optimizeDeps: {
+    include: ['fluent-ffmpeg', 'vite-plugin-ejs'],
+    exclude: []
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
