@@ -1,0 +1,6 @@
+%addCounter {
+    counter-increment: item;
+    &::before {
+        content: counter(item, decimal-leading-zero);
+    }
+}
