@@ -1,7 +1,7 @@
 import readline from 'node:readline';
 import fs from 'fs'
 import { resolve } from 'path';
-import { createEJSFile, createSCSSFile, updateMainSCSS, updateTestEJSFile } from './utils/utils';
+import { createEJSFile, createSCSSFile, updateMainEJSFile, updateMainSCSS, updateTestEJSFile } from './utils/utils';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -23,8 +23,9 @@ rl.question('Придумайте название секции: ', (componentNa
     }
 
     createSCSSFile({scssDir, blockType, componentName, fs})
-    updateMainSCSS({scssDir, blockType, componentName, fs})
     createEJSFile({ejsDir, blockType, componentName, fs})
+    updateMainSCSS({scssDir, blockType, componentName, fs})
+    updateMainEJSFile({ejsDir, componentName, fs})
     
     console.log(`Секция ${componentName} создана!`)
     rl.close()

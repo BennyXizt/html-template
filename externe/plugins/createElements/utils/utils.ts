@@ -26,16 +26,24 @@ export function updateMainSCSS({scssDir, blockType, componentName, fs}) {
 }
 
 export function createEJSFile({ejsDir, blockType, componentName, fs}) {
-    let ejsFileContent
+    let ejsFileContent,
+    formattedComponentName = componentName
     const ejsFile = `${ejsDir}/${blockType}/${componentName}.ejs`
+
+    if(componentName.includes('-')) {
+        formattedComponentName = formattedComponentName
+            .split('-')
+            .map((e, i) => i > 0 ? e.charAt(0).toUpperCase() + e.slice(1) : e)
+            .join('')
+    }
 
     switch(blockType) {
         case 'components': {
             ejsFileContent = `
-                <%\n\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n\t\treturn\n\t}
+                <%\n\tif(typeof ${formattedComponentName}_component === 'undefined' || !${formattedComponentName}_component) {\n\t\treturn\n\t}
                 `.trim() +
                 `\n\n\tvar blockCSS = '${componentName}'` + 
-                `\n\tif(typeof ${componentName}_component.block !== 'undefined' && ${componentName}_component.block) {` +
+                `\n\tif(typeof ${formattedComponentName}_component.block !== 'undefined' && ${formattedComponentName}_component.block) {` +
                 `\n\t\tblockCSS = \`\${componentName.block}__${componentName} ${componentName}\`` + 
                 `\n\t}\n%>` + 
                 `\n\n<div class="<%=blockCSS%>">\n\n</div>`
@@ -69,8 +77,19 @@ export function updateTestEJSFile({ejsDir, componentName, fs}) {
     const
         data = fs.readFileSync(`${ejsDir}/views/test.ejs`, 'utf-8'),
         ejsFile = `${ejsDir}/views/test.ejs`,
-        lastIndex = data.lastIndexOf('</section>'),
-        fileContent = 
+        lastIndex = data.lastIndexOf('</section>')
+
+    let formattedComponentName = componentName
+
+
+    if(componentName.includes('-')) {
+        formattedComponentName = formattedComponentName
+            .split('-')
+            .map((e, i) => i > 0 ? e.charAt(0).toUpperCase() + e.slice(1) : e)
+            .join('')
+    }
+
+    const fileContent = 
         data.slice(0, lastIndex + '</section>'.length).trim() + '\n\t' +
         `
         <section class='${componentName}_component'>
@@ -79,7 +98,7 @@ export function updateTestEJSFile({ejsDir, componentName, fs}) {
                 <h6 class="text-center">${componentName.toUpperCase()} Component</h6>
                 <div class="flex items-center gap-x-2">
                     <%- include('src/ejs/components/${componentName}.ejs', {
-                        ${componentName}_component: {
+                        ${formattedComponentName}_component: {
                             
                         }
                     })%>
@@ -90,4 +109,17 @@ export function updateTestEJSFile({ejsDir, componentName, fs}) {
         data.slice(lastIndex + '</section>'.length).trim()
 
     fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
+}
+
+export function updateMainEJSFile({ejsDir, componentName, fs}) {
+    const
+        data = fs.readFileSync(`${ejsDir}/views/index.ejs`, 'utf-8'),
+        ejsFile = `${ejsDir}/views/index.ejs`,
+        lastIndex = data.lastIndexOf('</main>'),
+        fileContent = 
+            data.slice(0, lastIndex).trim() + '\n\t' +
+            `\t\t<%- include('src/ejs/layout/${componentName}.ejs')%>\n\t\t` +
+            data.slice(lastIndex).trim()
+            
+        fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
 }
