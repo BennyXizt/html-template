@@ -12,6 +12,7 @@
   // <\%- include('Image.ejs', {
   //        image_component: {
   //          block: 'blockName',
+  //          class: 'className',
   //          img: {
   //              src: 'src',
   //              alt: 'alt',
@@ -40,6 +41,10 @@
 
     if(typeof image_component.block !== 'undefined' && image_component.block) {
         figureCSS = `class=${image_component.block}__image`
+    }
+
+    if(typeof image_component.class !== 'undefined' && image_component.class) {
+        figureCSS = `class=${image_component.class}`
     }
 
     if(
@@ -74,7 +79,7 @@
     <figure <%= figureCSS  %>>
         <% if(displayType === 'picture') { %>
             <picture>
-                <% for(const source of images) { %>
+                <% for(const source of image_component.images) { %>
                     <source 
                        <% if (source.srcset) { %> srcset="<%= source.srcset %>" <% } %>
                        <% if (source.type) { %> type="<%= source.type %>" <% } %>
