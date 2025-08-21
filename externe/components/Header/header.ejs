@@ -3,7 +3,7 @@
         <div class="header__body">
             <% if(typeof header_component.homePage !== 'undefined' && header_component.homePage) { %>
                 <%if(header_component.homePage === true) { %>
-                    <%- include('../Image/Image.ejs', {
+                    <%- include('externe/components/Image/Image.ejs', {
                         image_component: {
                             block: 'header',
                             img: {
@@ -14,7 +14,7 @@
                     })%>
                 <% } else { %>
                     <a href="./index.html" class="header__link-logo">
-                       <%- include('../Image/Image.ejs', {
+                       <%- include('externe/components/Image/Image.ejs', {
                             image_component: {
                                 block: 'header',
                                 img: {
@@ -26,24 +26,18 @@
                     </a>
                 <% } %>
             <% } %>
-            <%- include('../HeaderMenu/HeaderMenu.ejs', {
+            <%- include('externe/components/HeaderMenu/HeaderMenu.ejs', {
                 header_menu_component: {
                     list: [
-                        {'href': '#', 'ancor': 'Services'},
-                        {'href': '#', 'ancor': 'Work'},
-                        {'href': '#', 'ancor': 'About'},
-                        {'href': '#', 'ancor': 'Blog'},
-                        {'href': '#', 'ancor': 'Pages'},
+                        {'href': '#', 'ancor': 'PAGE'},
+                        {'href': '#', 'ancor': 'PAGE'},
+                        {'href': '#', 'ancor': 'PAGE'},
+                        {'href': '#', 'ancor': 'PAGE'},
+                        {'href': '#', 'ancor': 'PAGE'},
                     ]
                 }
             }) %>
-            <%-include('src/ejs/components/button.ejs', {
-                button_component: {
-                    label: 'Let’s talk',
-                    style: 'alternative'
-                }
-            })%>
-            <%- include('../Burger/Burger.ejs', {
+            <%- include('externe/components/Burger/Burger.ejs', {
                 burger_component: {
                     block: 'header'
                 }

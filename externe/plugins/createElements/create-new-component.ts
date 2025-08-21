@@ -1,12 +1,12 @@
-import readline from 'node:readline';
+import readline from 'node:readline'
 import fs from 'fs'
-import { resolve } from 'path';
-import { createEJSFile, createSCSSFile, updateMainSCSS, updateTestEJSFile } from './utils/utils';
+import { resolve } from 'path'
+import { createEJSFile, createSCSSFile, updateMainSCSS, updateTestEJSFile } from './utils/utils'
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
-});
+})
 
 rl.question('Придумайте название компонента: ', (componentName) => {
   const 
@@ -29,4 +29,4 @@ rl.question('Придумайте название компонента: ', (com
     
     console.log(`Компонент ${componentName} создан!`)
     rl.close()
-});
+})

@@ -5,25 +5,25 @@
    <html lang="en">
 <% } %>
 <head>
-   <%- include('./externe/components/Head/Head.ejs') %>
+   <%- include('externe/components/Head/Head.ejs') %>
 </head>
 <body>
-    <%- include('./externe/components/DummyAside/DummyAside.ejs', {
+    <%- include('externe/components/DummyAside/DummyAside.ejs', {
         dummy_aside_component: {
             ul: [
                 {
                     label: 'Font Icons',
-                    href: './externe/pages/fontIcons.html'
+                    href: 'externe/pages/fontIcons.html'
                 },
                 {
                     label: 'Test Page',
-                    href: './externe/pages/test.html'
+                    href: 'externe/pages/test.html'
                 },
             ]
         }
     }) %>
     <div class="wrapper">
-        <%- include('./externe/components/Header/header.ejs', {
+        <%- include('externe/components/Header/Header.ejs', {
             header_component: {
                 homePage: true
             }

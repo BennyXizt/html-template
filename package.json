@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "component": "tsx ./externe/plugins/createElements/create-new-component.ts",
-    "section": "tsx ./externe/plugins/createElements/create-new-section.ts"
+    "section": "tsx ./externe/plugins/createElements/create-new-section.ts",
+    "convert": "tsx ./externe/plugins/convertVideo/convert-video.ts"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.27",

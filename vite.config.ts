@@ -82,10 +82,10 @@ export default defineConfig({
       outputDestination: `${__dirname}/src/assets/styles/base/_fonts.scss`
     }),
     ViteWatchVideoFolderPlugin({
-      relativePath: '../../public/media/video',
-      outputVideoDirectory: '../../public/media/converted',
+      relativePath: `${__dirname}/public/media/video`,
+      outputVideoDirectory: `${__dirname}/public/media/converted`,
       outputVideoFormat: [".mp4"],
-      posterDirectory: '../../public/media/image/poster'
+      posterDirectory: `${__dirname}/public/media/image/poster`
     })
   ]
 })

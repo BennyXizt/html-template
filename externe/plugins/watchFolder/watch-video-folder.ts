@@ -44,9 +44,6 @@ export function ViteWatchVideoFolderPlugin({relativePath, outputVideoDirectory, 
 
                 translation.newFileAdded(inputFile) 
 
-               
-                
-
                 setTimeout(() => {
                     try {          
                         if(destinationVideoDirectory) {
