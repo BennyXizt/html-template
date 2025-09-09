@@ -42,11 +42,11 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
             ejsFileContent = `
                 <%\n\tif(typeof ${formattedComponentName}_component === 'undefined' || !${formattedComponentName}_component) {\n\t\treturn\n\t}
                 `.trim() +
-                `\n\n\tvar blockCSS = '${componentName}'` + 
+                `\n\n\tvar blockClass = '${componentName}'` + 
                 `\n\tif(typeof ${formattedComponentName}_component.block !== 'undefined' && ${formattedComponentName}_component.block) {` +
-                `\n\t\tblockCSS = \`\${componentName.block}__${componentName} ${componentName}\`` + 
+                `\n\t\tblockClass = \`\${${formattedComponentName}_component.block}__${componentName} ${componentName}\`` + 
                 `\n\t}\n%>` + 
-                `\n\n<div class="<%=blockCSS%>">\n\n</div>`
+                `\n\n<div class="<%=blockClass%>">\n\n</div>`
             break
         }
         case 'layout': {
