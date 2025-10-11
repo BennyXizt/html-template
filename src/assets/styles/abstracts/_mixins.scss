@@ -4,114 +4,29 @@
 @use "sass:list";
 
 @mixin clamp($initial, $additional: null) {
-    $restriction: $HEADERS_CLAMP_WIDTH;
-    $important: null;
-
     @if meta.type-of($initial) == "map" {
         @each $prop, $val in $initial {
             $important: null;
-            @if meta.type-of($val) == "list" {
-                @if meta.type-of(list.nth($val, 1)) == 'list' and meta.type-of(list.nth($val, 2)) == 'list' {
-                    $clampList: ();
-                    @each $elem in $val {
-                        @if list.length($elem) == 1 {
-                            $tempVal: list.nth($elem, 1);
-                            @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                                $important: $tempVal;
-                            }
-                        }
-                        @else {                            
-                            $max: list.nth($elem, 1);
-                            $min: list.nth($elem, 2);
-
-                            @if list.length($elem) == 3 {
-                                $restriction: list.nth($elem, 3);
-                            }
-
-                            $clampList: list.append($clampList, calculateClamp($min, $max, $restriction));
-                        }                      
-                        
-                    }
-                    #{$prop}: if($important == '!important', $clampList!important, $clampList);
-                }
-                @else {                    
-                    $max: list.nth($val, 1);
-                    $min: list.nth($val, 2);
-
-                    @if list.length($val) == 3 {
-                        $tempVal: list.nth($val, 3);
-
-                        @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                            $important: $tempVal;
-                        }
-                        @else {
-                            $restriction: $tempVal;
-                        }                
-                    }
-                    @else if list.length($val) == 4 {
-                        $restriction: list.nth($val, 3);
-                        $tempVal: list.nth($val, 4);
-
-                        @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                            $important: $tempVal;
-                        }                                    
-                    }
-                    #{$prop}: if($important == '!important', calculateClamp($min, $max, $restriction)!important, calculateClamp($min, $max, $restriction));
-                }
-            }
+           #{$prop}: generateClamp($val);
         }
     }
     @else if $additional != null {   
-        @if meta.type-of(list.nth($additional, 1)) == 'list' and meta.type-of(list.nth($additional, 2)) == 'list' {
-            $clampList: ();
-            @each $elem in $additional {                
-                @if list.length($elem) == 1 {
-                    $tempVal: list.nth($elem, 1);
-                    @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                        $important: $tempVal;
-                    }
-                }
-                @else {                            
-                    $max: list.nth($elem, 1);
-                    $min: list.nth($elem, 2);
-
-                    @if list.length($elem) == 3 {
-                        $restriction: list.nth($elem, 3);
-                    }
-
-                    $clampList: list.append($clampList, calculateClamp($min, $max, $restriction));
-                }                      
-                
-            }
-            #{$initial}: if($important == '!important', $clampList!important, $clampList);
-}     
-        @else {                        
-            $max: list.nth($additional, 1);
-            $min: list.nth($additional, 2);
-
-            @if list.length($additional) == 3 {
-                $tempVal: list.nth($additional, 3);
-
-                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                    $important: $tempVal;
-                }
-                @else {
-                    $restriction: $tempVal;
-                }                
-            }
-            @else if list.length($additional) == 4 {
-                $restriction: list.nth($additional, 3);
-                $tempVal: list.nth($additional, 4);
-
-                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                    $important: $tempVal;
-                }                                    
-            }
-            #{$initial}: if($important == '!important', calculateClamp($min, $max, $restriction)!important, calculateClamp($min, $max, $restriction));
-        }
-               
+         #{$initial}: generateClamp($additional);
     }
 }
+@mixin clamp-reverse($initial, $additional: null) {
+    @if meta.type-of($initial) == "map" {
+        @each $prop, $val in $initial {
+            $important: null;
+           #{$prop}: generateClamp($val, true);
+        }
+    }
+    @else if $additional != null {   
+         #{$initial}: generateClamp($additional, true);
+    }
+}
+
+
 @mixin line-height($lh, $fsz) {
     $original: calc($lh / $fsz);
 

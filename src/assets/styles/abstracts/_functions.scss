@@ -3,13 +3,105 @@
 @use "sass:list";
 @use "sass:math";
 
-@function calculateClamp($min, $max, $restriction) {
-    $modificator: 0.01 * $restriction;
-    $preffered: math.div($max, $modificator) + vw;
-    $min: pxToRem($min);
-    $max: pxToRem($max);
-    
-    @return clamp($min, $preffered, $max);
+@function generateClamp($list, $reverse: null) {
+    $restriction: $HEADERS_CLAMP_WIDTH;
+    $important: null;
+
+    @if meta.type-of(list.nth($list, 1)) == 'number' and meta.type-of(list.nth($list, 2)) == 'number' {
+            $max: list.nth($list, 1);
+            $min: list.nth($list, 2);
+
+            @if list.length($list) == 3 {
+                $tempVal: list.nth($list, 3);
+
+                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                    $important: $tempVal;
+                }
+                @else {
+                    $restriction: $tempVal;
+                }                
+            }
+            @else if list.length($list) == 4 {
+                $restriction: list.nth($list, 3);
+                $tempVal: list.nth($list, 4);
+
+                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                    $important: $tempVal;
+                }                                    
+            }
+            @return if($important == '!important', calculateClamp($min, $max, $restriction, $reverse)!important, calculateClamp($min, $max, $restriction, $reverse));
+    }
+    @else {
+        $tempFinalValue: ();
+        @for $i from 1 through list.length($list) {
+            @if meta.type-of(list.nth($list, $i)) == 'list' {
+                $sublist: list.nth($list, $i);
+
+                $max: list.nth($sublist, 1);
+                $min: list.nth($sublist, 2);
+
+                @if list.length($sublist) == 3 {
+                    $tempVal: list.nth($sublist, 3);
+
+                    @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                        $important: $tempVal;
+                    }
+                    @else {
+                        $restriction: $tempVal;
+                    }                
+                }
+                @else if list.length($sublist) == 4 {
+                    $restriction: list.nth($sublist, 3);
+                    $tempVal: list.nth($sublist, 4);
+
+                    @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
+                        $important: $tempVal;
+                    }                                    
+                }
+                
+                $tempFinalValue: list.append($tempFinalValue, calculateClamp($min, $max, $restriction, $reverse));
+            }
+            @else {
+                $tempFinalValue: list.append($tempFinalValue, list.nth($list, $i));
+            }
+        }
+        @return if($important == '!important', $tempFinalValue !important,  $tempFinalValue);
+    }
+}
+@function calculateClamp($min, $max, $restriction, $reverse) {
+   // padding: clamp(1rem, calc(1rem + (80rem - 100vw) * 0.3), 10rem);
+   @if not ($reverse) {
+        $modificator: 0.01 * $restriction;
+        $preffered: math.div($max, $modificator) + vw;
+        $min: pxToRem($min);
+        $max: pxToRem($max);
+        @return clamp($min, $preffered, $max);
+   }
+   @else {
+        // $minRem: pxToRem($min); 
+        // $maxRem: pxToRem($max); 
+        // $restrictionRem: pxToRem($restriction);
+
+        // $range: $maxRem - $minRem;
+        // $mod: math.abs($range / $restrictionRem);
+
+        // $preferred: calc(#{$maxRem} + (($restrictionRem - 100vw) * #{$mod}));
+
+        // @return clamp($maxRem, $preferred, $minRem);
+
+        $range: $max - $min;
+        $mod: math.abs($range / $restriction);
+
+        $min: pxToRem($min);
+        $max: pxToRem($max);
+        $restriction: pxToRem($restriction);
+        $mod: pxToRem($mod);
+        $preferred: calc(#{$max} + (($restriction - 100vw) * #{$mod}));
+
+        
+
+        @return clamp($max, $preferred, $min);
+   }
 }
 @function pxToRem($px, $base: null) {
     @if math.unit($px) != 'px' {
@@ -27,7 +119,6 @@
     @return $px;
 }
 @function calculateValue($val, $base: null) {
-    
    @if $base != null {
     @if meta.type-of($val) == "list" {
         $isImportant: false;
