@@ -69,7 +69,6 @@
     }
 }
 @function calculateClamp($min, $max, $restriction, $reverse) {
-   // padding: clamp(1rem, calc(1rem + (80rem - 100vw) * 0.3), 10rem);
    @if not ($reverse) {
         $modificator: 0.01 * $restriction;
         $preffered: math.div($max, $modificator) + vw;
@@ -78,17 +77,6 @@
         @return clamp($min, $preffered, $max);
    }
    @else {
-        // $minRem: pxToRem($min); 
-        // $maxRem: pxToRem($max); 
-        // $restrictionRem: pxToRem($restriction);
-
-        // $range: $maxRem - $minRem;
-        // $mod: math.abs($range / $restrictionRem);
-
-        // $preferred: calc(#{$maxRem} + (($restrictionRem - 100vw) * #{$mod}));
-
-        // @return clamp($maxRem, $preferred, $minRem);
-
         $range: $max - $min;
         $mod: math.abs($range / $restriction);
 
