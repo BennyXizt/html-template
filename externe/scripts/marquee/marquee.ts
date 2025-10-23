@@ -31,18 +31,37 @@ export function marquee() {
             childrens = root.querySelectorAll('[data-fsc-marquee-item]'),
             gap = Number.parseInt(getComputedStyle(root).columnGap)
         
-        const childrensWidth = Array.from(childrens).reduce(
+        let childrensWidth = Array.from(childrens).reduce(
             (acc, el) => acc + (el as HTMLElement).getBoundingClientRect().width,
         0) + gap * (childrens.length - 1)
 
-        const childrenArray = Array.from(childrens) as HTMLElement[]
+        const 
+            childrenArray = Array.from(childrens) as HTMLElement[],
+            rootWidth = root.getBoundingClientRect().width,
+            maxIndex = childrens.length - 1
+    
+        let currIndex = 0
+        
+        while(childrensWidth <= rootWidth) {
+            const clone = childrenArray[currIndex].cloneNode(true) as HTMLElement
+            clone.setAttribute('data-fsc-marquee-clone', '')
+            root.appendChild(clone)
 
-        for(const child of childrenArray) {
+            currIndex = currIndex === maxIndex ? 0 : ++currIndex
+
+            childrensWidth += clone.getBoundingClientRect().width + gap
+        }
+
+        const 
+            newChildrens = root.querySelectorAll('[data-fsc-marquee-item]'),
+            newChildrenArray = Array.from(newChildrens) as HTMLElement[]
+        
+        for(const child of newChildrenArray) {
             const clone = child.cloneNode(true) as HTMLElement
             clone.setAttribute('data-fsc-marquee-clone', '')
             root.appendChild(clone)
         }
-    
+        
         marqueeElements.push({root, childrensWidth, gap, speed, offset, direction})
 
         root.setAttribute('data-fsc-marquee-initialized', 'true')

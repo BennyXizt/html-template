@@ -13,16 +13,14 @@
 //   <\%- include('Carousel.ejs', {
 //        carousel_component: {
 //            block: 'blockName',
-//            images: [
-//            {
+//            images: {
 //              src: 'src',
 //              alt: 'alt',
 //              width: 600,
 //              height: 400,
 //              loading: 'lazy',
 //              decoding: 'async'
-//            },
-//          ]
+//          },
 //        }
 //    }) %>
 %>
@@ -34,28 +32,41 @@
 
     var blockCSS =  'carousel'
     var carouselImages = undefined
+    var carouselData = undefined
 
     if(typeof carousel_component.block !== 'undefined' && carousel_component.block) {
-        blockCSS = `${carousel_component.block}__carousel carousel`
+        blockCSS = `class="${carousel_component.block}__carousel carousel"`
     }
+    else if(typeof carousel_component.class !== 'undefined' && carousel_component.class) {
+        blockCSS = `class="${carousel_component.class} carousel"`
+    }
+
     if(typeof carousel_component.images !== 'undefined' && carousel_component.images) {
         carouselImages = carousel_component.images
+    } else if(typeof carousel_component.data !== 'undefined' && carousel_component.data) {
+        carouselData = carousel_component.data
     }
 %>
 
-<% if(typeof carouselImages !== 'undefined') { %>
-    <article class="<%= blockCSS %>">
-       <ul class="carousel__inner" data-fsc-marquee>
-         <% for(const image of carouselImages) { %>
-            <li class="carousel__item" data-fsc-marquee-item>
-                 <%- include('../Image/Image.ejs', {
-                    image_component: {
-                        block: 'carousel',
-                        img: image
-                    } 
-                }) %>
-            </li>           
+<article <%- blockCSS %>>
+    <ul class="carousel__inner" data-fsc-marquee data-fsc-marquee-speed="1000">
+        <% if(typeof carouselImages !== 'undefined') { %>
+            <% for(const image of carouselImages) { %>
+                <li class="carousel__item" data-fsc-marquee-item>
+                    <%- include('../Image/Image.ejs', {
+                        image_component: {
+                            block: 'carousel',
+                            img: image
+                        } 
+                    }) %>
+                </li>           
+            <% } %>
+        <% } else if(carouselData !== 'undefined') { %>
+            <% for(const item of carouselData) { %>
+                <li class="carousel__item" data-fsc-marquee-item>
+                    <%= item %>
+                </li>           
+            <% } %>
         <% } %>
-       </ul>
-    </article>
-<% } %>
+    </ul>
+</article>
