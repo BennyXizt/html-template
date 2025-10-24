@@ -17,7 +17,7 @@ import { MarqueeDirection } from "./types/plugin.type"
 const marqueeElements: MarqueeElementInterface[] = []
 let animationStarted = false
 
-export function marquee() {
+export function marqueeAutoload() {
     const elements = document.querySelectorAll('[data-fsc-marquee]') as NodeListOf<HTMLElement>
 
     for (const root of elements) {
@@ -73,6 +73,57 @@ export function marquee() {
     }
 }
 
+export function marqueeOnResize() {
+    for (const marqueeElement of marqueeElements) { 
+        const 
+            root = marqueeElement.root,
+            gap = Number.parseInt(getComputedStyle(root).columnGap),
+            offset = root.getAttribute('data-fsc-marquee-start') ? parseInt(root.getAttribute('data-fsc-marquee-start')!) : 0,
+            oldElements = root.querySelectorAll('[data-fsc-marquee-clone]')
+
+        oldElements.forEach(e => e.remove())
+            
+        const 
+            childrens = root.querySelectorAll('[data-fsc-marquee-item]')
+        
+
+        let childrensWidth = Array.from(childrens).reduce(
+            (acc, el) => acc + (el as HTMLElement).getBoundingClientRect().width,
+        0) + gap * (childrens.length - 1)
+
+        marqueeElement.gap = gap   
+        marqueeElement.offset = offset   
+        marqueeElement.childrensWidth = childrensWidth  
+
+        const 
+            childrenArray = Array.from(childrens) as HTMLElement[],
+            rootWidth = root.getBoundingClientRect().width,
+            maxIndex = childrens.length - 1
+    
+        let currIndex = 0
+        
+        while(childrensWidth <= rootWidth) {
+            const clone = childrenArray[currIndex].cloneNode(true) as HTMLElement
+            clone.setAttribute('data-fsc-marquee-clone', '')
+            root.appendChild(clone)
+
+            currIndex = currIndex === maxIndex ? 0 : ++currIndex
+
+            childrensWidth += clone.getBoundingClientRect().width + gap
+        }
+
+        const 
+            newChildrens = root.querySelectorAll('[data-fsc-marquee-item]'),
+            newChildrenArray = Array.from(newChildrens) as HTMLElement[]
+        
+        for(const child of newChildrenArray) {
+            const clone = child.cloneNode(true) as HTMLElement
+            clone.setAttribute('data-fsc-marquee-clone', '')
+            root.appendChild(clone)
+        }
+    }
+}
+
 function step() {
     for (const marqueeElement of marqueeElements) {   
         if(marqueeElement.direction === 'left') {
@@ -94,6 +145,6 @@ function step() {
             marqueeElement.root.style.transform = `translate3d(${marqueeElement.offset}px, 0, 0)`
         }
     }
-
     requestAnimationFrame(step)
 }
+

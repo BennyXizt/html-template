@@ -13,14 +13,19 @@
 //   <\%- include('Carousel.ejs', {
 //        carousel_component: {
 //            block: 'blockName',
-//            images: {
-//              src: 'src',
-//              alt: 'alt',
-//              width: 600,
-//              height: 400,
-//              loading: 'lazy',
-//              decoding: 'async'
-//          },
+//            images: [
+//              {
+//                src: 'src',
+//                alt: 'alt',
+//                width: 600,
+//                height: 400,
+//                loading: 'lazy',
+//                decoding: 'async'
+//              }
+//            ],
+//            data: [
+//              'someText'
+//            ]
 //        }
 //    }) %>
 %>
@@ -50,7 +55,7 @@
 
 <article <%- blockCSS %>>
     <ul class="carousel__inner" data-fsc-marquee data-fsc-marquee-speed="1000">
-        <% if(typeof carouselImages !== 'undefined') { %>
+        <% if(typeof carouselImages !== 'undefined' && carouselImages) { %>
             <% for(const image of carouselImages) { %>
                 <li class="carousel__item" data-fsc-marquee-item>
                     <%- include('../Image/Image.ejs', {
@@ -61,7 +66,7 @@
                     }) %>
                 </li>           
             <% } %>
-        <% } else if(carouselData !== 'undefined') { %>
+        <% } else if(typeof carouselData !== 'undefined' && carouselData) { %>
             <% for(const item of carouselData) { %>
                 <li class="carousel__item" data-fsc-marquee-item>
                     <%= item %>

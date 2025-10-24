@@ -1,7 +1,5 @@
-const loadedModules = new Set<string>()
-
-export function autoloader() {
-    document.querySelectorAll('*').forEach(async (el) => {
+export async function autoloader(loadedModules: Map<string, any>) {
+    for(const el of document.querySelectorAll('*')) {
         for (const attr of el.attributes) {
             if (
                 attr.name.startsWith('data-fsc-') &&
@@ -13,13 +11,12 @@ export function autoloader() {
 
                 try {
                     const module = await import(`~/scripts/${moduleName}/${moduleName}.ts`)
-                    module[moduleName](el)
-                    loadedModules.add(moduleName)
+                    loadedModules.set(moduleName, module)
                 } catch (err) {                                    
                     console.log(`@/plugins/${moduleName}/${moduleName}.ts`);   
                     console.warn(`❌ Component "${moduleName}" failed to load`, err)
                 }            
             }
         }
-    });    
+    }    
 }
