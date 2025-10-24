@@ -48,7 +48,7 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
                 `\n\t} else if(typeof ${formattedComponentName}_component.class !== 'undefined' && ${formattedComponentName}_component.class) {` + 
                 `\n\t\tblockClass = \`class=\${${formattedComponentName}_component.class}\`` +
                 `\n\t}\n%>` +
-                `\n\n<div <%=blockClass%>>\n\n</div>`
+                `\n\n<div <%-blockClass%>>\n\n</div>`
             break
         }
         case 'layout': {
