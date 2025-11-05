@@ -27,9 +27,14 @@ document.fonts.ready.then(async() => {
 
     const
         onClickedModules = Array.from(loadedModules)
-            .filter(([k, e]) => typeof e[`${k}Click`] === 'function')
-            .map(e => [e[0], e[1][`${e[0]}Click`]])
-
+            .filter(([k, e]) => typeof e[`${k}ClickArray`] === 'object')
+            .map(e => {
+                return {
+                        func: e[1][`${e[0]}ClickArray`][0],
+                        elementSelector: e[1][`${e[0]}ClickArray`][1] || `[data-fsc-${e[0]}]`
+                    }
+                })
+    
     const
         onResizeModules = Array.from(loadedModules)
             .filter(([k, e]) => typeof e[`${k}OnResize`] === 'function')
@@ -38,10 +43,10 @@ document.fonts.ready.then(async() => {
     window.addEventListener('click', function(event) {
         onClickedModules.forEach(e => {
             const 
-                item: HTMLElement | null = (event.target as HTMLElement).closest(`[data-fsc-${e[0]}]`)
+                DOMElement: HTMLElement | null = (event.target as HTMLElement).closest(e.elementSelector)
                 
-            if(item)
-                e[1]()
+            if(DOMElement)
+                e.func(DOMElement)
             
         })
     })
