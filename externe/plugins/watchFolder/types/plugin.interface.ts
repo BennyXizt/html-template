@@ -1,3 +1,5 @@
+import type { Language, Video } from './plugin.type'
+
 export interface FFmpegProgressInterface {
   frames?: number;
   currentFps?: number;
@@ -36,8 +38,8 @@ export interface EJSFolderDestination {
         fileName: string,
         fileDestination: string
     },
-    any?: {
-        fileName: string,
+    rest?: {
+        fileNameException: string[],
         fileDestination: string
     }
 }

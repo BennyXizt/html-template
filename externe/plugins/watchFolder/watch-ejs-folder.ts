@@ -17,12 +17,12 @@ export function ViteWatchEJSFolderPlugin({relativePath, outputDestination, langu
                     fileName: '',
                     fileDestination: ''
                 },
-                finalDestinationTest = outputDestination.test ? outputDestination.test :  {
-                    fileName: '',
+                finalDestinationRest = outputDestination.rest ? outputDestination.rest :  {
+                    fileNameException: ['index.ejs'],
                     fileDestination: ''
                 },
                 destinationRootHTML = outputDestination.root ? resolve(__dirname, outputDestination.root.fileDestination) : undefined,
-                destinationTestHTML = outputDestination.test ? resolve(__dirname, outputDestination.test.fileDestination) : undefined,
+                destinationRestHTML = outputDestination.rest ? resolve(__dirname, outputDestination.rest.fileDestination) : undefined,
                 translation = new EJSFolderTranslation({pluginName: 'watchEJSFolderPlugin', language})
 
             translation.pluginStart(watchDir, { destinationRootHTML })
@@ -30,7 +30,8 @@ export function ViteWatchEJSFolderPlugin({relativePath, outputDestination, langu
 
             server.watcher.add(watchDir);
             server.watcher.on('change', (changedFile) => {
-                if (dirname(changedFile) !== watchDir ) 
+                 console.log(changedFile);
+                if (dirname(changedFile) !== watchDir) 
                     return
 
                 translation.fileHasBeenChanged(changedFile)
@@ -44,13 +45,15 @@ export function ViteWatchEJSFolderPlugin({relativePath, outputDestination, langu
                         finalOutputDestionation =  destinationRootHTML
                         needToRewrite = true
                     }
-
-                    if(changedFile.includes(finalDestinationTest.fileName)) {
-                        finalOutputDestionation =  destinationTestHTML
+                   
+                    if(
+                        (destinationRestHTML) &&
+                        (!finalDestinationRest.fileNameException.includes(basename(changedFile)))
+                    ) {
+                        finalOutputDestionation =  resolve(destinationRestHTML, `${basename(changedFile).split('.')[0]}.html`)
                         needToRewrite = true
                     }
-
-
+                    
                     if(needToRewrite) {
                         const 
                             fileContent = fs.readFileSync(changedFile, 'utf-8')
@@ -58,10 +61,7 @@ export function ViteWatchEJSFolderPlugin({relativePath, outputDestination, langu
 
                         fs.writeFileSync(finalOutputDestionation!, fileContent, 'utf-8')
                         translation.fileHasBeenUpdated(finalOutputDestionation!)
-                           
                     }
-                    
-                    
 
                 }, 100)
                 // server.ws.send({ type: 'full-reload' })
