@@ -1,0 +1,23 @@
+[data-fsc-accordion] {
+    [data-fsc-accordion-summary] {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @include rem(column-gap, 10px);
+    }
+    [data-fsc-accordion-body] {
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: .3s ease-in-out;
+        transition-property: height, opacity, visibility, padding;
+        overflow: hidden;
+    }
+    &[data-fsc-accordion-active] {
+        [data-fsc-accordion-body] {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

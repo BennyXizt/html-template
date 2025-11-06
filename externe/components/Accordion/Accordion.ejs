@@ -1,0 +1,114 @@
+<%
+// Компонент Accordion: разворачивающийся блок с заголовком и содержимым
+// - Позволяет скрывать и раскрывать контент по клику на заголовок
+// - Поддерживает настройку поведения, классов, иконок и структуры заголовка
+// - Может содержать как текст, так и список элементов
+// - Управляется через объект настроек accordion_component
+//
+// Использование:
+//
+// Accordion({
+//     title: 'Подробнее' || {type:'h1-6', label:'Подробнее'},                                         // заголовок аккордиона (строка или объект с типом и текстом)
+//     body: 'Содержимое аккордиона' || [label:'Содержимое аккордиона',icon_component,link:'Ссылка'],  // контент (строка или массив объектов с label)
+//     icon: 'Пример иконки',                                                                          // имя иконки после title из спрайта (опционально)
+//     behaviour: 'default',                                                                           // режим поведения (например: default - одиночное раскрытие)
+//     this: {
+//		 parent: 'parentClass',
+//		 class: 'childClass',
+//		 style: 'customStyle',
+//	   }                                                                         
+//     class: 'Название класса'                                                                        // дополнительный класс (опционально)
+//     media: {type:'min-width' | 'max-width' | 'min-height' | 'max-height', label: '999px'}           // с какого диапазона в пикселях будет работать аккордион
+// })
+//
+// Пример вызова в шаблоне (EJS):
+//
+// <\%- include('externe/components/Accordion/Accordion.ejs', {
+//   accordion_component: {
+//     block: 'product',
+//     title: { type: 'h5', label: 'Заголовок' },
+//     body: [
+//       { label: 'СкрытаяИнформация', icon_component: {}, link: '#' }
+//     ],
+//     icon: 'arrow-down',
+//     behaviour: 'default',
+//     media: {
+//      type:'min-width',
+//      label: '999px'
+//     }     
+//   }
+// }) %>
+%>
+
+
+<%
+	if(typeof accordion_component === 'undefined' || !accordion_component) {
+		return
+	}
+
+	var thisClass = 'accordion'
+	if(
+        (typeof accordion_component.this !== 'undefined' && accordion_component.this) &&
+        (typeof accordion_component.this.parent !== 'undefined' && accordion_component.this.parent)
+    ) {
+		thisClass = `${accordion_component.this.parent}__accordion accordion`
+	} else if(
+        (typeof accordion_component.this !== 'undefined' && accordion_component.this) &&
+        (typeof accordion_component.this.class !== 'undefined' && accordion_component.this.class)
+    ) {
+        thisClass = `${accordion_component.this.class} accordion`
+    }
+
+    var thisStyles = undefined
+    if(
+		(typeof accordion_component.this !== 'undefined' && accordion_component.this) &&
+		(typeof accordion_component.this.style !== 'undefined' && accordion_component.this.style)
+	) {
+		thisStyles = `style='${accordion_component.this.style}'`
+	}
+
+    var dataAttributes = 'data-fsc-accordion'
+    if(typeof accordion_component.behaviour !== 'undefined' && accordion_component.behaviour) {
+        dataAttributes += ` data-fsc-accordion-behaviour=${accordion_component.behaviour}`
+    }
+
+    var mediaVisibilityTypes = ['min-width', 'max-width', 'min-height', 'max-height']
+    if(
+        (typeof accordion_component.media !== 'undefined' && accordion_component.media) &&
+        (typeof accordion_component.media.type !== 'undefined' && accordion_component.media.type) &&
+        (typeof accordion_component.media.label !== 'undefined' && accordion_component.media.label) &&
+        (mediaVisibilityTypes.includes(accordion_component.media.type))
+    ) {
+        dataAttributes += ` data-fsc-accordion-media-query='${accordion_component.media.type}: ${accordion_component.media.label}'`
+    }
+%>
+<article <%-dataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
+    <div data-fsc-accordion-summary class="accordion__top">
+            <% if(typeof accordion_component.title === 'string') { %>
+                <h6 class="accordion__title">
+                    <%= accordion_component.title%>
+                </h6>
+            <% } else if(typeof accordion_component.title === 'object') { %>
+                <<%= accordion_component.title.type%> class="accordion__title">
+                    <%= accordion_component.title.label%>
+                </<%= accordion_component.title.type%>>
+            <% } %>
+            <% if(accordion_component.icon !== 'undefined' && accordion_component.icon) { %>
+                <svg class="accordion__icon">
+                    <use href="public/media/icons/sprite.svg#<%= accordion_component.icon%>"></use>                                           
+                </svg>
+            <% } %>
+    </div>
+    <ul data-fsc-accordion-body class="accordion__body"> 
+        <% if(typeof accordion_component.body === 'string') { %>
+            <%= accordion_component.body%>
+        <% } %>
+        <% if(typeof accordion_component.body === 'object') { %>
+            <% for(const item of accordion_component.body) { %>
+                <li>
+                    <%= item.label %>
+                </li>
+            <% } %>
+        <% } %>
+    </ul>
+</article>
