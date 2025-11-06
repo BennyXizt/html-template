@@ -63,9 +63,11 @@ export default defineConfig({
            fileName: 'index.ejs',
            fileDestination: `${__dirname}/index.html`
          },
-         test: {
-           fileName: 'test.ejs',
-           fileDestination: `${__dirname}/externe/pages/test.html`
+         rest: {
+           fileNameException: [
+            'index.ejs'
+           ],
+           fileDestination: `${__dirname}/externe/pages/`
          }
         }
     }),
