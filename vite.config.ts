@@ -59,13 +59,15 @@ export default defineConfig({
     ViteWatchEJSFolderPlugin({
       relativePath: `${__dirname}/src/ejs/views/`,
       outputDestination: {
-         root: {
-           fileName: 'index.ejs',
-           fileDestination: `${__dirname}/index.html`
+         pages: {
+           fileNameException: [
+            'test.ejs'
+           ],
+           fileDestination: `${__dirname}`
          },
          rest: {
-           fileNameException: [
-            'index.ejs'
+           fileName: [
+            'test.ejs'
            ],
            fileDestination: `${__dirname}/externe/pages/`
          }
