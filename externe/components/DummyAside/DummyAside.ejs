@@ -1,18 +1,7 @@
 <% 
-    if(typeof dummy_aside_component === 'undefined' || !dummy_aside_component) {
-        return
-    }
-        
+
 %>
 
-<div data-fs-dummy-aside>
-    <h3>Components</h3>
-    <% if(typeof dummy_aside_component.ul !== 'undefined' && dummy_aside_component.ul)%>
-    <ul>
-        <% for(const li of dummy_aside_component.ul) { %>
-            <li>
-                <a href="<%=li.href%>"><%=li.label%></a>
-            </li>
-       <% } %>
-    </ul>
+<div data-fsc-dummyaside>
+    <h3>Pages</h3>
 </div>
