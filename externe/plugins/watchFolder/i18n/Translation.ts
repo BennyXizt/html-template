@@ -1,3 +1,5 @@
+import type { Language } from "../types/plugin.type" 
+
 export class Translation {
     protected messages: Record<Language, any> = {
         ru: {
@@ -9,19 +11,6 @@ export class Translation {
                 `🔄 Файл был изменен: ${filePath}`,
             errorReadingTheFile: (err: Error) =>
                 `❌ Ошибка при чтении файла:\n ${err}`
-
-        },
-        en: {
-            newFileAdded: (filePath: string) =>
-            `🆕 New file added: ${filePath}`,
-            errorReadingTheFile: (err: Error) =>
-            `❌ Error reading the file:\n ${err}`
-        },
-        de: {
-            newFileAdded: (filePath: string) =>
-            `🆕 Neue Datei hinzugefügt: ${filePath}`,
-            errorReadingTheFile: (err: Error) =>
-            `❌ Fehler beim Lesen der Datei:\n ${err}`
         }
     }
 
@@ -34,16 +23,16 @@ export class Translation {
         this.language = language ?? 'ru'
     }
     newFileAdded(filePath: string) {
-        console.log(`[${this.pluginName}]: ${this.messages[this.language]?.newFileAdded(filePath)}`)
+        console.log(`\x1b[32m[${this.pluginName}]:\x1b[0m ${this.messages[this.language]?.newFileAdded(filePath)}`)
     }
     fileHasBeenChanged(filePath: string) {
-        console.log(`[${this.pluginName}]: ${this.messages[this.language]?.fileHasBeenChanged(filePath)}`)
+        console.log(`\x1b[32m[${this.pluginName}]:\x1b[0m ${this.messages[this.language]?.fileHasBeenChanged(filePath)}`)
     }
     fileHasBeenUpdated(filePath: string) {
-        console.log(`[${this.pluginName}]: ${this.messages[this.language]?.fileHasBeenUpdated(filePath)}`)
+        console.log(`\x1b[32m[${this.pluginName}]:\x1b[0m ${this.messages[this.language]?.fileHasBeenUpdated(filePath)}`)
     }
     errorReadingTheFile(err: Error) {
-       console.error(`[${this.pluginName}]: ${this.messages[this.language]?.errorReadingTheFile(err)}`)
+       console.error(`\x1b[32m[${this.pluginName}]:\x1b[0m ${this.messages[this.language]?.errorReadingTheFile(err)}`)
     }
 
 }

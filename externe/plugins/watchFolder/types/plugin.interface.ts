@@ -30,16 +30,12 @@ export interface FontsFolderInterface {
     language?: Language
 }
 export interface EJSFolderDestination {
-    root?: {
-        fileName: string,
-        fileDestination: string
-    },
-    test?: {
-        fileName: string,
+    pages?: {
+        fileNameException: string[],
         fileDestination: string
     },
     rest?: {
-        fileNameException: string[],
+        fileName: string[],
         fileDestination: string
     }
 }
