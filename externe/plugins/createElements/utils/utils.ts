@@ -39,17 +39,6 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
 
     switch(blockType) {
         case 'components': {
-            // ejsFileContent = `
-            //     <%\n\tif(typeof ${formattedComponentName}_component === 'undefined' || !${formattedComponentName}_component) {\n\t\treturn\n\t}
-            //     `.trim() +
-            //     `\n\n\tvar blockClass = 'class=${componentName}'` + 
-            //     `\n\tif(typeof ${formattedComponentName}_component.block !== 'undefined' && ${formattedComponentName}_component.block) {` +
-            //     `\n\t\tblockClass = \`class=\${${formattedComponentName}_component.block}__${componentName} ${componentName}\`` + 
-            //     `\n\t} else if(typeof ${formattedComponentName}_component.class !== 'undefined' && ${formattedComponentName}_component.class) {` + 
-            //     `\n\t\tblockClass = \`class=\${${formattedComponentName}_component.class}\`` +
-            //     `\n\t}\n%>` +
-            //     `\n\n<div <%-blockClass%>>\n\n</div>`
-
             ejsFileContent = 
             `<%\n` +
             `// Пример вызова в шаблоне (EJS):\n` +
@@ -100,7 +89,14 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
             `\t\t(typeof ${componentName}_component.this !== 'undefined' && ${componentName}_component.this) &&\n` +
             `\t\t(typeof ${componentName}_component.this.dataAttribute !== 'undefined' && ${componentName}_component.this.dataAttribute)\n` +
             `\t) {\n` +
-            `\t\tthisDataAttributes = ${componentName}_component.this.dataAttribute\n` +
+            `\t\tif(typeof ${componentName}_component.this.dataAttribute === 'string')\n` +
+            `\t\t{\n` +
+            `\t\t\tthisDataAttributes += ' ' + ${componentName}_component.this.dataAttribute\n` +
+            `\t\t}\n` +
+            `\t\telse if(typeof ${componentName}_component.this.dataAttribute === 'object')\n` +
+            `\t\t{\n` +
+            `\t\t\tthisDataAttributes += ' ' + ${componentName}_component.this.dataAttribute.join(' ')\n` +
+            `\t\t}\n` +
             `\t}\n` +
             `%>\n\n` +
             `<<%=thisType%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>\n\n` +

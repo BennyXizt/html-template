@@ -15,64 +15,25 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Dummy SVG</title>
+                    <link rel="stylesheet" href="../fontIcons.scss">
                     </head>
                     <body>
-                    <div data-fs-dummy-aside="">
-                        <h3>Components</h3>
-                        <ul>
-                            <li>
-                                <a href="./test.html">Test Page</a>
-                            </li>
-                            <li>
-                                <a href="/">Home Page</a>
-                            </li>
-                        </ul>
-                    </div>
+                        <%- include('externe/components/DummyAside/DummyAside.ejs') %>
                         <h1>Dummy SVG</h1>
                         <ul class="icons">
                         <li class="icon">
                             <svg><use href="${relativePath}#${id}"></use><use href="${relativePath.replace(/\/public/, '')}#${id}"></use></svg>
                             <span>${id}</span>        
-                            <pre>
-                            <code>
+                            <div>
                                 &lt;svg&gt;
-                                  &lt;use href="media/icons/sprite.svg#${id}"&gt;&lt;/use&gt;
+                                <p style='margin-left: 5px'>
+                                    &lt;use href="media/icons/sprite.svg#${id}"&gt;&lt;/use&gt;
+                                </p>
                                 &lt;/svg&gt;
-                            </code>      
-                            </pre>  
+                            </div>
                         </li>
                         </ul>
-
-                        <style>
-                        h1 {
-                            text-align: center;
-                        }
-                        svg {
-                            color: rgb(194, 0, 0);
-                            width: 30px;
-                            height: 30px;
-                        }
-                        ul {
-                            display: flex;
-                            flex-flow: row wrap;
-                            gap: 10px;
-                        }
-                        li {
-                            display: grid;
-                            align-items: center;
-                            justify-items: start;
-                            grid-template-columns: repeat(2, 1fr);
-                            border: 1px solid black;
-                            padding: 12px;
-                            font-weight: bold;
-                        }
-                        pre {
-                            margin-top: 5px;
-                            grid-column: 1 / -1;
-                            margin-bottom: 0;
-                            margin-right: 5px;
-                        }
-                        </style>
+                        <script type="module" src="/src/ts/main.ts"></script>
                     </body>
                     </html>
                 `
@@ -89,13 +50,13 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                      <li class="icon">
                         <svg><use href="${relativePath}#${id}"></use><use href="${relativePath.replace(/\/public/, '')}#${id}"></use></svg>
                         <span>${id}</span>
-                        <pre>
-                        <code>
+                        <div>
                             &lt;svg&gt;
+                            <p style='margin-left: 5px'>
                                 &lt;use href="media/icons/sprite.svg#${id}"&gt;&lt;/use&gt;
+                            </p>
                             &lt;/svg&gt;
-                        </code>
-                        </pre>
+                        </div>
                     </li>
                     ${rewriteFile.slice(lastIndex)}
                 `.trim()

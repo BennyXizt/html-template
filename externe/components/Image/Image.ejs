@@ -33,20 +33,22 @@
     if(typeof image_component === 'undefined' || !image_component) {
         return
     }
-        
 
-    var figureCSS =  ''
+    var thisClass = ''
+    if(
+        (typeof image_component.this !== 'undefined' && image_component.this) &&
+        (typeof image_component.this.parent !== 'undefined' && image_component.this.parent)
+    ) {
+        thisClass = `class=${image_component.parent}__image`
+    } else if(
+        (typeof image_component.this !== 'undefined' && image_component.this) &&
+        (typeof image_component.this.class !== 'undefined' && image_component.this.class)
+    ) {
+        thisClass = `${image_component.this.class}`
+    }
+
     var displayType = undefined
     var image = undefined
-
-    if(typeof image_component.block !== 'undefined' && image_component.block) {
-        figureCSS = `class=${image_component.block}__image`
-    }
-
-    if(typeof image_component.class !== 'undefined' && image_component.class) {
-        figureCSS = `class=${image_component.class}`
-    }
-
     if(
         (typeof image_component.img !== 'undefined' && image_component.img) &&
         (typeof image_component.images !== 'undefined' && image_component.images)       
@@ -69,6 +71,28 @@
         displayType = 'image'
     }
 
+    var thisStyles = undefined
+    if(
+		(typeof image_component.this !== 'undefined' && image_component.this) &&
+		(typeof image_component.this.style !== 'undefined' && image_component.this.style)
+	) {
+		thisStyles = `style='${image_component.this.style}'`
+	}
+
+    var thisDataAttributes = undefined
+    if(
+		(typeof image_component.this !== 'undefined' && image_component.this) &&
+		(typeof image_component.this.dataAttribute !== 'undefined' && image_component.this.dataAttribute)
+	) {
+		if(typeof image_component.this.dataAttribute === 'string')
+        {
+            thisDataAttributes += ' ' + image_component.this.dataAttribute
+        }
+        else if(typeof image_component.this.dataAttribute === 'object')
+        {
+            thisDataAttributes += ' ' + image_component.this.dataAttribute.join(' ')
+        }
+	}
 %>
 
 
@@ -76,7 +100,7 @@
     (typeof image_component !== 'undefined' && image_component) &&
     (typeof displayType !== 'undefined' && displayType)
 ) { %>
-    <figure <%= figureCSS  %>>
+    <figure <%=thisDataAttributes%> <%=thisClass%> <%-thisStyles%>>
         <% if(displayType === 'picture') { %>
             <picture>
                 <% for(const source of image_component.images) { %>

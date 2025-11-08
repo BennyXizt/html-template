@@ -3,13 +3,51 @@
         return
     }
        
-    var sectionCSS =  'burger'
-
-    if(typeof burger_component.block !== 'undefined' && burger_component.block) {
-        sectionCSS = `${burger_component.block}__burger burger`
+    var thisClass = 'burger'
+    if(
+        (typeof burger_component.this !== 'undefined' && burger_component.this) &&
+        (typeof burger_component.this.parent !== 'undefined' && burger_component.this.parent)
+    ) {
+        thisClass = `${burger_component.this.parent}__burger burger`
+    } else if(
+        (typeof burger_component.this !== 'undefined' && burger_component.this) &&
+        (typeof burger_component.this.class !== 'undefined' && burger_component.this.class)
+    ) {
+        thisClass = `${burger_component.this.class} burger`
     }
+
+    var thisType = 'button'
+	if(
+		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
+		(typeof burger_component.this.type !== 'undefined' && burger_component.this.type)
+	) {
+		thisType = burger_component.this.type
+	}
+
+    var thisStyles = undefined
+    if(
+		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
+		(typeof burger_component.this.style !== 'undefined' && burger_component.this.style)
+	) {
+		thisStyles = `style='${burger_component.this.style}'`
+	}
+
+    var thisDataAttributes = undefined
+    if(
+		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
+		(typeof burger_component.this.dataAttribute !== 'undefined' && burger_component.this.dataAttribute)
+	) {
+		if(typeof burger_component.this.dataAttribute === 'string')
+        {
+            thisDataAttributes += ' ' + burger_component.this.dataAttribute
+        }
+        else if(typeof burger_component.this.dataAttribute === 'object')
+        {
+            thisDataAttributes += ' ' + burger_component.this.dataAttribute.join(' ')
+        }
+	}
 %>
 
-<button class="<%=sectionCSS%>">
+<<%=thisType%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
     <span></span>
-</button>
+</<%=thisType%>>

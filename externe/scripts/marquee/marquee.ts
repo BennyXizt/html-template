@@ -12,7 +12,7 @@
 
 
 import { MarqueeElementInterface } from "./types/plugin.interface"
-import { MarqueeDirection } from "./types/plugin.type"
+import type { MarqueeDirection } from "./types/plugin.type"
 
 const marqueeElements: MarqueeElementInterface[] = []
 let animationStarted = false
@@ -25,11 +25,16 @@ export function marqueeAutoload() {
 
         const 
             speed = root.getAttribute('data-fsc-marquee-speed') ? parseInt(root.getAttribute('data-fsc-marquee-speed')!) : 1000,
-            direction: MarqueeDirection  = root.getAttribute('data-fsc-marquee-direction') ? root.getAttribute('data-fsc-marquee-direction') : 'left',
+            direction = root.getAttribute('data-fsc-marquee-direction'),
             // isHorizontal = direction === 'left' || direction === 'right',
             offset = root.getAttribute('data-fsc-marquee-start') ? parseInt(root.getAttribute('data-fsc-marquee-start')!) : 0,
             childrens = root.querySelectorAll('[data-fsc-marquee-item]'),
             gap = Number.parseInt(getComputedStyle(root).columnGap)
+
+        const
+            typisiertDirection: MarqueeDirection = 
+                direction === 'left' || direction === 'right' || direction === 'top' || direction === 'bottom'
+                    ? direction : 'left'
         
         let childrensWidth = Array.from(childrens).reduce(
             (acc, el) => acc + (el as HTMLElement).getBoundingClientRect().width,
@@ -41,7 +46,6 @@ export function marqueeAutoload() {
             maxIndex = childrens.length - 1
     
         let currIndex = 0
-        
         while(childrensWidth <= rootWidth) {
             const clone = childrenArray[currIndex].cloneNode(true) as HTMLElement
             clone.setAttribute('data-fsc-marquee-clone', '')
@@ -62,7 +66,7 @@ export function marqueeAutoload() {
             root.appendChild(clone)
         }
         
-        marqueeElements.push({root, childrensWidth, gap, speed, offset, direction})
+        marqueeElements.push({root, childrensWidth, gap, speed, offset, direction: typisiertDirection})
 
         root.setAttribute('data-fsc-marquee-initialized', 'true')
     }

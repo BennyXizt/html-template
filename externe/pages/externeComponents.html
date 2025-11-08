@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<% if(typeof head_component.lang !== 'undefined' && head_component.lang) { %>
+   <html lang="<%= head_component.lang %>">
+<% } else { %>
+   <html lang="en">
+<% } %>
+<head>
+   <%- include('externe/components/Head/Head.ejs') %>
+   <link rel="stylesheet" href="../externeComponents.scss">
+</head>
+<body>
+    <%- include('externe/components/DummyAside/DummyAside.ejs') %>
+    <div class="wrapper">
+        <article class="components _accordion">
+            <h1>Accordion</h1>
+            <%- include('externe/components/Accordion/Accordion.ejs', {
+                accordion_component: {
+                    title: 'Accordion Summary',
+                    body: 'Accordion Body'
+                }
+            })%>
+        </article>
+        <article class="components _burger">
+            <h1>Burger</h1>
+            <%- include('externe/components/Burger/Burger.ejs', {
+                burger_component: {
+                    title: 'Accordion Summary',
+                    body: 'Accordion Body'
+                }
+            })%>
+        </article>
+        <article class="components _marquee">
+            <h1>Marquee</h1>
+             <%- include('externe/components/Marquee/Marquee.ejs', {
+                marquee_component: {
+                    data: [
+                        'someText',
+                        '-',
+                        'anotherText',
+                        '-'
+                    ]
+                }
+            }) %>
+            <%- include('externe/components/Marquee/Marquee.ejs', {
+                marquee_component: {
+                    this: {
+                        dataAttribute: 'data-fsc-marquee-direction=right'
+                    },
+                    data: [
+                        'someText',
+                        '-',
+                        'anotherText',
+                        '-'
+                    ]
+                }
+            }) %>
+        </article>
+        <article class="components _combobox">
+            <h1>ComboBox</h1>
+            <%- include('externe/components/ComboBox/ComboBox.ejs', {
+                combobox_component: {
+                    this: {
+                        parent: 'arrow',
+                        class: 'childClass',
+                        type: 'article',
+                        style: 'customStyle',
+                        dataAttribute: 'customDataAttributes' 
+                    },
+                    prestyled: 'full',
+                    label: 'Выберите город',
+                    placeholder: 'Начните вводить',
+                    icons: {
+                        input_dispose: '../icons/sprite.svg#angle-down-solid-full',
+                        input_close: '../icons/sprite.svg#xmark-solid-full',
+                        p: '../icons/sprite.svg#plus-solid-full'
+                    },
+                    data: [
+                        { flag: 'de', city: 'Deutschland' },
+                        { flag: 'fr', city: 'France' },
+                        { flag: 'es', city: 'España' }
+                    ]
+                }
+            }) %>
+            <%- include('externe/components/ComboBox/ComboBox.ejs', {
+                combobox_component: {
+                    this: {
+                        parent: 'arrow',
+                        class: 'childClass',
+                        type: 'article',
+                        style: 'margin-top: 20px',
+                        dataAttribute: 'customDataAttributes' 
+                    },
+                    prestyled: 'part',
+                    label: 'Выберите город',
+                    placeholder: 'Начните вводить',
+                    icons: {
+                        input_dispose: '../icons/sprite.svg#angle-down-solid-full',
+                        input_close: '../icons/sprite.svg#xmark-solid-full',
+                        p: '../icons/sprite.svg#plus-solid-full'
+                    },
+                    data: [
+                        { flag: 'de', city: 'Deutschland' },
+                        { flag: 'fr', city: 'France' },
+                        { flag: 'es', city: 'España' }
+                    ]
+                }
+            }) %>
+        </article>
+    </div>
+    <script type="module" src="/src/ts/main.ts"></script>
+</body>
+</html>

@@ -35,7 +35,7 @@ function handleTransition(this: HTMLElement, {animationName}: {animationName: st
     else if(animationName.startsWith('burger-reverse-opacity-middle'))  {
         this.removeEventListener('animationend', handler!)
         this.classList.remove('active', 'reverse')
-        menu.classList.remove('is-animating')
+        menu?.classList.remove('is-animating')
         isActive = false
     }             
 }

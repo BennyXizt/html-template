@@ -5,95 +5,131 @@
 // - Поддерживает иконки очистки и открытия списка
 // - Настраивается через объект настроек ComboBoxSettings
 //
-// Использование:
-//
-// ComboBox({
-//     event: e,                       // объект события (клик, ввод и т.п.)
-//     searchType: SearchType.default  // режим поиска: default или firstLetter
-// })
-//
-// Пример вызова в обработчике события:
-//
-// document.addEventListener('click', (e) => {
-//   ComboBox({
-//     event: e,
-//     searchType: SearchType.default
-//   })
-// })
-//
 // В шаблоне (EJS) подключается так:
 //
-// <\%- include('./src/components/ComboBox/ComboBox.ejs', {
-//   combobox_component: {
-//     label: 'Выберите город',
-//     placeholder: 'Начните вводить',
-//     icons: {
-//       input_close: { src: './media/icons/xmark.svg', alt: 'Очистить' },
-//       input_dispose: { src: './media/icons/arrow.svg', alt: 'Открыть' },
-//       p: { src: './media/icons/plus.svg', alt: 'Добавить' }
-//     },
-//     data: [
-//       { flag: 'de', city: 'Deutschland' },
-//       { flag: 'fr', city: 'France' },
-//       { flag: 'es', city: 'España' }
-//     ]
-//   }
+// <\%- include('externe/components/ComboBox/ComboBox.ejs', {
+//     combobox_component: {
+//         this: {
+//             parent: 'Parent',
+//             class: 'childClass',
+//             type: 'article',
+//             style: 'customStyle',
+//             dataAttribute: 'customDataAttributes' 
+//         },
+//         prestyled: 'full',
+//         label: 'Выберите город',
+//         placeholder: 'Начните вводить',
+//         icons: {
+//             input_dispose: '../icons/sprite.svg#angle-down-solid-full',
+//             input_close: '../icons/sprite.svg#xmark-solid-full',
+//             p: '../icons/sprite.svg#plus-solid-full'
+//         },
+//         data: [
+//             { flag: 'de', city: 'Deutschland' },
+//             { flag: 'fr', city: 'France' },
+//             { flag: 'es', city: 'España' }
+//         ]
+//     }
 // }) %>
 %>
-
-
-
 <% 
-   if(typeof combobox_component === 'undefined' || !combobox_component) {
+    if(typeof combobox_component === 'undefined' || !combobox_component) {
         return
-   }
-        
-    
+    }
+
+    var thisClass = 'combobox'
+    if(
+        (typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
+        (typeof combobox_component.this.parent !== 'undefined' && combobox_component.this.parent)
+    ) {
+        thisClass = `${combobox_component.this.parent}__combobox combobox`
+    } else if(
+        (typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
+        (typeof combobox_component.this.class !== 'undefined' && combobox_component.this.class)
+    ) {
+        thisClass = `${combobox_component.this.class} combobox`
+    }
+
+    var thisType = 'article'
+	if(
+		(typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
+		(typeof combobox_component.this.type !== 'undefined' && combobox_component.this.type)
+	) {
+		thisType = combobox_component.this.type
+	}
+
+    var thisStyles = undefined
+    if(
+		(typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
+		(typeof combobox_component.this.style !== 'undefined' && combobox_component.this.style)
+	) {
+		thisStyles = `style='${combobox_component.this.style}'`
+	}
+
+    var input_placeholder = undefined
+    if(typeof combobox_component.placeholder !== 'undefined' && combobox_component.placeholder)
+    {
+        input_placeholder = `placeholder='${combobox_component.placeholder}'`
+    }
+
+    var input_id = `cb${Math.random().toString(36).slice(2, 8)}-${new Date().getTime()}`
+    var thisDataAttributes = `data-fsc-combobox-id=${input_id} data-fsc-combobox-collapsed=false`
+    var input_prestyled = undefined
+    if(typeof combobox_component.prestyled !== 'undefined' && combobox_component.prestyled)
+    {
+        thisDataAttributes += ` data-fsc-combobox-prestyled data-fsc-combobox-prestyledType=${combobox_component.prestyled}`
+    }
+
+	if(
+		(typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
+		(typeof combobox_component.this.dataAttribute !== 'undefined' && combobox_component.this.dataAttribute)
+	) {
+		if(typeof combobox_component.this.dataAttribute === 'string')
+        {
+            thisDataAttributes += ' ' + combobox_component.this.dataAttribute
+        }
+        else if(typeof combobox_component.this.dataAttribute === 'object')
+        {
+            thisDataAttributes += ' ' + combobox_component.this.dataAttribute.join(' ')
+        }
+	}
 %>
 
-<%
- let 
-     input_id = `cb${Math.random().toString(36).slice(2, 8)}-${new Date().getTime()}`,
-     input_placeholder = null,
-     input_prestyled = null
-
- if(typeof combobox_component.id !== 'undefined' && combobox_component.id)
-    input_id = `${combobox_component.id}`
- if(typeof combobox_component.placeholder !== 'undefined' && combobox_component.placeholder)
-    input_placeholder = `placeholder='${combobox_component.placeholder}'`
- if(typeof combobox_component.prestyled !== 'undefined' && combobox_component.prestyled)
-    input_prestyled = `data-fsc-combobox-prestyled data-fsc-combobox-prestyledType=${combobox_component.prestyled}`
-%>
-
-<article data-fsc-combobox-id=<%=input_id%>  <%=input_prestyled%> data-fsc-combobox-collapsed="false" >
+<<%=thisType%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
     <% if(typeof combobox_component.label !== 'undefined' && combobox_component.label) { %>
-        <label for=<%= input_id %>><%= combobox_component.label %></label>
+        <label for=<%=input_id%> class='combobox__label'><%=combobox_component.label%></label> 
     <% } %>
-    <input type="text" id=<%= input_id %> <%-input_placeholder %> data-fsc-combobox>
+    <input type="text" id=<%=input_id%> <%-input_placeholder%> data-fsc-combobox class='combobox__input'>
     <% if (
         (typeof combobox_component.icons !== 'undefined' && combobox_component.icons) &&
         (typeof combobox_component.icons.input_dispose !== 'undefined' && combobox_component.icons.input_dispose)
     ) { %>
-        <img src=<%= combobox_component.icons.input_dispose.src %> alt=<%= combobox_component.icons.input_dispose.alt %> data-fsc-combobox-input-icon-dispose data-fsc-combobox>
+        <svg data-fsc-combobox-input-icon-dispose data-fsc-combobox class="combobox__dispose">
+            <use href='<%=combobox_component.icons.input_dispose%>'></use>
+        </svg>
     <% } %>
-      <% if(
+    <% if(
         (typeof combobox_component.icons !== 'undefined' && combobox_component.icons) &&
         (typeof combobox_component.icons.input_close !== 'undefined' && combobox_component.icons.input_close)
-      ) { %>
-        <img src=<%= combobox_component.icons.input_close.src %> alt=<%= combobox_component.icons.input_close.alt %> data-fsc-combobox-input-icon-close data-fsc-combobox>
+    ) { %>
+        <svg data-fsc-combobox-input-icon-close data-fsc-combobox class="combobox__close">
+            <use href='<%=combobox_component.icons.input_close%>'></use>
+        </svg>
     <% } %>
     <% if(typeof combobox_component.data !== 'undefined' && combobox_component.data) { %>
-        <ul>
+        <ul class="combobox__list">
             <% for(const obj of combobox_component.data) { %>
-                <li data-fsc-combobox-item>
+                <li data-fsc-combobox-item class="combobox__item">
                     <p>
                         <%=Object.values(obj).join(' ') %>
                         <% if(typeof combobox_component.icons.p !== 'undefined' && combobox_component.icons.p) { %>
-                            <img src=<%= combobox_component.icons.p.src %> alt=<%= combobox_component.icons.p.alt %>  data-fsc-combobox-item data-fsc-combobox-p-icon >
+                             <svg data-fsc-combobox-item data-fsc-combobox-p-icon class="combobox__p-icon">
+                                <use href='<%=combobox_component.icons.p%>'></use>
+                            </svg>
                         <% } %>
                     </p>
                 </li>
             <% } %> 
         </ul>
     <% } %>
-</article>
+</<%=thisType%>>

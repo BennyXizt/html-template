@@ -12,18 +12,18 @@
             <ul class="menu__list">
                 <% for(const item of header_menu_component.list) { %>
                     <% if(typeof header_menu_component.activePage !== 'undefined' && header_menu_component.activePage) { %>
-                        <% if(header_menu_component.activePage === item.ancor) { %>
+                        <% if(header_menu_component.activePage.toLowerCase() === item.anchor.toLowerCase()) { %>
                             <li class="menu__item">
-                                <a href="<%= item.href %>" class="menu__link menu__link--active"><%= item.ancor %></a>
+                                <a href="<%= item.href %>" class="menu__link menu__link--active"><%= item.anchor %></a>
                             </li>
                         <% } else { %>
                             <li class="menu__item">
-                                <a href="<%= item.href %>" class="menu__link"><%= item.ancor %></a>
+                                <a href="<%= item.href %>" class="menu__link"><%= item.anchor %></a>
                             </li>
                         <% } %>
                     <% } else { %>
                         <li class="menu__item">
-                            <a href="<%= item.href %>" class="menu__link"><%= item.ancor %></a>
+                            <a href="<%= item.href %>" class="menu__link"><%= item.anchor %></a>
                         </li>
                     <% } %>
                 <% } %>

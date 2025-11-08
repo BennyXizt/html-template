@@ -1,7 +1,8 @@
-article[data-fsc-combobox-id] {
+[data-fsc-combobox-id] {
     --animationDuration: .5s;
     --animationDelay: .3s;
     --maxHeightDuration: .8s;
+    --z-index: 1;
 
     ul {
         padding: unset;
@@ -15,11 +16,12 @@ article[data-fsc-combobox-id] {
         position: relative;
         display: flex;
         
-        img {
+        svg {
             &[data-fsc-combobox-input-icon-dispose],
             &[data-fsc-combobox-p-icon],
             &[data-fsc-combobox-input-icon-close] {
                 position: absolute;
+                z-index: var(--z-index);
                 top: 50%;           
                 right: 7px;
                 transform: translate(0, -50%);
@@ -36,24 +38,18 @@ article[data-fsc-combobox-id] {
                 visibility: hidden;
                 opacity: 0;
                 transition: visibility var(--animationDuration) ease-in-out var(--animationDelay), opacity var(--animationDuration) ease-in-out var(--animationDelay);
-                
-                &[data-fsc-combobox-collapsed] {
-                    opacity: 1;
-                    visibility: visible;
-                }
             }
         }
         ul {
             position: absolute;
             background-color: #fff;
-            z-index: 999;
+            z-index: calc(var(--z-index) + 2);
             top: 100%;
             max-height: 0;
             width: 100%;
             overflow: auto;
             border-radius: 8px;
             transition: max-height var(--maxHeightDuration) ease-in-out, opacity var(--animationDuration) ease-in-out var(--animationDelay), visibility var(--animationDuration) ease-in-out var(--animationDelay);
-            
             opacity: 0;
             visibility: hidden;
 
@@ -68,12 +64,15 @@ article[data-fsc-combobox-id] {
 
         input {
             flex: 1;
+            z-index: var(--z-index);
+        }
+        label {
+             z-index: calc(var(--z-index) + 1);
         }
         
         &[data-fsc-combobox-prestyledtype='full'] {       
             flex-flow: column nowrap;
             min-width: 220px;
-        
 
             label {
                 position: absolute;
@@ -97,15 +96,15 @@ article[data-fsc-combobox-id] {
                     border-color: #2e3aa8;
                 }
             }
-            img {
+            svg {
                 &[data-fsc-combobox-input-icon-dispose] {
                     width: 30px;
                     height: 30px;
                 }
                 &[data-fsc-combobox-input-icon-close] {
-                    width: 24px;
-                    height: 24px;
-                    right: 34px;
+                    width: 30px;
+                    height: 30px;
+                    right: 40px;
                 }
             }
             
@@ -146,11 +145,25 @@ article[data-fsc-combobox-id] {
                 visibility: visible;
             }
 
-            img[data-fsc-combobox-input-icon-dispose] {
-                transform: translate(0, -50%) rotate(180deg);
+            svg {
+                &[data-fsc-combobox-input-icon-dispose] {
+                    transform: translate(0, -50%) rotate(180deg);
+                }
+                &[data-fsc-combobox-input-icon-close] {
+                    opacity: 1;
+                    visibility: visible;
+                }
             }
         }
     }
    
 }
 
+[data-fsc-combobox-blank] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-index);
+}

@@ -8,16 +8,15 @@
 // Использование:
 //
 // Accordion({
-//     title: 'Подробнее' || {type:'h1-6', label:'Подробнее'},                                         // заголовок аккордиона (строка или объект с типом и текстом)
-//     body: 'Содержимое аккордиона' || [label:'Содержимое аккордиона',icon_component,link:'Ссылка'],  // контент (строка или массив объектов с label)
-//     icon: 'Пример иконки',                                                                          // имя иконки после title из спрайта (опционально)
-//     behaviour: 'default',                                                                           // режим поведения (например: default - одиночное раскрытие)
 //     this: {
 //		 parent: 'parentClass',
 //		 class: 'childClass',
 //		 style: 'customStyle',
-//	   }                                                                         
-//     class: 'Название класса'                                                                        // дополнительный класс (опционально)
+//	   }  
+//     title: 'Подробнее' || {type:'h1-6', label:'Подробнее'},                                         // заголовок аккордиона (строка или объект с типом и текстом)
+//     body: 'Содержимое аккордиона' || [label:'Содержимое аккордиона',icon_component,link:'Ссылка'],  // контент (строка или массив объектов с label)
+//     icon: 'Пример иконки',                                                                          // имя иконки после title из спрайта (опционально)
+//     behaviour: 'default',                                                                           // режим поведения (например: default - одиночное раскрытие)                                                                                  
 //     media: {type:'min-width' | 'max-width' | 'min-height' | 'max-height', label: '999px'}           // с какого диапазона в пикселях будет работать аккордион
 // })
 //
@@ -25,7 +24,9 @@
 //
 // <\%- include('externe/components/Accordion/Accordion.ejs', {
 //   accordion_component: {
-//     block: 'product',
+//     this: {
+//		 parent: 'parentClass',
+//	   }  
 //     title: { type: 'h5', label: 'Заголовок' },
 //     body: [
 //       { label: 'СкрытаяИнформация', icon_component: {}, link: '#' }
@@ -67,9 +68,9 @@
 		thisStyles = `style='${accordion_component.this.style}'`
 	}
 
-    var dataAttributes = 'data-fsc-accordion'
+    var thisDataAttributes = 'data-fsc-accordion'
     if(typeof accordion_component.behaviour !== 'undefined' && accordion_component.behaviour) {
-        dataAttributes += ` data-fsc-accordion-behaviour=${accordion_component.behaviour}`
+        thisDataAttributes += ` data-fsc-accordion-behaviour=${accordion_component.behaviour}`
     }
 
     var mediaVisibilityTypes = ['min-width', 'max-width', 'min-height', 'max-height']
@@ -79,10 +80,24 @@
         (typeof accordion_component.media.label !== 'undefined' && accordion_component.media.label) &&
         (mediaVisibilityTypes.includes(accordion_component.media.type))
     ) {
-        dataAttributes += ` data-fsc-accordion-media-query='${accordion_component.media.type}: ${accordion_component.media.label}'`
+        thisDataAttributes += ` data-fsc-accordion-media-query='${accordion_component.media.type}: ${accordion_component.media.label}'`
     }
+
+    if(
+		(typeof accordion_component.this !== 'undefined' && accordion_component.this) &&
+		(typeof accordion_component.this.dataAttribute !== 'undefined' && accordion_component.this.dataAttribute)
+	) {
+		if(typeof accordion_component.this.dataAttribute === 'string')
+        {
+            thisDataAttributes += ' ' + accordion_component.this.dataAttribute
+        }
+        else if(typeof accordion_component.this.dataAttribute === 'object')
+        {
+            thisDataAttributes += ' ' + accordion_component.this.dataAttribute.join(' ')
+        }
+	}
 %>
-<article <%-dataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
+<article <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
     <div data-fsc-accordion-summary class="accordion__top">
             <% if(typeof accordion_component.title === 'string') { %>
                 <h6 class="accordion__title">

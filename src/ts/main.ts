@@ -11,8 +11,6 @@ window.addEventListener('click', function(e) {
     
     if(burger)
         BurgerMenu(burger)
-
-
 })
 
 document.fonts.ready.then(async() => {
@@ -30,10 +28,11 @@ document.fonts.ready.then(async() => {
             .filter(([k, e]) => typeof e[`${k}ClickArray`] === 'object')
             .map(e => {
                 return {
-                        func: e[1][`${e[0]}ClickArray`][0],
-                        elementSelector: e[1][`${e[0]}ClickArray`][1] || `[data-fsc-${e[0]}]`
-                    }
-                })
+                    func: e[1][`${e[0]}ClickArray`][0],
+                    elementSelector: e[1][`${e[0]}ClickArray`][1] || `[data-fsc-${e[0]}]`,
+                    identificator: e[0]
+                }
+            })
     
     const
         onResizeModules = Array.from(loadedModules)
@@ -45,12 +44,14 @@ document.fonts.ready.then(async() => {
             const 
                 DOMElement: HTMLElement | null = (event.target as HTMLElement).closest(e.elementSelector)
                 
-            if(DOMElement)
-                e.func(DOMElement)
-            
+            if(DOMElement) {
+                if(e.identificator === 'combobox') 
+                    e.func(event)
+                else
+                    e.func(DOMElement)
+            }
         })
     })
-    
 
     window.addEventListener('resize', function(event) {
         onResizeModules.forEach(e => e[1]())

@@ -13,6 +13,9 @@
     height: 15px;
     overflow: hidden;
     transition: all .4s ease-in-out;
+    display: flex;
+    flex-flow: column wrap;
+    gap: 15px;
 
     h3 {
         font-size: 16px;

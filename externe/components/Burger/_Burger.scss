@@ -12,8 +12,10 @@
     
     display: block;
     position: relative;
-    @include rem((width:$width,
-            height:$height));
+    @include rem((
+        width:$width,
+        height:$height
+    ));
     background-color: transparent;
     cursor: pointer;
 
@@ -46,7 +48,7 @@
     }
 
     &.active {       
-        z-index: 1; 
+        z-index: 4;
         @mixin combo-animation($side) {
             @if $side !=middle {
                 $animation-move: burger-active-move-#{$side};

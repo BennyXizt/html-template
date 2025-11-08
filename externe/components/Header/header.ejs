@@ -1,7 +1,7 @@
 <header class="header">
     <div class="header__container container">
         <div class="header__body">
-            <% if(typeof header_component.homePage !== 'undefined' && header_component.homePage) { %>
+            <% if(typeof header_component.homePage !== 'undefined') { %>
                 <%if(header_component.homePage === true) { %>
                     <%- include('externe/components/Image/Image.ejs', {
                         image_component: {
@@ -13,7 +13,7 @@
                         }
                     })%>
                 <% } else { %>
-                    <a href="./index.html" class="header__link-logo">
+                    <a href="./" class="header__link-logo">
                        <%- include('externe/components/Image/Image.ejs', {
                             image_component: {
                                 block: 'header',
@@ -29,12 +29,13 @@
             <%- include('externe/components/HeaderMenu/HeaderMenu.ejs', {
                 header_menu_component: {
                     list: [
-                        {'href': '#', 'ancor': 'PAGE'},
-                        {'href': '#', 'ancor': 'PAGE'},
-                        {'href': '#', 'ancor': 'PAGE'},
-                        {'href': '#', 'ancor': 'PAGE'},
-                        {'href': '#', 'ancor': 'PAGE'},
-                    ]
+                        {'href': '#', 'anchor': 'PAGE'},
+                        {'href': '#', 'anchor': 'PAGE'},
+                        {'href': '#', 'anchor': 'PAGE'},
+                        {'href': '#', 'anchor': 'PAGE'},
+                        {'href': '#', 'anchor': 'PAGE'},
+                    ],
+                    activePage: header_component.activePage
                 }
             }) %>
             <%- include('externe/components/Burger/Burger.ejs', {
