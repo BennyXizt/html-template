@@ -165,10 +165,10 @@ export function updateTestEJSFile({ejsDir, componentName, fs}) {
     fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
 }
 
-export function updateMainEJSFile({ejsDir, componentName, fs}) {
+export function updateMainEJSFile({ejsDir, componentName, rootPage, fs}) {
     const
-        data = fs.readFileSync(`${ejsDir}/views/index.ejs`, 'utf-8'),
-        ejsFile = `${ejsDir}/views/index.ejs`,
+        data = fs.readFileSync(`${ejsDir}/views/${rootPage}`, 'utf-8'),
+        ejsFile = `${ejsDir}/views/${rootPage}`,
         lastIndex = data.lastIndexOf('</main>'),
         fileContent = 
             data.slice(0, lastIndex).trim() + '\n\t' +
