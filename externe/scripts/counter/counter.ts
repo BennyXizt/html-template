@@ -86,8 +86,6 @@ function animateCounter() {
                     currentValue = Math.round(startValue - (startValue - endValue) * easedProgress)
             }
 
-            console.log(currentValue);
-
             counter!.textContent = currentValue!.toString()
             
             if (progress < 1) {
