@@ -14,10 +14,10 @@
 //        marquee_component: {
 //            this: {
 //			    parent: 'parentClass',
-//			    class: 'childClass',
-//			    type: 'div',
-//			    style: 'customStyle',
-//			    dataAttribute: 'customDataAttributes' 
+//			    class: ['childClass'],
+//			    tag: 'div',
+//			    style: ['customStyle'],
+//			    dataAttribute: ['customDataAttributes'] 
 //		      }
 //            images: [
 //              {
@@ -54,15 +54,19 @@
         (typeof marquee_component.this !== 'undefined' && marquee_component.this) &&
         (typeof marquee_component.this.class !== 'undefined' && marquee_component.this.class)
     ) {
-        thisClass = `${marquee_component.this.class} marquee`
+        if(typeof marquee_component.this.class === 'string') {
+			thisClass = `${marquee_component.this.class} marquee`
+		} else if(typeof marquee_component.this.class === 'object') {
+			thisClass = `${marquee_component.this.class.join(' ')} marquee`
+		}
     }
 
-    var thisType = 'article'
+    var thisTag = 'article'
 	if(
 		(typeof marquee_component.this !== 'undefined' && marquee_component.this) &&
-		(typeof marquee_component.this.type !== 'undefined' && marquee_component.this.type)
+		(typeof marquee_component.this.tag !== 'undefined' && marquee_component.this.tag)
 	) {
-		thisType = marquee_component.this.type
+		thisTag = marquee_component.this.tag
 	}
 
     var thisStyles = undefined
@@ -70,7 +74,11 @@
 		(typeof marquee_component.this !== 'undefined' && marquee_component.this) &&
 		(typeof marquee_component.this.style !== 'undefined' && marquee_component.this.style)
 	) {
-		thisStyles = `style='${marquee_component.this.style}'`
+        if(typeof marquee_component.this.style === 'string') {
+			thisStyles = `style='${marquee_component.this.style}'`
+		} else if(typeof marquee_component.this.style === 'object') {
+			thisStyles = `style='${marquee_component.this.style.join(' ')}'`
+		}
 	}
 
     var thisDataAttributes = 'data-fsc-marquee'
@@ -96,7 +104,7 @@
     }
 %>
 
-<<%=thisType%> class='<%=thisClass%>' <%-thisStyles%>>
+<<%=thisTag%> class='<%=thisClass%>' <%-thisStyles%>>
     <ul class="marquee__inner" <%=thisDataAttributes%>>
         <% if(typeof marqueeImages !== 'undefined' && marqueeImages) { %>
             <% for(const image of marqueeImages) { %>
@@ -117,4 +125,4 @@
             <% } %>
         <% } %>
     </ul>
-</<%=thisType%>>
+</<%=thisTag%>>

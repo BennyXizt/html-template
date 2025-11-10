@@ -4,7 +4,7 @@
  *
  * Поддерживаемые атрибуты `data-fsc-counter-*`:
  * - data-fsc-counter — инициализирует элемент как счетчик
- * - data-fsc-counter-finalValue — конечное значение счетчика
+ * - data-fsc-counter-finalvalue — конечное значение счетчика
  * - data-fsc-counter-mode — режим выполнения счетчика: 'increment' или 'decrement' (по умолчанию 'increment')
  * - data-fsc-counter-duration — длительность выполнения счетчика в мс (по умолчанию '7000')
  * - data-fsc-counter-easing — определяют, как значение изменяется во времени (по умолчанию '2' - easeOutQuart)
@@ -32,7 +32,7 @@ function animateCounter() {
     
     for(const counter of counters) {
         const 
-            finalValueAttr = counter.getAttribute('data-fsc-counter-finalValue')
+            finalValueAttr = counter.getAttribute('data-fsc-counter-finalvalue')
 
         if(!finalValueAttr)
             return
@@ -85,6 +85,8 @@ function animateCounter() {
                 else
                     currentValue = Math.round(startValue - (startValue - endValue) * easedProgress)
             }
+
+            console.log(currentValue);
 
             counter!.textContent = currentValue!.toString()
             

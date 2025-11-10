@@ -11,10 +11,10 @@
 //     combobox_component: {
 //         this: {
 //             parent: 'Parent',
-//             class: 'childClass',
-//             type: 'article',
-//             style: 'customStyle',
-//             dataAttribute: 'customDataAttributes' 
+//             class: ['childClass'],
+//             tag: 'article',
+//             style: ['customStyle'],
+//             dataAttribute: ['customDataAttributes'] 
 //         },
 //         prestyled: 'full',
 //         label: 'Выберите город',
@@ -47,15 +47,19 @@
         (typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
         (typeof combobox_component.this.class !== 'undefined' && combobox_component.this.class)
     ) {
-        thisClass = `${combobox_component.this.class} combobox`
+        if(typeof combobox_component.this.class === 'string') {
+			thisClass = `${combobox_component.this.class} combobox`
+		} else if(typeof combobox_component.this.class === 'object') {
+			thisClass = `${combobox_component.this.class.join(' ')} combobox`
+		}
     }
 
-    var thisType = 'article'
+    var thisTag = 'article'
 	if(
 		(typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
-		(typeof combobox_component.this.type !== 'undefined' && combobox_component.this.type)
+		(typeof combobox_component.this.tag !== 'undefined' && combobox_component.this.tag)
 	) {
-		thisType = combobox_component.this.type
+		thisTag = combobox_component.this.tag
 	}
 
     var thisStyles = undefined
@@ -63,7 +67,11 @@
 		(typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
 		(typeof combobox_component.this.style !== 'undefined' && combobox_component.this.style)
 	) {
-		thisStyles = `style='${combobox_component.this.style}'`
+        if(typeof combobox_component.this.style === 'string') {
+			thisStyles = `style='${combobox_component.this.style}'`
+		} else if(typeof combobox_component.this.style === 'object') {
+			thisStyles = `style='${combobox_component.this.style.join(' ')}'`
+		}
 	}
 
     var input_placeholder = undefined
@@ -95,7 +103,7 @@
 	}
 %>
 
-<<%=thisType%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
+<<%=thisTag%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
     <% if(typeof combobox_component.label !== 'undefined' && combobox_component.label) { %>
         <label for=<%=input_id%> class='combobox__label'><%=combobox_component.label%></label> 
     <% } %>
@@ -132,4 +140,4 @@
             <% } %> 
         </ul>
     <% } %>
-</<%=thisType%>>
+</<%=thisTag%>>

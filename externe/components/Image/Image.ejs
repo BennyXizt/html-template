@@ -9,10 +9,14 @@
   // decoding="async" — не блокирует отрисовку страницы
   //
   // Пример использования компонента:
-  // <\%- include('Image.ejs', {
+  // <\%- include('externe/components/Image/Image.ejs', {
   //        image_component: {
-  //          block: 'blockName',
-  //          class: 'className',
+  //           this: {
+  //             parent: 'Parent',
+  //             class: ['childClass'],
+  //             style: ['customStyle'],
+  //             dataAttribute: ['customDataAttributes']
+  //         },
   //          img: {
   //              src: 'src',
   //              alt: 'alt',
@@ -39,12 +43,16 @@
         (typeof image_component.this !== 'undefined' && image_component.this) &&
         (typeof image_component.this.parent !== 'undefined' && image_component.this.parent)
     ) {
-        thisClass = `class=${image_component.parent}__image`
+        thisClass = `class='${image_component.this.parent}__image'`
     } else if(
         (typeof image_component.this !== 'undefined' && image_component.this) &&
         (typeof image_component.this.class !== 'undefined' && image_component.this.class)
     ) {
-        thisClass = `${image_component.this.class}`
+        if(typeof image_component.this.class === 'string') {
+			thisClass = `class='${image_component.this.class}'`
+		} else if(typeof image_component.this.class === 'object') {
+            thisClass = `class='${image_component.this.class.join(' ')}'`
+		}
     }
 
     var displayType = undefined
@@ -76,7 +84,11 @@
 		(typeof image_component.this !== 'undefined' && image_component.this) &&
 		(typeof image_component.this.style !== 'undefined' && image_component.this.style)
 	) {
-		thisStyles = `style='${image_component.this.style}'`
+		if(typeof image_component.this.style === 'string') {
+			thisStyles = `style='${image_component.this.style}'`
+		} else if(typeof image_component.this.style === 'object') {
+			thisStyles = `style='${image_component.this.style.join(' ')}'`
+		}
 	}
 
     var thisDataAttributes = undefined
@@ -100,7 +112,7 @@
     (typeof image_component !== 'undefined' && image_component) &&
     (typeof displayType !== 'undefined' && displayType)
 ) { %>
-    <figure <%=thisDataAttributes%> <%=thisClass%> <%-thisStyles%>>
+    <figure <%=thisDataAttributes%> <%-thisClass%> <%-thisStyles%>>
         <% if(displayType === 'picture') { %>
             <picture>
                 <% for(const source of image_component.images) { %>

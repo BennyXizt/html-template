@@ -1,3 +1,18 @@
+<%
+// Пример вызова в шаблоне (EJS):
+//
+// <\%- include('externe/components/Burger/Burger.ejs', { 
+//	burger_component: {
+//		this: {
+//			parent: 'parentClass',
+//			class: ['childClass'],
+//			tag: 'button',
+//			style: ['customStyle'],
+//			dataAttribute: ['customDataAttributes'], 
+//		}
+//	}
+//	}) %>
+%>
 <% 
     if(typeof burger_component === 'undefined' || !burger_component) {
         return
@@ -13,15 +28,19 @@
         (typeof burger_component.this !== 'undefined' && burger_component.this) &&
         (typeof burger_component.this.class !== 'undefined' && burger_component.this.class)
     ) {
-        thisClass = `${burger_component.this.class} burger`
+        if(typeof burger_component.this.class === 'string') {
+			thisClass = `${burger_component.this.class} burger`
+		} else if(typeof burger_component.this.class === 'object') {
+			thisClass = `${burger_component.this.class.join(' ')} burger`
+		}
     }
 
-    var thisType = 'button'
+    var thisTag = 'button'
 	if(
 		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
-		(typeof burger_component.this.type !== 'undefined' && burger_component.this.type)
+		(typeof burger_component.this.tag !== 'undefined' && burger_component.this.tag)
 	) {
-		thisType = burger_component.this.type
+		thisTag = burger_component.this.tag
 	}
 
     var thisStyles = undefined
@@ -29,7 +48,11 @@
 		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
 		(typeof burger_component.this.style !== 'undefined' && burger_component.this.style)
 	) {
-		thisStyles = `style='${burger_component.this.style}'`
+		if(typeof burger_component.this.style === 'string') {
+			thisStyles = `style='${burger_component.this.style}'`
+		} else if(typeof burger_component.this.style === 'object') {
+			thisStyles = `style='${burger_component.this.style.join(' ')}'`
+		}
 	}
 
     var thisDataAttributes = undefined
@@ -48,6 +71,6 @@
 	}
 %>
 
-<<%=thisType%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
+<<%=thisTag%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
     <span></span>
-</<%=thisType%>>
+</<%=thisTag%>>

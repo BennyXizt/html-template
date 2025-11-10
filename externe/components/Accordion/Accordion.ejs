@@ -10,10 +10,10 @@
 // Accordion({
 //     this: {
 //		 parent: 'parentClass',
-//		 class: 'childClass',
-//		 style: 'customStyle',
+//		 class: ['childClass'],
+//		 style: ['customStyle']
 //	   }  
-//     title: 'Подробнее' || {type:'h1-6', label:'Подробнее'},                                         // заголовок аккордиона (строка или объект с типом и текстом)
+//     title: 'Подробнее' || {tag:'h1-6', label:'Подробнее'},                                         // заголовок аккордиона (строка или объект с типом и текстом)
 //     body: 'Содержимое аккордиона' || [label:'Содержимое аккордиона',icon_component,link:'Ссылка'],  // контент (строка или массив объектов с label)
 //     icon: 'Пример иконки',                                                                          // имя иконки после title из спрайта (опционально)
 //     behaviour: 'default',                                                                           // режим поведения (например: default - одиночное раскрытие)                                                                                  
@@ -27,7 +27,7 @@
 //     this: {
 //		 parent: 'parentClass',
 //	   }  
-//     title: { type: 'h5', label: 'Заголовок' },
+//     title: { tag: 'h5', label: 'Заголовок' },
 //     body: [
 //       { label: 'СкрытаяИнформация', icon_component: {}, link: '#' }
 //     ],
@@ -57,7 +57,11 @@
         (typeof accordion_component.this !== 'undefined' && accordion_component.this) &&
         (typeof accordion_component.this.class !== 'undefined' && accordion_component.this.class)
     ) {
-        thisClass = `${accordion_component.this.class} accordion`
+        if(typeof accordion_component.this.class === 'string') {
+			thisClass = `${accordion_component.this.class} accordion`
+		} else if(typeof accordion_component.this.class === 'object') {
+			thisClass = `${accordion_component.this.class.join(' ')} accordion`
+		}
     }
 
     var thisStyles = undefined
@@ -65,7 +69,11 @@
 		(typeof accordion_component.this !== 'undefined' && accordion_component.this) &&
 		(typeof accordion_component.this.style !== 'undefined' && accordion_component.this.style)
 	) {
-		thisStyles = `style='${accordion_component.this.style}'`
+		if(typeof accordion_component.this.style === 'string') {
+			thisStyles = `style='${accordion_component.this.style}'`
+		} else if(typeof accordion_component.this.style === 'object') {
+			thisStyles = `style='${accordion_component.this.style.join(' ')}'`
+		}
 	}
 
     var thisDataAttributes = 'data-fsc-accordion'
@@ -104,9 +112,9 @@
                     <%= accordion_component.title%>
                 </h6>
             <% } else if(typeof accordion_component.title === 'object') { %>
-                <<%= accordion_component.title.type%> class="accordion__title">
+                <<%= accordion_component.title.tag%> class="accordion__title">
                     <%= accordion_component.title.label%>
-                </<%= accordion_component.title.type%>>
+                </<%= accordion_component.title.tag%>>
             <% } %>
             <% if(accordion_component.icon !== 'undefined' && accordion_component.icon) { %>
                 <svg class="accordion__icon">
