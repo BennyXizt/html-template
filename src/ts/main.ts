@@ -11,6 +11,8 @@ window.addEventListener('click', function(e) {
     
     if(burger)
         BurgerMenu(burger)
+
+
 })
 
 document.fonts.ready.then(async() => {
@@ -29,29 +31,58 @@ document.fonts.ready.then(async() => {
             .map(e => {
                 return {
                     func: e[1][`${e[0]}ClickArray`][0],
-                    elementSelector: e[1][`${e[0]}ClickArray`][1] || `[data-fsc-${e[0]}]`,
-                    identificator: e[0]
+                    elementSelector: e[1][`${e[0]}ClickArray`][1] || `[data-fsc-${e[0]}]`
                 }
             })
     
     const
+        onIntersectionModules = Object.fromEntries(
+             Array.from(loadedModules)
+            .filter(([k, e]) => typeof e[`${k}ObserverArray`] === 'object')
+            .map(([k, e]) => {
+                return [
+                    k,
+                    {
+                        func: e[`${k}ObserverArray`][0],
+                        elementSelector: e[`${k}ObserverArray`][1] || `[data-fsc-${k}]`
+                    }
+                ]
+            })
+        )
+
+    const
         onResizeModules = Array.from(loadedModules)
             .filter(([k, e]) => typeof e[`${k}OnResize`] === 'function')
             .map(e => [e[0], e[1][`${e[0]}OnResize`]])
+            
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const watchedModule = Array.from(entry.target.attributes)
+                .map(a => a.name)
+                .filter(name => /^data-fsc-[^-]+$/.test(name))
+                .map(name => name.slice('data-fsc-'.length))[0]
+
+            onIntersectionModules[watchedModule].func(entry, observer)
+        })
+    }, {
+        
+    })
+    
+    for(const element of Object.values(onIntersectionModules)) {
+        document.querySelectorAll(element.elementSelector).forEach(el => observer.observe(el))
+    }
 
     window.addEventListener('click', function(event) {
         onClickedModules.forEach(e => {
             const 
                 DOMElement: HTMLElement | null = (event.target as HTMLElement).closest(e.elementSelector)
                 
-            if(DOMElement) {
-                if(e.identificator === 'combobox') 
-                    e.func(event)
-                else
-                    e.func(DOMElement)
-            }
+            if(DOMElement)
+                e.func(DOMElement)
+            
         })
     })
+    
 
     window.addEventListener('resize', function(event) {
         onResizeModules.forEach(e => e[1]())
