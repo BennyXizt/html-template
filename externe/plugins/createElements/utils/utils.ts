@@ -130,8 +130,11 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
         }
         case 'layout': {
             ejsFileContent = 
-                `<%\n\n%>` + 
-                `\n\n<section class="layout__${componentName} ${componentName}">\n\t<div class="${componentName}__container container">` +
+                `<%\n` + 
+                `\tblockClass = '${componentName}'` + 
+                `\n%>` +
+                `\n\n<section class='layout__<%=blockClass%> <%=blockClass%>'>` +
+                `\n\t<div class='<%=blockClass%>__container container'>` +
                 `\n\n\t</div>\n</section>` 
             break
         }
