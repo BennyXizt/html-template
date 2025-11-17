@@ -30,6 +30,11 @@ function scrollClick(element: HTMLElement) {
         scrollBehaviour = element.getAttribute('data-fsc-scroll-behaviour'),
         scrollBlock = element.getAttribute('data-fsc-scroll-block')
 
+    if(!destination) {
+        console.warn('[SCROLL]: Destination = ', destination)
+        return
+    }
+
     const
         typisiertScrollBehaviour: ScrollBehavior = 
             scrollBehaviour === 'auto' || scrollBehaviour === 'smooth' || scrollBehaviour === 'instant' 
@@ -38,5 +43,5 @@ function scrollClick(element: HTMLElement) {
             scrollBlock === 'center' || scrollBlock === 'end' || scrollBlock === 'nearest' || scrollBlock === 'start' 
                 ?    scrollBlock : 'end'
                 
-    destination!.scrollIntoView({ behavior: typisiertScrollBehaviour, block: typisiertScrollBlock });
+    destination.scrollIntoView({ behavior: typisiertScrollBehaviour, block: typisiertScrollBlock });
 }
