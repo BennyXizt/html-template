@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import { config } from 'dotenv';
-import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './externe/plugins/watchFolder'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { resolve } from 'path'
+import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './externe/plugins/watchFolder'
+import { externe } from './externe/plugins/ejsUtils'
 
 config()
 
@@ -50,7 +51,8 @@ export default defineConfig({
         description: 'Default project description',
         keywords: 'vite, ejs, scss, javascript',
         author: 'Your Name'
-      }
+      },
+      externe
     }, {
       ejs: {
         views: [resolve(__dirname)]
@@ -61,15 +63,13 @@ export default defineConfig({
       outputDestination: {
          pages: {
            fileNameException: [
-            'test.ejs',
-            'externeComponents.ejs'
+            'test.ejs'
            ],
            fileDestination: `${__dirname}`
          },
          rest: {
            fileName: [
-            'test.ejs',
-            'externeComponents.ejs'
+            'test.ejs'
            ],
            fileDestination: `${__dirname}/externe/pages/`
          }
