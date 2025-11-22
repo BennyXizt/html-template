@@ -63,7 +63,7 @@
     }
 
 
-   var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...image_component, componentName: 'image'})
+   var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...image_component, componentName: ''})
             
 %>
 
@@ -72,7 +72,7 @@
     (typeof image_component !== 'undefined' && image_component) &&
     (typeof displayType !== 'undefined' && displayType)
 ) { %>
-    <figure <%-thisDataAttributes%> <%-thisClass%> <%-thisStyles%>>
+    <figure <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
         <% if(displayType === 'picture') { %>
             <picture>
                 <% for(const source of image_component.images) { %>
