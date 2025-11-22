@@ -15,7 +15,10 @@ import { MarqueeElementInterface } from "./types/plugin.interface"
 import type { MarqueeDirection } from "./types/plugin.type"
 
 const marqueeElements: MarqueeElementInterface[] = []
-let animationStarted = false
+let 
+    animationStarted = false,
+    prevWidth = window.innerWidth, 
+    prevHeight = window.innerHeight
 
 export function marqueeAutoload() {
     const elements = document.querySelectorAll('[data-fsc-marquee]') as NodeListOf<HTMLElement>
@@ -78,6 +81,13 @@ export function marqueeAutoload() {
 }
 
 export function marqueeOnResize() {
+    const currWidth = window.innerWidth
+    if(currWidth === prevWidth)
+        return
+    
+    prevWidth = currWidth
+
+    
     for (const marqueeElement of marqueeElements) { 
         const 
             root = marqueeElement.root,

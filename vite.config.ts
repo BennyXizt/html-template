@@ -63,13 +63,15 @@ export default defineConfig({
       outputDestination: {
          pages: {
            fileNameException: [
-            'test.ejs'
+            'test.ejs',
+            'externeComponents.ejs'
            ],
            fileDestination: `${__dirname}`
          },
          rest: {
            fileName: [
-            'test.ejs'
+            'test.ejs',
+            'externeComponents.ejs'
            ],
            fileDestination: `${__dirname}/externe/pages/`
          }

@@ -1,3 +1,26 @@
+/**
+ * combobox.ts
+ * Компонент динамического встраивания в target.
+ *
+ * Поддерживаемые атрибуты `data-fsc-combobox-*`:
+ * 
+ * Вешать на главный элемент
+ * - data-fsc-combobox-id — уникальный идентификатор элемента
+ * - data-fsc-combobox-collapsed — состояние открытия
+ * - data-fsc-combobox-prestyled — включение дефолтных стилей
+ * - data-fsc-combobox-prestyledtype — полные либо базовые дефолтные стили
+ * 
+ * Вешать не на всплывающий список
+ * - data-fsc-combobox (input, svg)
+ * - data-fsc-combobox-input-icon-dispose (svg)
+ * - data-fsc-combobox-input-icon-close (svg)
+ *  
+ * Вешать на список
+ * - data-fsc-combobox-item (ul -> li, ul -> li -> svg)
+ * - data-fsc-combobox-p-icon (svg)
+ */
+
+
 import type { ComboBoxSettings } from './types/plugin.interface'
 import { SearchType } from './types/plugin.enum'
 

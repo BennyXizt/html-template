@@ -83,7 +83,6 @@ document.fonts.ready.then(async() => {
         })
     })
     
-
     window.addEventListener('resize', function(event) {
         onResizeModules.forEach(e => e[1]())
     })

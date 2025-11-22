@@ -103,7 +103,7 @@
 	}
 %>
 
-<<%=thisTag%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
+<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
     <% if(typeof combobox_component.label !== 'undefined' && combobox_component.label) { %>
         <label for=<%=input_id%> class='combobox__label'><%=combobox_component.label%></label> 
     <% } %>

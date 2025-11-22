@@ -1,3 +1,14 @@
+/**
+ * accordion.ts
+ * Компонент аккордиона (расскрытие полного тескта при нажатии на заголовок).
+ *
+ * Поддерживаемые атрибуты `data-fsc-accordion-*`:
+ * - data-fsc-accordion — инициализирует элемент
+ * - data-fsc-accordion-summary — элемент заголовок
+ * - data-fsc-accordion-body — элемент скрытого текста
+ * - data-fsc-accordion-behaviour — тип поведения (default - одиночное раскрытие)
+ * - data-fsc-accordion-media-query — с какого диапазона в пикселях будет работать аккордион (min- max- width/height: 30px)
+ */
 
 let tempParticle: HTMLElement[] = []
 

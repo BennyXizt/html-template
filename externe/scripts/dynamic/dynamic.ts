@@ -1,3 +1,12 @@
+/**
+ * dynamic.ts
+ * Компонент динамического встраивания в target.
+ *
+ * Поддерживаемые атрибуты `data-fsc-dynamic-*`:
+ * - data-fsc-dynamic — инициализирует элемент, который при определенном media встраивается в target
+ * - data-fsc-dynamic-target — цель для вставки
+ * - data-fsc-dynamic-media-query — медиа запрос, по которому будет идти встраивание
+ */
 
 
 export function dynamicAutoload() {
@@ -38,9 +47,5 @@ export function dynamicAutoload() {
         })
         
     })
-    
-}
-
-function handleMedia() {
     
 }

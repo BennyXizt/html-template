@@ -18,59 +18,9 @@
         return
     }
        
-    var thisClass = 'burger'
-    if(
-        (typeof burger_component.this !== 'undefined' && burger_component.this) &&
-        (typeof burger_component.this.parent !== 'undefined' && burger_component.this.parent)
-    ) {
-        thisClass = `${burger_component.this.parent}__burger burger`
-    } else if(
-        (typeof burger_component.this !== 'undefined' && burger_component.this) &&
-        (typeof burger_component.this.class !== 'undefined' && burger_component.this.class)
-    ) {
-        if(typeof burger_component.this.class === 'string') {
-			thisClass = `${burger_component.this.class} burger`
-		} else if(typeof burger_component.this.class === 'object') {
-			thisClass = `${burger_component.this.class.join(' ')} burger`
-		}
-    }
-
-    var thisTag = 'button'
-	if(
-		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
-		(typeof burger_component.this.tag !== 'undefined' && burger_component.this.tag)
-	) {
-		thisTag = burger_component.this.tag
-	}
-
-    var thisStyles = undefined
-    if(
-		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
-		(typeof burger_component.this.style !== 'undefined' && burger_component.this.style)
-	) {
-		if(typeof burger_component.this.style === 'string') {
-			thisStyles = `style='${burger_component.this.style}'`
-		} else if(typeof burger_component.this.style === 'object') {
-			thisStyles = `style='${burger_component.this.style.join(' ')}'`
-		}
-	}
-
-    var thisDataAttributes = undefined
-    if(
-		(typeof burger_component.this !== 'undefined' && burger_component.this) &&
-		(typeof burger_component.this.dataAttribute !== 'undefined' && burger_component.this.dataAttribute)
-	) {
-		if(typeof burger_component.this.dataAttribute === 'string')
-        {
-            thisDataAttributes += ' ' + burger_component.this.dataAttribute
-        }
-        else if(typeof burger_component.this.dataAttribute === 'object')
-        {
-            thisDataAttributes += ' ' + burger_component.this.dataAttribute.join(' ')
-        }
-	}
+    var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...burger_component, componentName: 'burger'})
 %>
 
-<<%=thisTag%> <%=thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
+<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
     <span></span>
 </<%=thisTag%>>

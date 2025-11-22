@@ -38,23 +38,6 @@
         return
     }
 
-    var thisClass = ''
-    if(
-        (typeof image_component.this !== 'undefined' && image_component.this) &&
-        (typeof image_component.this.parent !== 'undefined' && image_component.this.parent)
-    ) {
-        thisClass = `class='${image_component.this.parent}__image'`
-    } else if(
-        (typeof image_component.this !== 'undefined' && image_component.this) &&
-        (typeof image_component.this.class !== 'undefined' && image_component.this.class)
-    ) {
-        if(typeof image_component.this.class === 'string') {
-			thisClass = `class='${image_component.this.class}'`
-		} else if(typeof image_component.this.class === 'object') {
-            thisClass = `class='${image_component.this.class.join(' ')}'`
-		}
-    }
-
     var displayType = undefined
     var image = undefined
     if(
@@ -79,32 +62,9 @@
         displayType = 'image'
     }
 
-    var thisStyles = undefined
-    if(
-		(typeof image_component.this !== 'undefined' && image_component.this) &&
-		(typeof image_component.this.style !== 'undefined' && image_component.this.style)
-	) {
-		if(typeof image_component.this.style === 'string') {
-			thisStyles = `style='${image_component.this.style}'`
-		} else if(typeof image_component.this.style === 'object') {
-			thisStyles = `style='${image_component.this.style.join(' ')}'`
-		}
-	}
 
-    var thisDataAttributes = ''
-    if(
-		(typeof image_component.this !== 'undefined' && image_component.this) &&
-		(typeof image_component.this.dataAttribute !== 'undefined' && image_component.this.dataAttribute)
-	) {
-		if(typeof image_component.this.dataAttribute === 'string')
-        {
-            thisDataAttributes += ' ' + image_component.this.dataAttribute
-        }
-        else if(typeof image_component.this.dataAttribute === 'object')
-        {
-            thisDataAttributes += ' ' + image_component.this.dataAttribute.join(' ')
-        }
-	}
+   var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...image_component, componentName: 'image'})
+            
 %>
 
 
@@ -112,7 +72,7 @@
     (typeof image_component !== 'undefined' && image_component) &&
     (typeof displayType !== 'undefined' && displayType)
 ) { %>
-    <figure <%=thisDataAttributes%> <%-thisClass%> <%-thisStyles%>>
+    <figure <%-thisDataAttributes%> <%-thisClass%> <%-thisStyles%>>
         <% if(displayType === 'picture') { %>
             <picture>
                 <% for(const source of image_component.images) { %>

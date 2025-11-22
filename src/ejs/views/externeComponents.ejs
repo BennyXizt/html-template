@@ -146,6 +146,22 @@
                 }
             }) %>
         </article>
+        <article data-fsc-dynamic data-fsc-dynamic-target="article._image" data-fsc-dynamic-media-query="max-width: 769px" class="script _dynamic">
+            <h1>Dynamic max-width: 769px</h1>
+            <%- include('externe/components/Image/Image.ejs', {
+                image_component: {
+                    this: {
+                        style: 'display: flex; justify-content: space-around;',
+                    },
+                    img: {
+                        src: 'https://shorthand.com/the-craft/raster-images/assets/5kVrMqC0wp/sh-unsplash_5qt09yibrok-4096x2731.jpeg',
+                        alt: 'image here',
+                        width: '30px',
+                        height: '30px'
+                    }
+                }
+            }) %>
+        </article>
     </div>
     <script type="module" src="/src/ts/main.ts"></script>
 </body>
