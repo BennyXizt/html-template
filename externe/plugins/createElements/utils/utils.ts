@@ -61,7 +61,7 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
             `\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n` +
             `\t\treturn\n` +
             `\t}\n\n` +
-            `\tvar {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...TE_component, componentName: '${componentName}'})\n` +
+            `\tvar {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...${componentName}_component, componentName: '${componentName}'})\n` +
             `%>\n\n` +
 
             `<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>\n\n` +
