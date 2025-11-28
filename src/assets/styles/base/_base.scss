@@ -9,27 +9,40 @@
   background-color: map.get($BASE, background_color);
 }
 
-body {
-    &.active {
-        overflow: hidden;
-        touch-action: none;
-        overscroll-behavior: none;
+textarea,
+input {
+  &::placeholder {
+    transition: opacity .3s ease-in-out;
+  }
 
-        header {
-          z-index: 2;
-        }
-
-        &::before {
-          content: "";
-              background: rgba(0,0,0, .85);
-              width: 100dvw;
-              height: 100dvh;
-              position: absolute;
-              top: 0;
-              left: 0;
-              z-index: 1;
-        }
+  &:focus {
+    &::placeholder {
+      opacity: 0;
     }
+  }
+}
+
+body {
+  &.active {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+
+    header {
+      z-index: 2;
+    }
+
+    &::before {
+      content: "";
+        background: rgba(0,0,0, .85);
+        width: 100dvw;
+        height: 100dvh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+  }
 }
 
 .wrapper {
