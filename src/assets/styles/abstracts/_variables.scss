@@ -23,11 +23,9 @@ $BASE: (
     font_size: 16px,
     font_weight: 400,
     line_height: 1,
-    font_family: ('Chillax', sans-serif),
-    // main_color: rgba(218, 197, 167, .60),
+    // font_family: ('Chillax', sans-serif),
     main_color: rgb(0, 0, 0),
-    // background_color: #0e0e0e,
-    background_color: #ffffff,
+    // background_color: #ffffff,
     container_padding_x: (15px * 2),
     min_width: 320px,
     max_width: 1920px
@@ -46,6 +44,14 @@ $BURGER: (
 
 $COLORS: (
     base: map.get($BASE, main_color)
+);
+
+$ANIMATIONSPEEDS: (
+    base: .5s,
+);
+
+$ZINDEXES: (
+    immortal: 5
 );
 // Custom
 $FONTS: ();

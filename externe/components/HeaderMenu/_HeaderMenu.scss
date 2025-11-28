@@ -10,7 +10,7 @@
     }
     &__link {
         position: relative;
-        transition: color .5s ease-in-out;
+        transition: color map.get($ANIMATIONSPEEDS, base) ease-in-out;
 
         &::after {
             content: "";
@@ -19,7 +19,7 @@
             left: 50%;
             width: 0;
             height: 0.5px;
-            transition: .5s ease-in-out;
+            transition: map.get($ANIMATIONSPEEDS, base) ease-in-out;
             transition-property: width, left, background-color;           
             background-color: map.get($BASE, main_color);
         }
@@ -37,14 +37,14 @@
     }
     &.active {
        &::before {
-        content: "";
+            content: "";
             background: rgba(0,0,0, .85);
             width: 100dvw;
             height: 100dvh;
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: map.get($ZINDEXES, immortal);
        }
        .menu__body {
             transform: translate3d(0,0,0);
@@ -62,7 +62,7 @@
             position: absolute;
             top: 100%;
             right: 0;
-            z-index: 1;
+            z-index: map.get($ZINDEXES, immortal);
             transform: translate3d(100dvw,0,0);
             transition: transform var(--animation-speed) ease-in-out;
             will-change: transform;

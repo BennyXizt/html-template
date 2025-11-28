@@ -48,7 +48,7 @@
     }
 
     &.active {       
-        z-index: 4;
+        z-index: map.get($ZINDEXES, immortal);
         @mixin combo-animation($side) {
             @if $side !=middle {
                 $animation-move: burger-active-move-#{$side};
