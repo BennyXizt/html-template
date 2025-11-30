@@ -8,8 +8,6 @@ require __DIR__ . '/phpmailer/src/SMTP.php';
 
 header('Content-Type: application/json');
 
-$mail = new PHPMailer(true);
-
 $authUsername = 'you@example.com';
 $authPassword = 'password';
 $authHost = 'smtp.gmail.com';
@@ -20,6 +18,8 @@ $email = $_POST['email'] ?? $authUsername;
 $message = $_POST['message'] ?? 'Test Message';
 $sendTo = 'send@example.com';
 
+$mail = new PHPMailer(true);
+
 $mail->isSMTP();
 $mail->Host       = $authHost;
 $mail->SMTPAuth   = true;
@@ -28,8 +28,11 @@ $mail->Password   = $authPassword;
 $mail->SMTPSecure = 'tls';
 $mail->Port       = 587;
 
+if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $mail->addReplyTo($email, $name);
+}
+
 $mail->setFrom($authUsername, $name);
-$mail->addReplyTo($email, $name); 
 $mail->addAddress($sendTo);
 
 $mail->Subject = $subject;
@@ -38,6 +41,6 @@ $mail->Body    = $message;
 try {
     $mail->send();
     echo json_encode(['status' => 'ok']);
-} catch (\PHPMailer\PHPMailer\Exception $e) {
+} catch (Exception $e) {
     echo json_encode(['status' => 'error', 'error' => $mail->ErrorInfo]);
 }
