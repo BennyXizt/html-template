@@ -51,6 +51,12 @@ document.fonts.ready.then(async() => {
         )
 
     const
+        onSubmitModules = Array.from(loadedModules)
+            .filter(([k, e]) => typeof e[`${k}OnSubmit`] === 'function')
+            .map(e => [e[0], e[1][`${e[0]}OnSubmit`]])
+
+
+    const
         onResizeModules = Array.from(loadedModules)
             .filter(([k, e]) => typeof e[`${k}OnResize`] === 'function')
             .map(e => [e[0], e[1][`${e[0]}OnResize`]])
@@ -85,6 +91,10 @@ document.fonts.ready.then(async() => {
     
     window.addEventListener('resize', function(event) {
         onResizeModules.forEach(e => e[1]())
+    })
+
+    window.addEventListener('submit', function(event) {
+        onSubmitModules.forEach(e => e[1](event))
     })
     
 })
