@@ -6,7 +6,7 @@
 @function generateClamp($list, $reverse: null) {
     $restriction: $HEADERS_CLAMP_WIDTH;
     $important: null;
-
+    
     @if meta.type-of(list.nth($list, 1)) == 'number' and meta.type-of(list.nth($list, 2)) == 'number' {
             $max: list.nth($list, 1);
             $min: list.nth($list, 2);
@@ -68,7 +68,7 @@
         @return if($important == '!important', $tempFinalValue !important,  $tempFinalValue);
     }
 }
-@function calculateClamp($min, $max, $restriction, $reverse) {
+@function calculateClamp($min, $max, $restriction, $reverse: null) {
    @if not ($reverse) {
         $modificator: 0.01 * $restriction;
         $preffered: math.div($max, $modificator) + vw;
@@ -85,8 +85,6 @@
         $restriction: pxToRem($restriction);
         $mod: pxToRem($mod);
         $preferred: calc(#{$max} + (($restriction - 100vw) * #{$mod}));
-
-        
 
         @return clamp($max, $preferred, $min);
    }
