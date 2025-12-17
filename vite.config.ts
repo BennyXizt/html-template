@@ -7,9 +7,35 @@ import { externe } from './externe/plugins/ejsUtils'
 
 config()
 
-
-
 export default defineConfig({
+  base: './',
+  build: {
+    rollupOptions: {
+      output: {
+         // JS
+        entryFileNames: 'assets/js/[name].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+
+        // ассеты (шрифты, картинки)
+        assetFileNames: ({ name }) => {
+          if (!name) return 'assets/[name][extname]';
+          if (/\.(woff2?|ttf|otf|eot)$/.test(name)) {
+            return 'assets/fonts/[name][extname]';
+          }
+          if (/\.(png|jpe?g|gif|svg|webp|mp4|mov|webm)$/i.test(name)) {
+            return 'assets/media/[name][extname]';
+          }
+          if (/\.(css)$/.test(name)) {
+            return 'assets/styles/[name][extname]';
+          }
+          if (/\.html$/i.test(name)) {
+            return 'assets/pages/[name][extname]';
+          }
+          return 'assets/[name][extname]';
+        },
+      }
+    }
+  },
   server: {
     watch: {
       ignored: [
@@ -28,6 +54,13 @@ export default defineConfig({
     hmr: {
       overlay: false,     
       // timeout: 3000     
+    },
+    proxy: {
+      '/php': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/php/, '') // убираем /php из пути
+      }
     }
   },
   optimizeDeps: {
