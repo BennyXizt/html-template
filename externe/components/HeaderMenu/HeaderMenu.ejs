@@ -1,33 +1,63 @@
 <%
+// Пример вызова в шаблоне (EJS):
+//
+// <\%- include('externe/components/HeaderMenu/HeaderMenu.ejs', {
+//     header_menu_component: {
+//         activePage: 'activePage',
+//         list: [
+//             {'href': './index.html', 'anchor': 'HomePage'},
+//             {'anchor': 'Pages', 'submenus': [
+//                 {'href': '#', 'anchor': 'Page1'},
+//                 {'href': '#', 'anchor': 'Page2', 'submenus': [
+//                     {'href': '#', 'anchor': 'Page2_1', 'submenus': [
+//                         {'href': '#', 'anchor': 'Page3_1'},
+//                         {'href': '#', 'anchor': 'Page3_2'},
+//                     ]},
+//                     {'href': '#', 'anchor': 'Page2_2'}
+//                 ]},
+//                 {'href': '#', 'anchor': 'Page3'}
+//             ]},
+//         ]
+//     }
+// }) %>
+%>
+<%
     if(typeof header_menu_component === 'undefined' || !header_menu_component) {
         return
     }
-        
-    
+
+    function generateMenu(menu, blockClass='menu') {
+        if(menu.length == 0) return
+
+        let str = `\<ul class="${blockClass}__list">`
+        for(const item of menu) {
+            let activePageClass = ''
+            
+            if (
+                (typeof header_menu_component.activePage !== 'undefined' && header_menu_component.activePage) &&
+                (header_menu_component.activePage.toLowerCase() === item.anchor.toLowerCase())
+            ) {
+                activePageClass = `${blockClass}__link--active`
+            }
+            str += `\<li class="${item.submenus ? `${blockClass}__item ${blockClass}__item--submenu submenu-${blockClass}` : `${blockClass}__item`}">`
+            str += item.href ? 
+                `\<a href="${item.href}" class="${blockClass}__link ${activePageClass}">${item.anchor}\</a>` :
+                item.anchor
+            if(item.submenus && item.submenus.length > 0) {
+               str += generateMenu(item.submenus, 'submenu-menu')
+            }
+            str += '\</li>'
+        }
+        str += '\</ul>'
+
+        return str
+    }
 %>
 
 <div class="header__menu menu">
     <nav class="menu__body">
         <% if(typeof header_menu_component.list !== 'undefined' && header_menu_component.list) { %>
-            <ul class="menu__list">
-                <% for(const item of header_menu_component.list) { %>
-                    <% if(typeof header_menu_component.activePage !== 'undefined' && header_menu_component.activePage) { %>
-                        <% if(header_menu_component.activePage.toLowerCase() === item.anchor.toLowerCase()) { %>
-                            <li class="menu__item">
-                                <a href="<%= item.href %>" class="menu__link menu__link--active"><%= item.anchor %></a>
-                            </li>
-                        <% } else { %>
-                            <li class="menu__item">
-                                <a href="<%= item.href %>" class="menu__link"><%= item.anchor %></a>
-                            </li>
-                        <% } %>
-                    <% } else { %>
-                        <li class="menu__item">
-                            <a href="<%= item.href %>" class="menu__link"><%= item.anchor %></a>
-                        </li>
-                    <% } %>
-                <% } %>
-            </ul>
+            <%- generateMenu(header_menu_component.list) %>
         <% } %>
     </nav>
 </div>
