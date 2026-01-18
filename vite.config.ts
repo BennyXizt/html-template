@@ -11,6 +11,10 @@ export default defineConfig({
   base: './',
   build: {
     rollupOptions: {
+      input: {
+        main: 'index.html',
+        // остальные страницы для генерации итогового html
+      },
       output: {
          // JS
         entryFileNames: 'assets/js/[name].js',
