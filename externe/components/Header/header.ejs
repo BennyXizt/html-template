@@ -37,9 +37,12 @@
                         {'href': '#', 'anchor': 'PAGE'},
                         {'href': '#', 'anchor': 'PAGE'},
                         {'href': '#', 'anchor': 'PAGE'},
-                        {'href': '#', 'anchor': 'PAGE'},
+                        {'href': '#', 'anchor': 'PAGE', 'submenus': [
+                            {'href': '', 'anchor': 'SUBPAGE'},
+                            {'href': '', 'anchor': 'SUBPAGE'},
+                        ]}
                     ],
-                    activePage: header_component.activePage
+                    activePage: header_component.activePage ?? ''
                 }
             }) %>
             <%- include('externe/components/Burger/Burger.ejs', {

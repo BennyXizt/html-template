@@ -7,11 +7,17 @@ import { autoloader } from '~/scripts/autoloader/autoloader'
 
 window.addEventListener('click', function(e) {
     const 
-        burger: HTMLElement | null = (e.target as HTMLElement).closest('.burger')
+        burger: HTMLElement | null = (e.target as HTMLElement).closest('.burger'),
+        submenu = (e.target as HTMLElement).closest('.submenu-menu span')
+
     
     if(burger)
         BurgerMenu(burger)
 
+    if(submenu)
+        displaySubmenu(submenu)
+    else 
+        closeSubmenu()
 
 })
 
@@ -55,7 +61,6 @@ document.fonts.ready.then(async() => {
             .filter(([k, e]) => typeof e[`${k}OnSubmit`] === 'function')
             .map(e => [e[0], e[1][`${e[0]}OnSubmit`]])
 
-
     const
         onResizeModules = Array.from(loadedModules)
             .filter(([k, e]) => typeof e[`${k}OnResize`] === 'function')
@@ -98,3 +103,36 @@ document.fonts.ready.then(async() => {
     })
     
 })
+
+function displaySubmenu(target) {
+    const 
+        parent = target.parentElement,
+        ul = parent.querySelector('ul')
+
+    closeSubmenu(target)
+    
+    target.classList.toggle('active')
+    ul.classList.toggle('active')
+
+    
+    
+}
+function closeSubmenu(target = null) {
+    if(!target) {
+        document.querySelectorAll('ul.active').forEach(e => {
+            e.classList.remove('active')
+        })
+        return
+    }
+    else {
+        const 
+            parent = target.parentElement,
+            ul = parent.querySelector('ul')
+            
+        parent.querySelectorAll('.active').forEach(e => {
+            if(!e.isSameNode(target) && !e.isSameNode(ul))
+                e.classList.remove('active')
+        })
+        
+    }
+}
