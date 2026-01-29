@@ -32,14 +32,18 @@
             <% } %>
             <%- include('externe/components/HeaderMenu/HeaderMenu.ejs', {
                 header_menu_component: {
+                    activePage: header_component.active ?? '',
                     list: [
                         {'href': '#', 'anchor': 'PAGE'},
                         {'href': '#', 'anchor': 'PAGE'},
                         {'href': '#', 'anchor': 'PAGE'},
                         {'href': '#', 'anchor': 'PAGE'},
                         {'href': '#', 'anchor': 'PAGE'},
-                    ],
-                    activePage: header_component.activePage
+                        {'href': '#', 'anchor': 'PAGESUBMENU', submenus: [
+                            {'href': '#', 'anchor': 'SUBPAGE'},
+                            {'href': '#', 'anchor': 'SUBPAGE'},
+                        ]},
+                    ]
                 }
             }) %>
             <%- include('externe/components/Burger/Burger.ejs', {

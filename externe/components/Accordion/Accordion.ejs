@@ -129,7 +129,13 @@
         <% if(typeof accordion_component.body === 'object') { %>
             <% for(const item of accordion_component.body) { %>
                 <li>
+                    <% if(item.link !== 'undefined' && item.link) { %>
+                        <a href="<%= item.link%>">
+                    <% } %>
                     <%= item.label %>
+                    <% if(item.link !== 'undefined' && item.link) { %>
+                        </a>
+                    <% } %>
                 </li>
             <% } %>
         <% } %>
