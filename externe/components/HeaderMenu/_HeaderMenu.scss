@@ -103,7 +103,7 @@
         transition-property: transform;
         display: flex;
         flex-flow: column nowrap;
-        // align-items: flex-end;
+        align-items: flex-end;
 
         &.active {
             overflow: unset;

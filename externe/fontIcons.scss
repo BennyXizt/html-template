@@ -1,27 +1,27 @@
  h1 {
-     text-align: center;
+    text-align: center;
  }
 
  svg {
-     color: rgb(194, 0, 0);
-     width: 30px;
-     height: 30px;
+    color: rgb(194, 0, 0);
+    width: 30px;
+    height: 30px;
  }
 
  ul {
-     display: flex;
-     flex-flow: row wrap;
-     gap: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 10px;
  }
 
  li {
-     display: grid;
-     align-items: center;
-     justify-items: center;
-     grid-template-columns: 30px 400px;
-     border: 1px solid black;
-     padding: 12px;
-     font-weight: bold;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: 30px 400px;
+    border: 1px solid black;
+    padding: 12px;
+    font-weight: bold;
  }
 
  .icon {
