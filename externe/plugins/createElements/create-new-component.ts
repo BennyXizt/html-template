@@ -8,7 +8,7 @@ const rl = readline.createInterface({
   output: process.stdout
 })
 
-rl.question('Придумайте название компонента: ', (componentName) => {
+rl.question('Придумайте название компонента: ', (componentName: string) => {
   const 
     ejsDir = resolve(process.cwd(), "src/ejs"),
     scssDir = resolve(process.cwd(), "src/assets/styles"),

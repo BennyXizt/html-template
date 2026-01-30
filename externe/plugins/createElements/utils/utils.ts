@@ -1,6 +1,11 @@
 
 
-export function updateMainSCSS({scssDir, blockType, componentName, fs}) {
+export function updateMainSCSS({scssDir, blockType, componentName, fs}: {
+    scssDir: string,
+    blockType: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
     let fileContent: string
 
     const 
@@ -25,9 +30,15 @@ export function updateMainSCSS({scssDir, blockType, componentName, fs}) {
     fs.writeFileSync(outputFile, fileContent, 'utf-8')  
 }
 
-export function createEJSFile({ejsDir, blockType, componentName, fs}) {
-    let ejsFileContent,
-    formattedComponentName = componentName
+export function createEJSFile({ejsDir, blockType, componentName, fs}: {
+    ejsDir: string,
+    blockType: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
+    let 
+        ejsFileContent: string,
+        formattedComponentName = componentName
     const ejsFile = `${ejsDir}/${blockType}/${componentName}.ejs`
 
     if(componentName.includes('-')) {
@@ -49,6 +60,7 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
             `//\t\t\tparent: 'parentClass',\n` +
             `//\t\t\tblock: 'childBlockClass',\n` +
             `//\t\t\tclass: ['childClass'],\n` +
+            `//\t\t\tid: ['childID'],\n` +
             `//\t\t\ttag: 'div',\n` +
             `//\t\t\tstyle: ['customStyle'],\n` +
             `//\t\t\tdataAttribute: ['customDataAttributes'], \n` +
@@ -61,10 +73,10 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
             `\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n` +
             `\t\treturn\n` +
             `\t}\n\n` +
-            `\tvar {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...${componentName}_component, componentName: '${componentName}'})\n` +
+            `\tvar {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...${componentName}_component, componentName: '${componentName}'})\n` +
             `%>\n\n` +
 
-            `<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>\n\n` +
+            `<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>\n\n` +
             `</<%=thisTag%>>`
             break
         }
@@ -78,13 +90,20 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}) {
                 `\n\n\t</div>\n</section>` 
             break
         }
+        default:
+            throw new Error(`Unknown blockType: ${blockType}`)
     }
 
     fs.mkdirSync(`${ejsDir}/${blockType}`, { recursive: true })
     fs.writeFileSync(ejsFile, ejsFileContent, 'utf-8')
 }
 
-export function createSCSSFile({scssDir, blockType, componentName, fs}) {
+export function createSCSSFile({scssDir, blockType, componentName, fs}: {
+    scssDir: string,
+    blockType: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
     const
         scssFile = `${scssDir}/${blockType}/_${componentName}.scss`,
         scssFileContent = 
@@ -95,7 +114,11 @@ export function createSCSSFile({scssDir, blockType, componentName, fs}) {
     fs.writeFileSync(scssFile, scssFileContent, 'utf-8')  
 }
 
-export function updateTestEJSFile({ejsDir, componentName, fs}) {
+export function updateTestEJSFile({ejsDir, componentName, fs}: {
+    ejsDir: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
     const
         data = fs.readFileSync(`${ejsDir}/views/test.ejs`, 'utf-8'),
         ejsFile = `${ejsDir}/views/test.ejs`,
@@ -133,7 +156,12 @@ export function updateTestEJSFile({ejsDir, componentName, fs}) {
     fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
 }
 
-export function updateMainEJSFile({ejsDir, componentName, rootPage, fs}) {
+export function updateMainEJSFile({ejsDir, componentName, rootPage, fs}: {
+    ejsDir: string,
+    componentName: string,
+    rootPage: string,
+    fs: typeof import('fs')
+}) {
     const
         data = fs.readFileSync(`${ejsDir}/views/${rootPage}`, 'utf-8'),
         ejsFile = `${ejsDir}/views/${rootPage}`,

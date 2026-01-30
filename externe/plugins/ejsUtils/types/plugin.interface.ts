@@ -5,6 +5,7 @@ export interface Component {
         parent?: string,
         block?: string,
         class?: string | string[],
+        id?: string | string[],
         tag?: string,
         style?: string | string[],
         dataAttribute?: string | string[]

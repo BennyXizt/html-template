@@ -22,6 +22,13 @@ function setupEJSComponent(component: Component) {
 	} 
     else thisClass = blockClass
 
+	let thisID = ''
+	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.id !== 'undefined' && component.this.id)) {
+		if(typeof component.this.id === 'string') 
+            thisID = `id='${component.this.id}'`
+		else if(typeof component.this.id === 'object') 
+            thisID = `id='${component.this.id.join(' ')}'`
+	}
 
 	let thisTag = 'div'
 	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.tag !== 'undefined' && component.this.tag))
@@ -43,5 +50,5 @@ function setupEJSComponent(component: Component) {
 		    thisDataAttributes += ' ' + component.this.dataAttribute.join(' ')
 	}
 
-    return {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes}
+    return {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes}
 }

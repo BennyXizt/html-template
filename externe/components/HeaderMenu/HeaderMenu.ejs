@@ -64,14 +64,14 @@
                 item.anchor
             
             if(hasSubmenu) {
-                str += include('src/ejs/components/icon.ejs', {
-                    icon_component: {
-                        this: {
-                            parent: iconClass
-                        },
-                        name: 'ph_arrow-drop-down-line'
-                    }
-                })
+                // str += include('externe/components/Icon/Icon.ejs', {
+                //     icon_component: {
+                //         this: {
+                //             parent: iconClass
+                //         },
+                //         name: 'ph_arrow-drop-down-line'
+                //     }
+                // })
                 str += '\</span>'
                 str += generateMenu({
                     menu: item.submenus,
