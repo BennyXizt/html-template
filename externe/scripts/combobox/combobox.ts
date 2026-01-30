@@ -30,7 +30,7 @@ let
 
 export const comboboxClickArray = [comboboxClick, '[data-fsc-combobox-id]']
 
-function comboboxClick(event: Event) {
+function comboboxClick(_: HTMLElement, event: Event) {
     const 
         target = event.target as HTMLElement,
         liHTMLElement = target.closest('li[data-fsc-combobox-item]'),
@@ -227,4 +227,3 @@ function actionFilterList( { list, searchTerm, ul, searchType } : {
     
  }
 }
-

@@ -89,7 +89,7 @@ document.fonts.ready.then(async() => {
                 DOMElement: HTMLElement | null = (event.target as HTMLElement).closest(e.elementSelector)
                 
             if(DOMElement)
-                e.func(DOMElement)
+                e.func(DOMElement, event)
             
         })
     })
