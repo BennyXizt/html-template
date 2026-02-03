@@ -7,4 +7,5 @@ export interface MarqueeElementInterface {
     direction: MarqueeDirection
     gap: number
     childrensWidth: number
+    visible: boolean
 }

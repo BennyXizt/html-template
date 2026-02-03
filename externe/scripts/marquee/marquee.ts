@@ -16,9 +16,9 @@ import type { MarqueeDirection } from "./types/plugin.type"
 
 const marqueeElements: MarqueeElementInterface[] = []
 let 
-    animationStarted = false,
-    prevWidth = window.innerWidth, 
-    prevHeight = window.innerHeight
+    animationID: number | undefined = undefined
+
+export const marqueeObserverArray = [marqueeObserver, '[data-fsc-marquee]']
 
 export function marqueeAutoload() {
     const elements = document.querySelectorAll('[data-fsc-marquee]') as NodeListOf<HTMLElement>
@@ -69,25 +69,13 @@ export function marqueeAutoload() {
             root.appendChild(clone)
         }
         
-        marqueeElements.push({root, childrensWidth, gap, speed, offset, direction: typisiertDirection})
+        marqueeElements.push({root, childrensWidth, gap, speed, offset, direction: typisiertDirection, visible: false})
 
         root.setAttribute('data-fsc-marquee-initialized', 'true')
-    }
-
-    if (!animationStarted) {
-        animationStarted = true
-        requestAnimationFrame(step)
     }
 }
 
 export function marqueeOnResize() {
-    const currWidth = window.innerWidth
-    if(currWidth === prevWidth)
-        return
-    
-    prevWidth = currWidth
-
-    
     for (const marqueeElement of marqueeElements) { 
         const 
             root = marqueeElement.root,
@@ -138,27 +126,50 @@ export function marqueeOnResize() {
     }
 }
 
+export function marqueeObserver(entry: IntersectionObserverEntry, observer: IntersectionObserver) {
+    const el = entry.target as HTMLElement
+    const marquee = marqueeElements.find(m => m.root === el)
+
+    if (!marquee) return
+
+    marquee.visible = entry.isIntersecting
+
+    if (marquee.visible && !animationID) {
+        animationID = requestAnimationFrame(step)
+    }
+}
+
 function step() {
-    for (const marqueeElement of marqueeElements) {   
-        if(marqueeElement.direction === 'left') {
+    let hasVisible = false
+
+    for (const marqueeElement of marqueeElements) {
+        if (!marqueeElement.visible) continue
+
+        hasVisible = true
+
+        if (marqueeElement.direction === 'left') {
             marqueeElement.offset -= marqueeElement.speed / 1000
-        
+
             if (marqueeElement.offset < -marqueeElement.childrensWidth) {
                 marqueeElement.offset = marqueeElement.gap
             }
-
-            marqueeElement.root.style.transform = `translate3d(${marqueeElement.offset}px, 0, 0)`
         }
-        else if(marqueeElement.direction === 'right') {
+        else if (marqueeElement.direction === 'right') {
             marqueeElement.offset += marqueeElement.speed / 1000
-        
+
             if (marqueeElement.offset >= marqueeElement.gap) {
                 marqueeElement.offset = -marqueeElement.childrensWidth
             }
-
-            marqueeElement.root.style.transform = `translate3d(${marqueeElement.offset}px, 0, 0)`
         }
+
+        marqueeElement.root.style.transform =
+            `translate3d(${marqueeElement.offset}px, 0, 0)`
     }
-    requestAnimationFrame(step)
+
+    if (hasVisible) {
+        animationID = requestAnimationFrame(step)
+    } else {
+        animationID = undefined
+    }
 }
 
