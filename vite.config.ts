@@ -127,7 +127,8 @@ export default defineConfig({
       dummy: {
         destination:  `${__dirname}/externe/pages/`,
         fileName:  'fontIcons.html'
-      }
+      },
+      convertType: 0
     }),
     ViteWatchFontsFolderPlugin({
       relativePath: `${__dirname}/src/assets/fonts`,
