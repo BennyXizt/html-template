@@ -20,4 +20,14 @@
             visibility: visible;
         }
     }
+
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            [data-fsc-accordion-body] {
+                opacity: 1;
+                visibility: visible;
+                height: max-content;
+            }
+        }
+    }
 }
