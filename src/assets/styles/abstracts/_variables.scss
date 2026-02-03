@@ -5,7 +5,7 @@ $SETTINGS: (
     // Mobile first
     mobile_first: false,
     // pixels perfect
-    pixels_only: false,
+    pixels_only: true,
     // Тип адаптива контейнера
     // 1 = без брейкпоинтов
     // 2 = Boostrap сетка
@@ -13,7 +13,6 @@ $SETTINGS: (
 );
 
 $CONTAINER: $DEFAULT_CONTAINER;
-$DEFAULT_HEADERS: if(map.get($SETTINGS, mobile_first), $DEFAULT_HEADERS_MOBILE_FIRST, $DEFAULT_HEADERS_DESKTOP_FIRST);
 $HEADERS_CLAMP_WIDTH: $DEFAULT_HEADERS_CLAMP_WIDTH;
 
 $P: $DEFAULT_P;

@@ -1,3 +1,4 @@
 export const settings = {
-    watcherNeeded: true
+    watcherNeeded: true,
+    SVGConvertType: 0
 }

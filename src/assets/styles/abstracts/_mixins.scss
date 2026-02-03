@@ -7,10 +7,8 @@
 @mixin showFluid($initial, $min, $max, $important, $restriction, $clampedValue: null) {
     @if(not $clampedValue) {
         @if($important == '!important') {
-            & {
-                #{$initial}: pxToRem($min)!important;
-                #{$initial}: calculateClamp($min, $max, $restriction)!important;
-            }
+            #{$initial}: pxToRem($min)!important;
+            #{$initial}: calculateClamp($min, $max, $restriction)!important;
 
             @supports not (#{$initial}: clamp(1px, 1vw, 1px)) {
                 @include media(desktop) {
@@ -19,10 +17,8 @@
             }
         }
         @else {
-            & {
-                #{$initial}: pxToRem($min);
-                #{$initial}: calculateClamp($min, $max, $restriction);
-            }
+            #{$initial}: pxToRem($min);
+            #{$initial}: calculateClamp($min, $max, $restriction);
 
             @supports not (#{$initial}: clamp(1px, 1vw, 1px)) {
                 @include media(desktop) {
@@ -33,10 +29,8 @@
     }
     @else {
         @if($important == '!important') {
-            & {
-                #{$initial}: $min!important;
-                #{$initial}: $clampedValue!important;
-            }
+            #{$initial}: $min!important;
+            #{$initial}: $clampedValue!important;
 
             @supports not (#{$initial}: clamp(1px, 1vw, 1px)) {
                 @include media(desktop) {
@@ -45,10 +39,8 @@
             }
         }
         @else {
-            & {
-                #{$initial}: $min;
-                #{$initial}: $clampedValue;
-            }
+            #{$initial}: $min;
+            #{$initial}: $clampedValue;
 
             @supports not (#{$initial}: clamp(1px, 1vw, 1px)) {
                 @include media(desktop) {
@@ -189,6 +181,7 @@
 
 @mixin media($breakpoint, $type: min) {
   $size: map.get(map.get($CONTAINER, $breakpoint), width);
+  
   @if $size {
     @media (#{$type}-width: #{$size}) {
       @content;
@@ -199,10 +192,11 @@
 }
 
 @mixin text_adaptive($type, $map) {
-    $font_size: map.get($map, font_size);
+    $font_size_first: map.get($map, font_size_original);
+    $font_size_last: map.get($map, font_size_adaptive);
+
     $line_height: map.get($map, line_height);
-    $font_weight: map.get($map, font_weight);
-    $mediaType: if(map.get($SETTINGS, mobile_first), min, max);    
+    $font_weight: map.get($map, font_weight);  
 
     #{$type} {
         font-weight: $font_weight;
@@ -211,53 +205,13 @@
         hyphens: auto;
         text-wrap: pretty;
         text-wrap: balance;
-        @include rem(font-size, $font_size);
+        @include fluid(font-size, $font_size_first $font_size_last);
 
         @if not math.is-unitless($line_height) {
-            @include line-height($line_height, $font_size);
+            @include line-height($line_height, $font_size_first);
         }
         @else {
             line-height: $line_height;
         }
-    }
-
-    @supports (font-size: clamp(1rem, 2vw, 2rem)) {
-        $map_container: map.get($map, clamp);
-
-        @if($map_container != null) {
-            #{$type} {
-                $max: math.max(map.get(map.get($map, clamp), font_size), $font_size);
-                $min: math.min(map.get(map.get($map, clamp), font_size), $font_size);
-
-                $modificator: 0.01 * map.get(map.get($map, clamp), width);
-
-                $preffered: math.div($max, $modificator) + vw;
-                
-                $max: pxToRem($max);
-                $min: pxToRem($min);
-
-                font-size: clamp($min, $preffered, $max);
-            }      
-        }
-    }
-
-    @supports not (font-size: clamp(1rem, 2vw, 2rem)) {
-        $map_container: map.get($map, media);
-        
-        @if($map_container != null) {
-            #{$type} {
-                @each $media, $multiplier in map.get($map, media) {
-                    @include media($media, $mediaType) {                    
-                        @if math.is-unitless($multiplier) {
-                            @include rem(font-size, ($font_size * $multiplier));
-                        }
-                        @else {
-                            @include rem(font-size, $multiplier);
-                        }                    
-                    }
-                }
-            }
-        }
-       
     }
 } 
