@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { config } from 'dotenv';
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
+import { qrcode } from 'vite-plugin-qrcode'
 import { resolve } from 'path'
 import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './externe/plugins/watchFolder'
 import { externe } from './externe/plugins/ejsUtils'
@@ -13,7 +14,12 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        // остальные страницы для генерации итогового html
+        blog: 'blog.html',
+        about: 'about.html',
+        contact: 'contact.html',
+        services: 'services.html',
+        work: 'work.html',
+        worksingle: 'worksingle.html',
       },
       output: {
          // JS
@@ -81,6 +87,7 @@ export default defineConfig({
     postcss: {}
   },
   plugins: [
+     qrcode(),
      ViteEjsPlugin({
       head_component: {
         lang: 'en',
@@ -120,7 +127,7 @@ export default defineConfig({
       dummy: {
         destination:  `${__dirname}/externe/pages/`,
         fileName:  'fontIcons.html'
-      } 
+      }
     }),
     ViteWatchFontsFolderPlugin({
       relativePath: `${__dirname}/src/assets/fonts`,
