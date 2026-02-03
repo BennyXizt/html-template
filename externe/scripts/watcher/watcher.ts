@@ -3,8 +3,8 @@
  * Компонент Intersection Observer, позволяющий следить за появлением элемента в viewport Браузера.
  *
  * Поддерживаемые атрибуты `data-fsc-watcher-*`:
- * - data-fsc-watcher — инициализирует элемент как счетчик
- * - data-fsc-watcher-once — инициализирует элемент как счетчик
+ * - data-fsc-watcher — инициализирует элемент
+ * - data-fsc-watcher-once — элемент будет отслеживаем лишь один раз
  */
 
 export const watcherObserverArray = [watcherObserver, '[data-fsc-watcher]']
