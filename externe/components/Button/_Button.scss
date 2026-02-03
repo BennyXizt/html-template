@@ -7,7 +7,7 @@
     background-color: inherit;
     text-align: center;
 
-    @media (any-hover: hover) {
+    @media (hover: hover) and (pointer: fine) {
         &:hover {
 
         }

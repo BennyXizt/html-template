@@ -7,9 +7,13 @@
  * - data-fsc-watcher-once — элемент будет отслеживаем лишь один раз
  */
 
+import { settings } from "../../../settings"
 export const watcherObserverArray = [watcherObserver, '[data-fsc-watcher]']
 
 function watcherObserver(entry: IntersectionObserverEntry, observer: IntersectionObserver) {
+  if(!settings.watcherNeeded)
+    return
+
   const 
     el = entry.target as HTMLElement,
     isFinite = el.hasAttribute('data-fsc-watcher-once')
