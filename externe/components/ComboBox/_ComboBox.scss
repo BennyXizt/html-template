@@ -125,11 +125,13 @@
                         color: rgb(255, 71, 172);
                     }
 
-                    &:hover {
-                        background-color: rgb(255, 71, 172);
+                    @media (hover: hover) and (pointer: fine) {
+                        &:hover {
+                            background-color: rgb(255, 71, 172);
 
-                        span[data-fsc-combobox-highlited] {
-                            color: rgb(255, 255, 255);
+                            span[data-fsc-combobox-highlited] {
+                                color: rgb(255, 255, 255);
+                            }
                         }
                     }
                 }

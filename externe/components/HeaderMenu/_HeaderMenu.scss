@@ -27,7 +27,7 @@
         }
     }
 
-    @media (any-hover: hover) {
+    @media (hover: hover) and (pointer: fine) {
         &:hover {
             color: color.scale(map.get($BASE, main_color), $lightness: 100%);
             &::after {
@@ -147,7 +147,7 @@
         ));
     }
 
-    @media(any-hover: hover) {
+    @media(hover: hover) and (pointer: fine) {
         &:hover {
             > .submenu-menu {
                 &__list {
