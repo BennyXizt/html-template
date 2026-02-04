@@ -1,7 +1,8 @@
 import ffmpeg from 'fluent-ffmpeg'
 import { basename} from 'node:path'
+import { ConvertVideo } from '../types/plugin.type'
 
-export function convertToMP4scale320({inputFile, outputFile}) {
+export function convertToMP4scale320({inputFile, outputFile}: ConvertVideo) {
     ffmpeg(inputFile)
         .output(outputFile)
         .videoCodec('libx264')
@@ -19,7 +20,7 @@ export function convertToMP4scale320({inputFile, outputFile}) {
         .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
         .run()
 }
-export function convertToMP4scale480({inputFile, outputFile}) {
+export function convertToMP4scale480({inputFile, outputFile}: ConvertVideo) {
     ffmpeg(inputFile)
         .output(outputFile)
         .videoCodec('libx264')
@@ -37,7 +38,7 @@ export function convertToMP4scale480({inputFile, outputFile}) {
         .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
         .run()
 }
-export function convertToMP4scale720({inputFile, outputFile}) {
+export function convertToMP4scale720({inputFile, outputFile}: ConvertVideo) {
     ffmpeg(inputFile)
         .output(outputFile)
         .videoCodec('libx264')
@@ -55,7 +56,7 @@ export function convertToMP4scale720({inputFile, outputFile}) {
         .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
         .run()
 }
-export function convertToMP4scale1080({inputFile, outputFile}) {
+export function convertToMP4scale1080({inputFile, outputFile}: ConvertVideo) {
     ffmpeg(inputFile)
         .output(outputFile)
         .videoCodec('libx264')
@@ -76,7 +77,7 @@ export function convertToMP4scale1080({inputFile, outputFile}) {
         .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
         .run()
 }
-export function convertToWEBMscale320({inputFile, outputFile}) {
+export function convertToWEBMscale320({inputFile, outputFile}: ConvertVideo) {
     ffmpeg(inputFile)
         .output(outputFile)
         .videoCodec('libvpx-vp9')        
@@ -95,7 +96,7 @@ export function convertToWEBMscale320({inputFile, outputFile}) {
         .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
         .run()
 }
-export function convertToWEBMscale480({inputFile, outputFile}) {
+export function convertToWEBMscale480({inputFile, outputFile}: ConvertVideo) {
     ffmpeg(inputFile)
         .output(outputFile)
         .videoCodec('libvpx-vp9')        
@@ -113,4 +114,25 @@ export function convertToWEBMscale480({inputFile, outputFile}) {
         .on('end', () => console.log('Файл WebM успешно создан'))
         .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
         .run()
+}
+export function convertToMOV({inputFile, outputFile}: ConvertVideo) {
+  ffmpeg(inputFile)
+    .output(outputFile)
+    .outputOptions([
+    //   '-c copy',                 // ❌ Копирование без перекодирования
+      '-map_metadata -1',        // ❌ Удаляет все метаданные (глобальные и потоковые)
+      '-map_chapters -1',        // ❌ Удаляет главы
+      '-metadata title=',        // ❌ Убирает название
+      '-metadata comment=',      // ❌ Убирает комментарий
+      '-metadata author=',       // ❌ Убирает автора
+      '-metadata encoder=',      // ❌ Убирает информацию о кодеке/энкодере
+      '-metadata creation_time=', // ❌ Убирает дату создания
+    //   '-an'                  // убираем аудио
+    ])
+    .on('progress', (progress) =>
+      console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`)
+    )
+    .on('end', () => console.log('Файл без метаданных, качество сохранено'))
+    .on('error', (err) => console.log('Ошибка: ', err))
+    .run();
 }
