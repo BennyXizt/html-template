@@ -7,17 +7,20 @@
         @include rem(column-gap, 10px);
     }
     [data-fsc-accordion-body] {
-        height: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+        max-height: 0;
         opacity: 0;
         visibility: hidden;
         transition: .3s ease-in-out;
-        transition-property: height, opacity, visibility, padding;
-        overflow: hidden;
+        transition-property: max-height, transform, opacity, visibility;
     }
+
     &[data-fsc-accordion-active] {
         [data-fsc-accordion-body] {
             opacity: 1;
             visibility: visible;
+            transform: scaleY(1);
         }
     }
 
@@ -26,7 +29,8 @@
             [data-fsc-accordion-body] {
                 opacity: 1;
                 visibility: visible;
-                height: max-content;
+                transform: scaleY(1);
+                max-height: 500px;
             }
         }
     }
