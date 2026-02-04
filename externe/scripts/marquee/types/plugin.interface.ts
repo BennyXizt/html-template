@@ -6,6 +6,7 @@ export interface MarqueeElementInterface {
     offset: number
     direction: MarqueeDirection
     gap: number
-    childrensWidth: number
-    visible: boolean
+    visible: boolean,
+    dimention: number,
+    animationID: number | undefined
 }
