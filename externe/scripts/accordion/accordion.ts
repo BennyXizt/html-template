@@ -45,6 +45,7 @@ function accordionClick(element: HTMLElement) {
 
     if(accordion.hasAttribute('data-fsc-accordion-active')) {
         hiddenPart.style.maxHeight = cloneHeight
+        hiddenPart.style.height = 'max-content'
 
         if(dataBehaviourType !== 'default')
             tempParticle.push(hiddenPart!)
