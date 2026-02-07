@@ -14,8 +14,9 @@
     display: block;
     position: relative;
     @include rem((
-        width:$width,
-        height:$height
+        width: $width,
+        height: $height,
+        flex: 0 0 $width
     ));
     background-color: transparent;
     cursor: pointer;
