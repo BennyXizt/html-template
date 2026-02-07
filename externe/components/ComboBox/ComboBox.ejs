@@ -37,42 +37,14 @@
         return
     }
 
-    var thisClass = 'combobox'
-    if(
-        (typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
-        (typeof combobox_component.this.parent !== 'undefined' && combobox_component.this.parent)
-    ) {
-        thisClass = `${combobox_component.this.parent}__combobox combobox`
-    } else if(
-        (typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
-        (typeof combobox_component.this.class !== 'undefined' && combobox_component.this.class)
-    ) {
-        if(typeof combobox_component.this.class === 'string') {
-			thisClass = `${combobox_component.this.class} combobox`
-		} else if(typeof combobox_component.this.class === 'object') {
-			thisClass = `${combobox_component.this.class.join(' ')} combobox`
-		}
+    if(typeof combobox_component.this === 'undefined') {
+        combobox_component.this = {
+            tag: 'article'
+        }
     }
+    
+    var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...combobox_component, componentName: 'accordion'})
 
-    var thisTag = 'article'
-	if(
-		(typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
-		(typeof combobox_component.this.tag !== 'undefined' && combobox_component.this.tag)
-	) {
-		thisTag = combobox_component.this.tag
-	}
-
-    var thisStyles = undefined
-    if(
-		(typeof combobox_component.this !== 'undefined' && combobox_component.this) &&
-		(typeof combobox_component.this.style !== 'undefined' && combobox_component.this.style)
-	) {
-        if(typeof combobox_component.this.style === 'string') {
-			thisStyles = `style='${combobox_component.this.style}'`
-		} else if(typeof combobox_component.this.style === 'object') {
-			thisStyles = `style='${combobox_component.this.style.join(' ')}'`
-		}
-	}
 
     var input_placeholder = undefined
     if(typeof combobox_component.placeholder !== 'undefined' && combobox_component.placeholder)
@@ -81,7 +53,7 @@
     }
 
     var input_id = `cb${Math.random().toString(36).slice(2, 8)}-${new Date().getTime()}`
-    var thisDataAttributes = `data-fsc-combobox-id=${input_id} data-fsc-combobox-collapsed=false`
+    thisDataAttributes += ` data-fsc-combobox-id=${input_id} data-fsc-combobox-collapsed=false`
     var input_prestyled = undefined
     if(typeof combobox_component.prestyled !== 'undefined' && combobox_component.prestyled)
     {
@@ -103,7 +75,7 @@
 	}
 %>
 
-<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>
+<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
     <% if(typeof combobox_component.label !== 'undefined' && combobox_component.label) { %>
         <label for=<%=input_id%> class='combobox__label'><%=combobox_component.label%></label> 
     <% } %>
