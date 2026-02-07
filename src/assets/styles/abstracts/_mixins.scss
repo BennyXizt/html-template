@@ -239,7 +239,6 @@
         hyphens: auto;
         text-wrap: pretty;
         text-wrap: balance;
-        @include fluid(font-size, $font_size_first $font_size_last);
 
         @if not math.is-unitless($line_height) {
             @include line-height($line_height, $font_size_first);
@@ -247,5 +246,7 @@
         @else {
             line-height: $line_height;
         }
+
+        @include fluid(font-size, $font_size_first $font_size_last);
     }
 } 
