@@ -21,8 +21,9 @@
 		return
 	}
 
-	if(typeof icon_component.this === 'undefined') {
+	if(typeof icon_component.this !== 'undefined') {
         icon_component.this = {
+			...icon_component.this,
             tag: 'svg'
         }
     }

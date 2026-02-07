@@ -37,9 +37,10 @@
         return
     }
 
-    if(typeof combobox_component.this === 'undefined') {
+    if(typeof combobox_component.this !== 'undefined') {
         combobox_component.this = {
-            tag: 'article'
+			...combobox_component.this,
+            tag: 'svg'
         }
     }
     
