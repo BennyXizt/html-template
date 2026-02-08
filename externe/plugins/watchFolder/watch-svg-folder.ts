@@ -53,9 +53,11 @@ function convertSVGToFile({ watchDir, filePath, nameOfTheOutputFile, translation
         pathArray = watchedFile.match(/<path (.+)>/g),
         circleArray = watchedFile.match(/<circle (.+)>/g),
         lineArray = watchedFile.match(/<line (.+)>/g),
+        rectArray = watchedFile.match(/<rect (.+)>/g),
+        ellipseArray = watchedFile.match(/<ellipse (.+)>/g),
         name = basename(filePath).slice(0, -4).toLowerCase().replace(/\s/g, '-'),
         destFile = `${watchDir}/${nameOfTheOutputFile}`,
-        rewriteFile = fs.readFileSync(destFile, 'utf-8'), 
+        rewriteFile = fs.existsSync(destFile) && fs.readFileSync(destFile, 'utf-8'), 
         isFileNotExistOrEmpty = !fs.existsSync(destFile) || fs.statSync(destFile).size === 0
 
     let fileContent = ''
@@ -66,7 +68,7 @@ function convertSVGToFile({ watchDir, filePath, nameOfTheOutputFile, translation
             `\n\t<defs>` +
             `\n\t\t<symbol id='${name}' viewBox='${viewbox}'>`
     }
-    else if(!rewriteFile.includes(name)) {
+    else if(rewriteFile && !rewriteFile.includes(name)) {
         const
             index = rewriteFile.lastIndexOf('</defs>')
             
@@ -80,48 +82,87 @@ function convertSVGToFile({ watchDir, filePath, nameOfTheOutputFile, translation
     }
 
     if(pathArray) {
-        for(const path of pathArray) {
+        for (const item of pathArray) {
             const 
-                d = path.match(/d="([Mm][^"]+")/g),
+                d = item.match(/d="([Mm][^"]+")/g),
 
-                stroke = /stroke=/.test(path),
-                strokeWidth = path.match(/stroke-width="([^"]+)"/g),
-                strokeOpacity = path.match(/stroke-opacity="([^"]+)"/g)
+                transform = item.match(/transform="([^"]+)"/g),
+                stroke = /stroke=/.test(item),
+                strokeWidth = item.match(/stroke-width="([^"]+)"/g),
+                strokeOpacity = item.match(/stroke-opacity="([^"]+)"/g)
             
             fileContent += 
-                `\n\t\t\t<path ${d} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''}/>`
+                `\n\t\t\t<path ${d} ${transform ?? ''} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''} />`
         }
     }
     if(circleArray) {
-        for(const circle of circleArray) {
+        for (const item of circleArray) {
             const
-                r = circle.match(/r="([^"]+)"/g),
-                cx = circle.match(/cx="([^"]+)"/g),
-                cy = circle.match(/cy="([^"]+)"/g),
+                r = item.match(/\br="([^"]+)"/g),
+                cx = item.match(/\bcx="([^"]+)"/g),
+                cy = item.match(/\bcy="([^"]+)"/g),
 
-                stroke = /stroke=/.test(circle),
-                strokeWidth = circle.match(/stroke-width="([^"]+)"/g),
-                strokeOpacity = circle.match(/stroke-opacity="([^"]+)"/g)
+                transform = item.match(/transform="([^"]+)"/g),
+                stroke = /stroke=/.test(item),
+                strokeWidth = item.match(/stroke-width="([^"]+)"/g),
+                strokeOpacity = item.match(/stroke-opacity="([^"]+)"/g)
 
                 fileContent += 
-                    `\n\t\t\t<circle ${r} ${cx ?? ''} ${cy ?? ''} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''}/>`
+                    `\n\t\t\t<circle ${r} ${cx ?? ''} ${cy ?? ''} ${transform ?? ''} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''} />`
         }
     }
     if(lineArray) {
-        for(const line of lineArray) {
+        for (const item of lineArray) {
             const
-                x1 = line.match(/x1="([^"]+)"/g),
-                y1 = line.match(/y1="([^"]+)"/g),
-                x2 = line.match(/x2="([^"]+)"/g),
-                y2 = line.match(/y2="([^"]+)"/g),
+                x1 = item.match(/\bx1="([^"]+)"/g),
+                y1 = item.match(/\by1="([^"]+)"/g),
+                x2 = item.match(/\bx2="([^"]+)"/g),
+                y2 = item.match(/\by2="([^"]+)"/g),
 
-                transform = line.match(/transform="([^"]+)"/g),
-                stroke = /stroke=/.test(line),
-                strokeWidth = line.match(/stroke-width="([^"]+)"/g),
-                strokeOpacity = line.match(/stroke-opacity="([^"]+)"/g)
+                transform = item.match(/transform="([^"]+)"/g),
+                stroke = /stroke=/.test(item),
+                strokeWidth = item.match(/stroke-width="([^"]+)"/g),
+                strokeOpacity = item.match(/stroke-opacity="([^"]+)"/g)
 
                 fileContent += 
-                    `\n\t\t\t<line ${x1 ?? ''} ${y1 ?? ''} ${x2 ?? ''} ${y2 ?? ''} ${transform ?? ''} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''}/>`
+                    `\n\t\t\t<line ${x1 ?? ''} ${y1 ?? ''} ${x2 ?? ''} ${y2 ?? ''} ${transform ?? ''} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''} />`
+        }
+    }
+    if(rectArray) {
+        for (const item of rectArray) {
+            const
+                width = item.match(/width="([^"]+)"/g),
+                height = item.match(/height="([^"]+)"/g),
+                x = item.match(/\bx="([^"]+)"/g),
+                y = item.match(/\by="([^"]+)"/g),
+                rx = item.match(/\brx="([^"]+)"/g),
+                ry = item.match(/\bry="([^"]+)"/g),
+
+                transform = item.match(/transform="([^"]+)"/g),
+                stroke = /stroke=/.test(item),
+                strokeWidth = item.match(/stroke-width="([^"]+)"/g),
+                strokeOpacity = item.match(/stroke-opacity="([^"]+)"/g)
+
+            fileContent += 
+                `\n\t\t\t<rect ${width} ${height} ${x ?? ''} ${y ?? ''} ${rx ?? ''} ${ry ?? ''} ${transform ?? ''} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''} />`
+       
+        }
+    }
+    if(ellipseArray) {
+        for (const item of ellipseArray) {
+            const
+                rx = item.match(/\brx="([^"]+)"/g),
+                ry = item.match(/\bry="([^"]+)"/g),
+                cx = item.match(/\bcx="([^"]+)"/g),
+                cy = item.match(/\bcy="([^"]+)"/g),
+
+                transform = item.match(/transform="([^"]+)"/g),
+                stroke = /stroke=/.test(item),
+                strokeWidth = item.match(/stroke-width="([^"]+)"/g),
+                strokeOpacity = item.match(/stroke-opacity="([^"]+)"/g)
+
+            fileContent += 
+                `\n\t\t\t<ellipse ${rx} ${ry} ${cx ?? ''} ${cy ?? ''} ${transform ?? ''} ${stroke ? "stroke='currentColor' fill='none'" : "fill='currentColor'"} ${strokeWidth ?? ''} ${strokeOpacity ?? ''} />`
         }
     }
 
