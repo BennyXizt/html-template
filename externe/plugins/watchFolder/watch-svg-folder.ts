@@ -32,9 +32,6 @@ export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, lan
                                 result = convertSVGToFile({ watchDir, filePath, nameOfTheOutputFile, translation, relativePath, dummy})
                             }
 
-                            console.log(`Result: ${result}`)
-                            
-
                             if(result)
                                 fs.unlinkSync(filePath)   
                         } catch (err) {

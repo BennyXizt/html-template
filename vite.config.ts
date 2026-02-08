@@ -101,25 +101,25 @@ export default defineConfig({
         views: [resolve(__dirname)]
       }
     }),
-    // ViteWatchEJSFolderPlugin({
-    //   relativePath: `${__dirname}/src/ejs/views/`,
-    //   outputDestination: {
-    //      pages: {
-    //        fileNameException: [
-    //         'test.ejs',
-    //         'externeComponents.ejs'
-    //        ],
-    //        fileDestination: `${__dirname}`
-    //      },
-    //      rest: {
-    //        fileName: [
-    //         'test.ejs',
-    //         'externeComponents.ejs'
-    //        ],
-    //        fileDestination: `${__dirname}/externe/pages/`
-    //      }
-    //     }
-    // }),
+    ViteWatchEJSFolderPlugin({
+      relativePath: `${__dirname}/src/ejs/views/`,
+      outputDestination: {
+         pages: {
+           fileNameException: [
+            'test.ejs',
+            'externeComponents.ejs'
+           ],
+           fileDestination: `${__dirname}`
+         },
+         rest: {
+           fileName: [
+            'test.ejs',
+            'externeComponents.ejs'
+           ],
+           fileDestination: `${__dirname}/externe/pages/`
+         }
+        }
+    }),
     ViteWatchSVGFolderPlugin({
       relativePath: `${__dirname}/public/media/icons/`,
       nameOfTheOutputFile: 'sprite.svg',
@@ -129,16 +129,16 @@ export default defineConfig({
       },
       convertType: settings.SVGConvertType
     }),
-    // ViteWatchFontsFolderPlugin({
-    //   relativePath: `${__dirname}/src/assets/fonts`,
-    //   outputDestination: `${__dirname}/src/assets/styles/base/_fonts.scss`
-    // }),
-    // ViteWatchVideoFolderPlugin({
-    //   relativePath: `${__dirname}/public/media/video`,
-    //   outputVideoDirectory: `${__dirname}/public/media/converted`,
-    //   outputVideoFormat: [".mp4"],
-    //   posterDirectory: `${__dirname}/public/media/image/poster`
-    // })
+    ViteWatchFontsFolderPlugin({
+      relativePath: `${__dirname}/src/assets/fonts`,
+      outputDestination: `${__dirname}/src/assets/styles/base/_fonts.scss`
+    }),
+    ViteWatchVideoFolderPlugin({
+      relativePath: `${__dirname}/public/media/video`,
+      outputVideoDirectory: `${__dirname}/public/media/converted`,
+      outputVideoFormat: [".mp4"],
+      posterDirectory: `${__dirname}/public/media/image/poster`
+    })
   ],
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
