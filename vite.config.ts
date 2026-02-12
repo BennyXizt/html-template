@@ -5,6 +5,7 @@ import { resolve } from 'path'
 import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './externe/plugins/watchFolder'
 import { externe } from './externe/plugins/ejsUtils'
 import { settings } from './settings';
+import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
   base: './',
@@ -79,6 +80,17 @@ export default defineConfig({
     },
   },
   css: {
+    postcss: {
+      plugins: [autoprefixer({
+        overrideBrowserslist: [
+          ">0.5%",
+          "last 2 versions",
+          "Firefox ESR",
+          "Safari >= 10",
+          "not dead"
+        ]
+      })]
+    },
     preprocessorOptions: {
       scss: {
         additionalData: `$BUILD_ENV: "${process.env.NODE_ENV}";`
