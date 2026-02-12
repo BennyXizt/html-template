@@ -5,11 +5,15 @@ export const accordionClickArray = [accordionClick, '[data-fsc-accordion-summary
 
 function accordionClick(element: HTMLElement) {
     const 
+        hoverSupported = window.matchMedia('(hover: hover) and (pointer: fine)').matches,
         accordion = element.closest('[data-fsc-accordion]') as HTMLElement,
         dataBehaviourType = accordion?.getAttribute('data-fsc-accordion-behaviour'),
         dataMediaVisibility = accordion?.getAttribute('data-fsc-accordion-media-query')
         
-    if(dataMediaVisibility && !window.matchMedia(`(${dataMediaVisibility})`).matches) 
+    if(
+        (dataMediaVisibility && !window.matchMedia(`(${dataMediaVisibility})`).matches) ||
+        hoverSupported
+    ) 
         return
 
     if(dataBehaviourType !== 'default') {
