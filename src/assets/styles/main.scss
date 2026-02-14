@@ -12,12 +12,13 @@
         './base/base';
 
 // internal layout START
+@import
+	'./layout/header';
 // internal layout END
 
 @import 
         '../../../externe/components/Burger/Burger',
-        '../../../externe/components/HeaderMenu/HeaderMenu',
-        '../../../externe/components/Header/Header';
+        '../../../externe/components/HeaderMenu/HeaderMenu';
 
 // internal components START
 // internal components END
