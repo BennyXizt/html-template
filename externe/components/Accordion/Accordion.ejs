@@ -87,12 +87,16 @@
 
             <% if (typeof accordion_component.icon !== 'undefined' && accordion_component.icon) { %>
                 <% if (typeof accordion_component.icon === 'object' && accordion_component.icon.div) { %>
-                    <div class="accordion__figure">
-                <% } %>
-                    <svg class="accordion__icon" data-fsc-accordion-icon>
-                        <use href="public/media/icons/sprite.svg#<%= accordion_component.icon.label ?? accordion_component.icon %>"></use>                                           
-                    </svg>
-                 <% if (typeof accordion_component.icon === 'object' && accordion_component.icon.div) { %>
+                    <div class="accordion__figure" data-fsc-accordion-touch>
+                        <svg class="accordion__icon" data-fsc-accordion-icon>
+                            <use href="public/media/icons/sprite.svg#<%= accordion_component.icon.label %>"></use>                                           
+                        </svg>
+                    </div>
+                <% } else { %>
+                    <div class="accordion__figure" data-fsc-accordion-touch>
+                        <svg class="accordion__icon" data-fsc-accordion-icon>
+                            <use href="public/media/icons/sprite.svg#<%= accordion_component.icon %>"></use>                                           
+                        </svg>
                     </div>
                 <% } %>
             <% } %>
