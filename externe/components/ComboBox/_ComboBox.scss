@@ -26,6 +26,23 @@ $z_index: map.get($ZINDEXES, immortal);
                 }
             }
         }
+
+        &[data-fsc-combobox-prestyled-all] {
+            ul {
+                max-height: 50dvh;
+                opacity: 1;
+                visibility: visible;
+            }
+            svg {
+                &[data-fsc-combobox-input-icon-dispose] {
+                    transform: translate(0, -50%) rotate(180deg);
+                }
+                &[data-fsc-combobox-input-icon-close] {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
     }
 
     ul {
