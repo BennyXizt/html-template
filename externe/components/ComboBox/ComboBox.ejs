@@ -52,12 +52,10 @@
         return
     }
 
-    if(typeof combobox_component.this !== 'undefined') {
-        combobox_component.this = {
-			...combobox_component.this,
-            tag: 'form'
-        }
-    }
+    combobox_component.this = {
+		...combobox_component.this,
+		tag: combobox_component.this?.tag ?? 'form'
+	}
     
     var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...combobox_component, componentName: 'combobox'})
 
