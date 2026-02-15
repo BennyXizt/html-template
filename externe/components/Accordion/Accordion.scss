@@ -15,7 +15,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        @include rem(column-gap, 10px);
     }
     [data-fsc-accordion-body] {
         transform: scaleY(0);
