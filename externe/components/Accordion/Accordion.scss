@@ -1,3 +1,9 @@
+@mixin accordionHover {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+
 [data-fsc-accordion] {
     [data-fsc-accordion-summary] {
         cursor: pointer;
@@ -18,18 +24,14 @@
 
     &[data-fsc-accordion-active] {
         [data-fsc-accordion-body] {
-            opacity: 1;
-            visibility: visible;
-            transform: scaleY(1);
+            @include accordionHover;
         }
     }
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
             [data-fsc-accordion-body] {
-                opacity: 1;
-                visibility: visible;
-                transform: scaleY(1);
+                @include accordionHover;
                 max-height: 500px;
             }
         }
