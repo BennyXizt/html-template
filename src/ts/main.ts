@@ -93,7 +93,11 @@ document.fonts.ready.then(async() => {
         document.querySelectorAll(element.elementSelector).forEach(el => observer.observe(el))
     }
     
-    window.addEventListener('click', function(event) {
+    window.addEventListener('pointerdown', function(event) {
+        const target = event.target;
+
+        if (!(target instanceof Element)) return;
+
         onClickedModules.forEach(e => {
             const 
                 DOMElement: HTMLElement | null = (event.target as HTMLElement).closest(e[1])
