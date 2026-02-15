@@ -27,7 +27,7 @@
 //     this: {
 //         parent: 'parentClass',
 //     },  
-//     title: { tag: 'h5', label: 'Заголовок' },
+//     title: { this: { tag: 'a', dataAttribute: 'href=tel:+123456789' }, label: 'Заголовок' },
 //     body: [
 //       { this: {tag: 'button', dataAttribute: ['custoDataAttributes']}, label: 'СкрытаяИнформация', icon_component: {} }
 //     ],
@@ -72,11 +72,14 @@
                 <h6 class="accordion__title">
                     <%= accordion_component.title%>
                 </h6>
-            <% } else if(typeof accordion_component.title === 'object') { %>
-                <<%= accordion_component.title.tag%> class="accordion__title">
+            <% } else if(typeof accordion_component.title === 'object') { 
+                var {thisClass: titleThisClass, thisID: titleThisID, thisTag: titleThisTag, thisStyles: titleThisStyles, thisDataAttributes: titleThisDataAttributes} = externe.setupEJSComponent({...accordion_component.title, componentName: 'accordion__title'})
+            %>
+                <<%=titleThisTag%> <%-titleThisDataAttributes%> class='<%=titleThisClass%>' <%-titleThisID%> <%-titleThisStyles%>>
                     <%= accordion_component.title.label%>
-                </<%= accordion_component.title.tag%>>
+                </<%= titleThisTag%>>
             <% } %>
+
             <% if(typeof accordion_component.icon !== 'undefined' && accordion_component.icon) { %>
                 <% if(typeof accordion_component.icon === 'object' && accordion_component.icon.div) { %>
                     <div class="accordion__figure">
