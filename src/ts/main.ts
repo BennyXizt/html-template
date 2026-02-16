@@ -6,10 +6,14 @@ import { BurgerMenu } from '~/components'
 import { autoloader } from '~/scripts/autoloader/autoloader'
 import { ClickedModule } from './types/plugin.type'
 
-window.addEventListener('click', function(e) {
+window.addEventListener('pointerdown', function(event) {
+    const target = event.target
+
+    if (!(target instanceof Element)) return
+
     const 
-        burger: HTMLElement | null = (e.target as HTMLElement).closest('.burger'),
-        submenu = (e.target as HTMLElement).closest('.submenu-menu span')
+        burger: HTMLElement | null = (target as HTMLElement).closest('.burger'),
+        submenu = (target as HTMLElement).closest('.submenu-menu__icon')
 
     
     if(burger)
@@ -17,8 +21,6 @@ window.addEventListener('click', function(e) {
 
     if(submenu)
         displaySubmenu(submenu)
-    else 
-        closeSubmenu()
 
 })
 
@@ -94,13 +96,13 @@ document.fonts.ready.then(async() => {
     }
     
     window.addEventListener('pointerdown', function(event) {
-        const target = event.target;
+        const target = event.target
 
-        if (!(target instanceof Element)) return;
+        if (!(target instanceof Element)) return
 
         onClickedModules.forEach(e => {
             const 
-                DOMElement: HTMLElement | null = (event.target as HTMLElement).closest(e[1])
+                DOMElement: HTMLElement | null = (target as HTMLElement).closest(e[1])
                 
             if(DOMElement)
                 e[0](DOMElement, event)
@@ -130,16 +132,12 @@ document.fonts.ready.then(async() => {
 
 function displaySubmenu(target) {
     const 
-        parent = target.parentElement,
-        ul = parent.querySelector('ul')
-
-    closeSubmenu(target)
+        root = target.closest('.submenu-menu'),
+        span = root.querySelector('span.submenu-menu__trigger'),
+        ul = root.querySelector('ul')
     
-    target.classList.toggle('active')
+    span.classList.toggle('active')
     ul.classList.toggle('active')
-
-    
-    
 }
 function closeSubmenu(target = null) {
     if(!target) {
