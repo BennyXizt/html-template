@@ -3,11 +3,6 @@
 //
 // <\%- include('externe/components/HeaderMenu/HeaderMenu.ejs', {
 //     header_menu_component: {
-//         this: {
-//		     parent: 'parentClass',
-//		     class: ['childClass'],
-//		     style: ['customStyle']
-//	       },  
 //         activePage: 'activePage',
 //         list: [
 //             {'href': './index.html', 'anchor': 'HomePage'},
@@ -30,8 +25,6 @@
     if(typeof header_menu_component === 'undefined' || !header_menu_component) {
         return
     }
-
-    var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...header_menu_component, componentName: 'menu'})
 
     function generateMenu({
         menu,
@@ -58,7 +51,8 @@
                 liClass = hasSubmenu ? `${blockClass}__item ${blockClass}__item--submenu ${submenuClass}` : `${blockClass}__item`,
                 linkClass = hasSubmenu ? `${blockClass}__link ${blockClass}__link--submenu ${activeLinkPageClass}` : `${blockClass}__link ${activeLinkPageClass}`,
                 spanClass = depth === 0 ? `${submenuClass}__trigger ${submenuClass}__trigger--first` : `${submenuClass}__trigger`,
-                iconClass = hasSubmenu ? submenuClass : blockClass
+                iconClass = hasSubmenu ? submenuClass : blockClass,
+                wrapperIconClass = `${iconClass}__wrapper`
           
             str += `\<li class="${liClass}">`
             
@@ -71,14 +65,16 @@
                 item.anchor
             
             if(hasSubmenu) {
-                // str += include('externe/components/Icon/Icon.ejs', {
-                //     icon_component: {
-                //         this: {
-                //             parent: iconClass
-                //         },
-                //         name: 'ph_arrow-drop-down-line'
-                //     }
-                // })
+                str += `<div class='${wrapperIconClass}'>`
+                str += include('src/ejs/components/icon.ejs', {
+                    icon_component: {
+                        this: {
+                            parent: iconClass
+                        },
+                        name: 'ph_arrow-drop-down-line'
+                    }
+                })
+                str += '</div>'
                 str += '\</span>'
                 str += generateMenu({
                     menu: item.submenus,
@@ -94,10 +90,10 @@
     }
 %>
 
-<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
+<div class="header__menu menu" data-fsc-headermenu>
     <nav class="menu__body">
         <% if(typeof header_menu_component.list !== 'undefined' && header_menu_component.list) { %>
             <%- generateMenu({menu: header_menu_component.list}) %>
         <% } %>
     </nav>
-</<%=thisTag%>>
+</div>

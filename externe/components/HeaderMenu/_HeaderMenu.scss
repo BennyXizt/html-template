@@ -39,6 +39,19 @@
     }
 }
 
+@mixin menuSubmenu {
+    &__trigger {
+        svg {
+            transform: rotate(180deg);
+        }
+    }
+    &__list {
+        overflow: unset;
+        height: max-content;
+        transform: translateY(10px);
+    }
+}
+
 .menu {
     --animation-speed: 0s;
     flex: 1;
@@ -61,6 +74,7 @@
             transform: translate3d(100dvw,0,0);
             transition: transform var(--animation-speed) ease-in-out;
             will-change: transform;
+            overflow-y: auto;
         }
 
         &.active {
@@ -103,22 +117,18 @@
         transition-property: transform;
         display: flex;
         flex-flow: column nowrap;
-        align-items: flex-end;
+        position: relative;
 
-        &.active {
-            overflow: unset;
-            height: max-content;
-            transform: translateY(10px);
-        }
-    }
-    &__item {
-        @include fluid(padding-top, 16px 8px);
-        @include fluid(padding-bottom, 16px 8px);
-    
-        @include rem(padding-right, 10px);
-        & li {
-            &:last-child {
-                padding-bottom: unset;
+        @include media(tablet) {
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 100%;
+                @include rem((
+                    top: -20px,
+                    height: 20px
+                ))
             }
         }
     }
@@ -127,15 +137,11 @@
     }
     &__trigger {
         display: flex;
+    }
+    &__wrapper {
+        display: flex;
+        justify-content: center;
         align-items: center;
-        justify-content: flex-end;
-        @include rem(gap, 6px);
-
-        &.active {
-            svg {
-                transform: rotate(180deg);
-            }
-        }
     }
     &__icon {
         transition: $speed ease-in-out;
@@ -147,16 +153,16 @@
         ));
     }
 
-    @media(hover: hover) and (pointer: fine) {
+    &.active {
+        > .submenu-menu {
+            @include menuSubmenu;
+        }
+    }
+    @media (hover: hover) and (pointer: fine) {
         &:hover {
             > .submenu-menu {
-                &__list {
-                    overflow: unset;
-                    height: max-content;
-                    transform: translateY(-10px);
-                }
+                @include menuSubmenu;
             }
-            
         }
     }
 }

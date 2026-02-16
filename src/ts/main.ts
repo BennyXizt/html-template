@@ -12,16 +12,10 @@ window.addEventListener('pointerdown', function(event) {
     if (!(target instanceof Element)) return
 
     const 
-        burger: HTMLElement | null = (target as HTMLElement).closest('.burger'),
-        submenu = (target as HTMLElement).closest('.submenu-menu__icon')
+        burger: HTMLElement | null = (target as HTMLElement).closest('.burger')
 
-    
     if(burger)
         BurgerMenu(burger)
-
-    if(submenu)
-        displaySubmenu(submenu)
-
 })
 
 document.fonts.ready.then(async() => {
@@ -106,7 +100,6 @@ document.fonts.ready.then(async() => {
                 
             if(DOMElement)
                 e[0](DOMElement, event)
-            
         })
     })
     
@@ -118,46 +111,13 @@ document.fonts.ready.then(async() => {
         onSubmitModules.forEach(e => e[1](event))
     })
     
-
     onKeyUpModules.forEach(e => {
         if(!Array.isArray(e)) return 
 
         const HTMLElement = document.querySelectorAll(e[1]) 
         HTMLElement.forEach(el => el.addEventListener('keyup', function(event: KeyboardEvent) {
-                e[0](event)
+            e[0](event)
         }))
     })
     
 })
-
-function displaySubmenu(target) {
-    const 
-        root = target.closest('.submenu-menu'),
-        span = root.querySelector('span.submenu-menu__trigger'),
-        ul = root.querySelector('ul')
-    
-    span.classList.toggle('active')
-    ul.classList.toggle('active')
-}
-function closeSubmenu(target = null) {
-    if(!target) {
-        document.querySelectorAll('ul.active').forEach(e => {
-            e.classList.remove('active')
-        })
-        document.querySelectorAll('span.active').forEach(e => {
-            e.classList.remove('active')
-        })
-        return
-    }
-    else {
-        const 
-            parent = target.parentElement,
-            ul = parent.querySelector('ul')
-            
-        parent.querySelectorAll('.active').forEach(e => {
-            if(!e.isSameNode(target) && !e.isSameNode(ul))
-                e.classList.remove('active')
-        })
-        
-    }
-}
