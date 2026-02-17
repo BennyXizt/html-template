@@ -13,7 +13,6 @@
     [data-fsc-accordion-summary] {
         cursor: pointer;
         display: flex;
-        align-items: center;
         justify-content: space-between;
     }
     [data-fsc-accordion-body] {
@@ -24,6 +23,11 @@
         visibility: hidden;
         transition: $animationShort ease-in-out;
         transition-property: max-height, transform, opacity, visibility;
+    }
+    [data-fsc-accordion-touch] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     [data-fsc-accordion-icon] {
         transition: $animationLang ease-in-out;
