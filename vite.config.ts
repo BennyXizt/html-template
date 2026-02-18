@@ -12,14 +12,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        blog: 'blog.html',
-        blogsingle: 'blogsingle.html',
-        about: 'about.html',
-        contact: 'contact.html',
-        services: 'services.html',
-        pricing: 'pricing.html',
-        work: 'work.html',
-        worksingle: 'worksingle.html',
       },
       output: {
          // JS
