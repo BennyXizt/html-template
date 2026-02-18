@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"vite\" \"php -S localhost:8000 -t ./externe/php\"",
+    "server": "php -S localhost:8000 -t ./externe/php",
     "online": "vite --host",
     "build": "vite build",
     "preview": "vite preview",

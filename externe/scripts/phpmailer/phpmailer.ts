@@ -1,27 +1,32 @@
 
-
 export async function phpmailerOnSubmit(event: Event) {
     event.preventDefault()
 
     const element = event.target as HTMLFormElement
     if (!element) return
 
-    const body = new FormData(element)
-    const method = element.getAttribute('method') || 'POST'
+    const 
+        body    = new FormData(element),
+        method  = element.getAttribute('method') || 'POST',
+        action  = element.getAttribute('action') || '/php/mail.php'
 
     try {
-        const res = await fetch('/php/mail.php', {
+        const res = await fetch(action, {
             method,
             body
         })
 
         if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`)
+            console.warn(`HTTP error! status: ${res.status}`)
         }
 
         const data = await res.json()
-        console.log('Server response:', data)
+        
+        if (data.status === 'error') {
+            console.warn('Server warning:', data.error || 'Unknown server error')
+        }
+        else console.log('Server response:', data)
     } catch (err) {
-        console.error('Fetch or JSON error:', err)
+        console.warn('Fetch or JSON error:', err)
     }
 }

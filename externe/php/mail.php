@@ -8,15 +8,25 @@ require __DIR__ . '/phpmailer/src/SMTP.php';
 
 header('Content-Type: application/json');
 
-$authUsername = 'you@example.com';
-$authPassword = 'password';
-$authHost = 'smtp.gmail.com';
+$env = parse_ini_file(__DIR__ . '/../../.env');
 
-$name = $_POST['name'] ?? 'Test Name';
-$subject = $_POST['subject'] ?? 'Test mail';
-$email = $_POST['email'] ?? $authUsername;
-$message = $_POST['message'] ?? 'Test Message';
-$sendTo = 'send@example.com';
+if ($env === false) {
+    echo json_encode(['status' => 'error', 'error' => '.env not found']);
+    exit;
+}
+
+$authUsername   = $env['SMTP_USERNAME'];
+$authPassword   = $env['SMTP_PASSWORD'];
+$authHost       = $env['SMTP_HOST'] ?? 'smtp.gmail.com';
+$authPort       = $env['SMTP_PORT'] ?? 587;
+$authSecure     = $env['SMTP_SECURE'] ?? 'tls';
+$authCharset    = $env['SMTP_CHARSET'] ?? 'UTF-8';
+$sendTo         = $env['SMTP_SEND_TO'];
+
+$name       = $_POST['name']    ?? 'Test Name';
+$from       = $_POST['email']   ?? $authUsername;
+$subject    = $_POST['subject'] ?? 'Get in Touch - ' . $from;
+$message    = $_POST['message'] ?? 'Test Message';
 
 $mail = new PHPMailer(true);
 
@@ -25,11 +35,12 @@ $mail->Host       = $authHost;
 $mail->SMTPAuth   = true;
 $mail->Username   = $authUsername;
 $mail->Password   = $authPassword;
-$mail->SMTPSecure = 'tls';
-$mail->Port       = 587;
+$mail->SMTPSecure = $authSecure;
+$mail->Port       = $authPort;
+$mail->CharSet    = 'UTF-8'; 
 
-if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $mail->addReplyTo($email, $name);
+if (filter_var($from, FILTER_VALIDATE_EMAIL)) {
+    $mail->addReplyTo($from, $name);
 }
 
 $mail->setFrom($authUsername, $name);

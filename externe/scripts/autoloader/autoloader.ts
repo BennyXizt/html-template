@@ -1,3 +1,4 @@
+
 export async function autoloader(loadedModules: Map<string, any>) {
     for(const el of document.querySelectorAll('*')) {
         for (const attr of el.attributes) {
