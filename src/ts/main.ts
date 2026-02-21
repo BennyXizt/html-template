@@ -5,6 +5,7 @@ import { BurgerMenu } from '~/components'
 // @ts-ignore
 import { autoloader } from '~/scripts/autoloader/autoloader'
 import { ClickedModule } from './types/plugin.type'
+import { IntersectionObserverElements } from './types/plugin.interface'
 
 window.addEventListener('pointerdown', function(event) {
     const target = event.target
@@ -37,6 +38,7 @@ document.fonts.ready.then(async() => {
             )
             
     const
+        IntersectionElements: IntersectionObserverElements[] = [],
         onIntersectionModules = Object.fromEntries(
              Array.from(loadedModules)
             .filter(([k, e]) => typeof e[`${k}ObserverArray`] === 'object')
@@ -45,7 +47,8 @@ document.fonts.ready.then(async() => {
                     k,
                     {
                         func: e[`${k}ObserverArray`][0],
-                        elementSelector: e[`${k}ObserverArray`][1] || `[data-fsc-${k}]`
+                        elementSelector: e[`${k}ObserverArray`][1] || `[data-fsc-${k}]`,
+                        options: e[`${k}ObserverArray`][2] || {}
                     }
                 ]
             })
@@ -71,21 +74,32 @@ document.fonts.ready.then(async() => {
                 })
             })
             .filter(e => typeof e !== 'undefined')
-            
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const watchedModule = Array.from(entry.target.attributes)
-                .map(a => a.name)
-                .filter(name => /^data-fsc-[^-]+$/.test(name))
-                .map(name => name.slice('data-fsc-'.length))[0]
 
-            onIntersectionModules[watchedModule].func(entry, observer)
-        })
-    }, {
-        
-    })
-    
     for(const element of Object.values(onIntersectionModules)) {
+        let observer: IntersectionObserver | undefined  = 
+            IntersectionElements
+                .find(e => JSON.stringify(e.options) === JSON.stringify(element.options) )
+                ?.observer
+        
+        if(!observer) {
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const watchedModule = Array.from(entry.target.attributes)
+                        .map(a => a.name)
+                        .filter(name => /^data-fsc-[^-]+$/.test(name))
+                        .map(name => name.slice('data-fsc-'.length))[0]
+                        
+                    if(onIntersectionModules[watchedModule])
+                        onIntersectionModules[watchedModule].func(entry, observer)
+                })
+            }, element.options)
+
+            IntersectionElements.push({
+                options: element.options,
+                observer
+            })
+        }
+
         document.querySelectorAll(element.elementSelector).forEach(el => observer.observe(el))
     }
     
