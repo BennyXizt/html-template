@@ -1,6 +1,7 @@
 import { MarqueeDirection } from "./plugin.type"
 
 export interface MarqueeElementInterface {
+    marquee: HTMLElement
     root: HTMLElement
     speed: number
     offset: number

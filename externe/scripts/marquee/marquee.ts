@@ -1,32 +1,32 @@
 /**
  * marquee.ts
  * Компонент бесшовной карусели/марки с горизонтальным скроллом.
+ * Экспортирует 3 параметра: [функцию, селектор слежения и опциональный объект с настройками options]
  *
  * Поддерживаемые атрибуты `data-fsc-marquee-*`:
- * - data-fsc-marquee — инициализирует элемент как карусель
- * - data-fsc-marquee-speed — скорость движения в px/сек (по умолчанию 1000)
+ * - data-fsc-marquee           — инициализирует элемент как карусель
+ * - data-fsc-marquee-list      — сама карусель
+ * - data-fsc-marquee-speed     — скорость движения в px/сек (по умолчанию 1000)
  * - data-fsc-marquee-direction — направление движения: 'left' или 'right' (по умолчанию 'left')
- * - data-fsc-marquee-start — начальное смещение в px (по умолчанию 0)
- * - data-fsc-marquee-item — отдельный элемент карусели
+ * - data-fsc-marquee-start     — начальное смещение в px (по умолчанию 0)
+ * - data-fsc-marquee-item      — отдельный элемент карусели
  */
-
 
 import { MarqueeElementInterface } from "./types/plugin.interface"
 import type { MarqueeDirection } from "./types/plugin.type"
 
 const marqueeElements: MarqueeElementInterface[] = []
-let 
-    animationID: number | undefined = undefined
-
-export const marqueeObserverArray = [marqueeObserver, '[data-fsc-marquee]']
 
 export function marqueeAutoload() {
-    const elements = document.querySelectorAll('[data-fsc-marquee]') as NodeListOf<HTMLElement>
+    const marquees = document.querySelectorAll('[data-fsc-marquee]') as NodeListOf<HTMLElement>
 
-    for (const root of elements) {
-        if (root.getAttribute('data-fsc-marquee-initialized')) continue
-
+    for (const marquee of marquees) {
         const 
+            root = marquee.querySelector<HTMLElement>('[data-fsc-marquee-list]')
+
+        if (!root || root.getAttribute('data-fsc-marquee-initialized')) continue
+
+        const
             speed = root.getAttribute('data-fsc-marquee-speed') ? parseInt(root.getAttribute('data-fsc-marquee-speed')!) : 1000,
             direction = root.getAttribute('data-fsc-marquee-direction'),
             offset = root.getAttribute('data-fsc-marquee-start') ? parseInt(root.getAttribute('data-fsc-marquee-start')!) : 0,
@@ -70,12 +70,12 @@ export function marqueeAutoload() {
                 root.appendChild(clone)
             }
 
-            marqueeElements.push({root, dimention: childrensWidth, gap, speed, offset, direction: typisiertDirection, visible: false, animationID: undefined})
+            marqueeElements.push({marquee, root, dimention: childrensWidth, gap, speed, offset, direction: typisiertDirection, visible: false, animationID: undefined})
 
         }
         else {
-            const childrensHeight = root.getBoundingClientRect().height
-            marqueeElements.push({root, dimention: childrensHeight, gap, speed, offset, direction: typisiertDirection, visible: false, animationID: undefined})
+            const childrensHeight = marquee.getBoundingClientRect().height
+            marqueeElements.push({marquee, root, dimention: childrensHeight, gap, speed, offset, direction: typisiertDirection, visible: false, animationID: undefined})
 
         }
         
@@ -83,20 +83,15 @@ export function marqueeAutoload() {
     }
 }
 
-export function marqueeObserver(entry: IntersectionObserverEntry, observer: IntersectionObserver) {
-    const marquee = marqueeElements.find(e => e.root === entry.target)
+export const marqueeObserverArray = [marqueeObserver, '[data-fsc-marquee]', {             
+    rootMargin: '50px 0px 50px 0px',  
+}]
+
+function marqueeObserver(entry: IntersectionObserverEntry, _: IntersectionObserver) {
+    const marquee = marqueeElements.find(e => e.marquee === entry.target)
     if (!marquee) return
 
-    const 
-        rect = marquee.root.getBoundingClientRect(),
-        isHorizontal = marquee.direction === 'left' || marquee.direction === 'right'
-
-    let isVisible: boolean
-
-    if(isHorizontal) isVisible = rect.bottom > 0 && rect.top < window.innerHeight
-    else isVisible = rect.right > 0 && rect.left < window.innerWidth
-
-    marquee.visible = isVisible 
+    marquee.visible = entry.isIntersecting 
 
     if (marquee.visible && !marquee.animationID) {
         marquee.animationID = requestAnimationFrame(() => step(marquee))
@@ -150,4 +145,3 @@ function step(marquee: MarqueeElementInterface) {
         
     marquee.animationID = requestAnimationFrame(() => step(marquee))
 }
-

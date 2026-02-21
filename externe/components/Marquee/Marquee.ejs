@@ -104,8 +104,8 @@
     }
 %>
 
-<<%=thisTag%> class='<%=thisClass%>' <%-thisStyles%>>
-    <ul class="marquee__inner" <%-thisDataAttributes%>>
+<<%=thisTag%> class='<%=thisClass%>' <%-thisDataAttributes%> <%-thisStyles%>>
+    <ul class="marquee__inner" data-fsc-marquee-list>
         <% if(typeof marqueeImages !== 'undefined' && marqueeImages) { %>
             <% for(const image of marqueeImages) { %>
                 <li class="marquee__item" data-fsc-marquee-item>
