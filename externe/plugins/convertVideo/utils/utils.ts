@@ -44,7 +44,7 @@ export function convertToMP4scale720({inputFile, outputFile}: ConvertVideo) {
         .videoCodec('libx264')
         .audioCodec('aac')
         .audioBitrate('128k')
-        .videoFilters('scale=-1:720')
+        .videoFilters('scale=-2:720')
         .outputOptions([
             '-preset slow',
             '-crf 23',
