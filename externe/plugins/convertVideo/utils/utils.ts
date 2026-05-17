@@ -17,7 +17,10 @@ export function convertToMP4scale320({inputFile, outputFile}: ConvertVideo) {
         ])
         .on('progress', (progress) => console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`))
         .on('end', () => console.log('Файл MP4 успешно создан'))
-        .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
+        .on('error', (err, stdout, stderr) => {
+            console.log('Ошибка конвертации файла: ', err.message)
+            console.log('stderr: ', stderr)
+        })
         .run()
 }
 export function convertToMP4scale480({inputFile, outputFile}: ConvertVideo) {
@@ -35,7 +38,10 @@ export function convertToMP4scale480({inputFile, outputFile}: ConvertVideo) {
         ])
         .on('progress', (progress) => console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`))
         .on('end', () => console.log('Файл MP4 успешно создан'))
-        .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
+        .on('error', (err, stdout, stderr) => {
+            console.log('Ошибка конвертации файла: ', err.message)
+            console.log('stderr: ', stderr)
+        })
         .run()
 }
 export function convertToMP4scale720({inputFile, outputFile}: ConvertVideo) {
@@ -53,7 +59,10 @@ export function convertToMP4scale720({inputFile, outputFile}: ConvertVideo) {
         ])
         .on('progress', (progress) => console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`))
         .on('end', () => console.log('Файл MP4 успешно создан'))
-        .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
+        .on('error', (err, stdout, stderr) => {
+            console.log('Ошибка конвертации файла: ', err.message)
+            console.log('stderr: ', stderr)
+        })
         .run()
 }
 export function convertToMP4scale1080({inputFile, outputFile}: ConvertVideo) {
@@ -74,7 +83,10 @@ export function convertToMP4scale1080({inputFile, outputFile}: ConvertVideo) {
         ])
         .on('progress', (progress) => console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`))
         .on('end', () => console.log('Файл MP4 успешно создан'))
-        .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
+        .on('error', (err, stdout, stderr) => {
+            console.log('Ошибка конвертации файла: ', err.message)
+            console.log('stderr: ', stderr)
+        })
         .run()
 }
 export function convertToWEBMscale320({inputFile, outputFile}: ConvertVideo) {
@@ -93,7 +105,10 @@ export function convertToWEBMscale320({inputFile, outputFile}: ConvertVideo) {
         ])
         .on('progress', (progress) => console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`))
         .on('end', () => console.log('Файл WebM успешно создан'))
-        .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
+        .on('error', (err, stdout, stderr) => {
+            console.log('Ошибка конвертации файла: ', err.message)
+            console.log('stderr: ', stderr)
+        })
         .run()
 }
 export function convertToWEBMscale480({inputFile, outputFile}: ConvertVideo) {
@@ -112,7 +127,10 @@ export function convertToWEBMscale480({inputFile, outputFile}: ConvertVideo) {
         ])
         .on('progress', (progress) => console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`))
         .on('end', () => console.log('Файл WebM успешно создан'))
-        .on('error', (err: Error) => console.log('Ошибка конвертации файла: ', err))
+        .on('error', (err, stdout, stderr) => {
+            console.log('Ошибка конвертации файла: ', err.message)
+            console.log('stderr: ', stderr)
+        })
         .run()
 }
 export function convertToMOV({inputFile, outputFile}: ConvertVideo) {
@@ -133,6 +151,9 @@ export function convertToMOV({inputFile, outputFile}: ConvertVideo) {
       console.log(`${basename(outputFile)} | Обработка: ${progress.percent?.toFixed(2)}%`)
     )
     .on('end', () => console.log('Файл без метаданных, качество сохранено'))
-    .on('error', (err) => console.log('Ошибка: ', err))
+    .on('error', (err, stdout, stderr) => {
+        console.log('Ошибка конвертации файла: ', err.message)
+        console.log('stderr: ', stderr)
+    })
     .run();
 }

@@ -66,12 +66,12 @@
             
             if(hasSubmenu) {
                 str += `<div class='${wrapperIconClass}'>`
-                str += include('src/ejs/components/icon.ejs', {
+                str += include('externe/components/Icon/Icon.ejs', {
                     icon_component: {
                         this: {
                             parent: iconClass
                         },
-                        name: 'ph_arrow-drop-down-line'
+                        name: 'iconSubmenuDropdown'
                     }
                 })
                 str += '</div>'
