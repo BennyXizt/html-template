@@ -6,7 +6,6 @@
 <% } %>
 <head>
    <%- include('externe/components/Head/Head.ejs') %>
-   <link rel="stylesheet" href="../externeComponents.scss">
 </head>
 <body>
     <%- include('externe/components/DummyAside/DummyAside.ejs') %>
@@ -29,9 +28,15 @@
                 }
             })%>
         </article>
+         <article class="components _themeToggle">
+            <h1>Theme Toggle</h1>
+            <%- include('externe/components/ThemeToggle/ThemeToggle.ejs', {
+                theme_toggle_component: {}
+            })%>
+        </article>
         <article class="components _marquee">
             <h1>Marquee</h1>
-             <%- include('externe/components/Marquee/Marquee.ejs', {
+            <%- include('externe/components/Marquee/Marquee.ejs', {
                 marquee_component: {
                     data: [
                         'someText',
@@ -44,7 +49,7 @@
             <%- include('externe/components/Marquee/Marquee.ejs', {
                 marquee_component: {
                     this: {
-                        dataAttribute: 'data-fsc-marquee-direction=right'
+                        dataAttribute: 'data-fsc-marquee-direction=right',
                     },
                     data: [
                         'someText',
@@ -59,14 +64,7 @@
             <h1>ComboBox</h1>
             <%- include('externe/components/ComboBox/ComboBox.ejs', {
                 combobox_component: {
-                    this: {
-                        parent: 'arrow',
-                        class: 'childClass',
-                        type: 'article',
-                        style: 'customStyle',
-                        dataAttribute: 'customDataAttributes' 
-                    },
-                    prestyled: 'full',
+                    prestyled: 'all',
                     label: 'Выберите город',
                     placeholder: 'Начните вводить',
                     icons: {
@@ -83,14 +81,6 @@
             }) %>
             <%- include('externe/components/ComboBox/ComboBox.ejs', {
                 combobox_component: {
-                    this: {
-                        parent: 'arrow',
-                        class: 'childClass',
-                        type: 'article',
-                        style: 'margin-top: 20px',
-                        dataAttribute: 'customDataAttributes' 
-                    },
-                    prestyled: 'part',
                     label: 'Выберите город',
                     placeholder: 'Начните вводить',
                     icons: {
@@ -163,6 +153,7 @@
             }) %>
         </article>
     </div>
+    <script type="module" src="../temporary/externeComponents.ts"></script>
     <script type="module" src="/src/ts/main.ts"></script>
 </body>
 </html>

@@ -2,12 +2,20 @@
 @use "sass:math";
 
 :root {
+  --theme-main-background-color: #{map.get($BASE, background_color)};
+  --theme-main-text-color: #{map.get($BASE, main_color)};
+
   line-height: map.get($BASE, line_height);
   font-size: map.get($BASE, font_size);
   font-family: map.get($BASE, font_family);
   font-weight: map.get($BASE, font_weight);
-  color: map.get($BASE, main_color);
-  background-color: map.get($BASE, background_color);
+  color: var(--theme-main-text-color);
+  background-color: var(--theme-main-background-color);
+
+  // &[data-theme='dark'] {
+  //   --theme-main-background-color: #{map.get($COLORS, value)};
+  //   --theme-main-text-color: #{map.get($COLORS, value)};
+  // }
 }
 
 textarea,

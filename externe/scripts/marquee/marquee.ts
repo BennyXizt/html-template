@@ -27,9 +27,9 @@ export function marqueeAutoload() {
         if (!root || root.getAttribute('data-fsc-marquee-initialized')) continue
 
         const
-            speed = root.getAttribute('data-fsc-marquee-speed') ? parseInt(root.getAttribute('data-fsc-marquee-speed')!) : 1000,
-            direction = root.getAttribute('data-fsc-marquee-direction'),
-            offset = root.getAttribute('data-fsc-marquee-start') ? parseInt(root.getAttribute('data-fsc-marquee-start')!) : 0,
+            speed = marquee.getAttribute('data-fsc-marquee-speed') ? parseInt(marquee.getAttribute('data-fsc-marquee-speed')!) : 1000,
+            direction = marquee.getAttribute('data-fsc-marquee-direction'),
+            offset = marquee.getAttribute('data-fsc-marquee-start') ? parseInt(marquee.getAttribute('data-fsc-marquee-start')!) : 0,
             childrens = root.querySelectorAll('[data-fsc-marquee-item]'),
             gap = Number.parseFloat(getComputedStyle(root).columnGap)
 
@@ -38,7 +38,7 @@ export function marqueeAutoload() {
                 direction === 'left' || direction === 'right' || direction === 'top' || direction === 'bottom'
                     ? direction : 'left',
             isHorizontal = typisiertDirection === 'left' || typisiertDirection === 'right'
-            
+        
         if(isHorizontal) {
             let childrensWidth = Array.from(childrens).reduce(
                 (acc, el) => acc + (el as HTMLElement).getBoundingClientRect().width,

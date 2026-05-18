@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <% if(typeof head_component.lang !== 'undefined' && head_component.lang) { %>
-   <html lang="<%= head_component.lang %>">
+   <html lang="<%= head_component.lang %>" data-theme="light">
 <% } else { %>
-   <html lang="en">
+   <html lang="en" data-theme="light">
 <% } %>
 <head>
    <%- include('externe/components/Head/Head.ejs') %>

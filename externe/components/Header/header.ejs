@@ -1,35 +1,14 @@
 <header class="header">
     <div class="header__container container">
         <div class="header__body">
-            <% if(typeof header_component.homePage !== 'undefined') { %>
-                <%if(header_component.homePage === true) { %>
-                    <%- include('externe/components/Image/Image.ejs', {
-                        image_component: {
-                            this: {
-                                parent: 'header'
-                            },
-                            img: {
-                                src: '/media/icons/logo/logo.svg',
-                                alt: 'website-logo'
-                            }
-                        }
-                    })%>
-                <% } else { %>
-                    <a href="./" class="header__link-logo">
-                       <%- include('externe/components/Image/Image.ejs', {
-                            image_component: {
-                                this: {
-                                    parent: 'header'
-                                },
-                                img: {
-                                    src: '/media/icons/logo/logo.svg',
-                                    alt: 'website-logo'
-                                }
-                            }
-                        })%>
-                    </a>
-                <% } %>
-            <% } %>
+           <%- include('externe/components/Logo/Logo.ejs', {
+                logo_component: {
+                    this: {
+                        parent: 'header'
+                    },
+                    homePage: header_component.homePage,
+                }
+           })%>
             <%- include('externe/components/HeaderMenu/HeaderMenu.ejs', {
                 header_menu_component: {
                     list: [
@@ -51,6 +30,9 @@
                         parent: 'header'
                     }
                 }
+            })%>
+            <%- include('externe/components/ThemeToggle/ThemeToggle.ejs', {
+                theme_toggle_component: {}
             })%>
         </div>
     </div>

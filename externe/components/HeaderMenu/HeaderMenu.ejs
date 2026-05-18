@@ -66,14 +66,14 @@
             
             if(hasSubmenu) {
                 str += `<div class='${wrapperIconClass}'>`
-                str += include('externe/components/Icon/Icon.ejs', {
-                    icon_component: {
-                        this: {
-                            parent: iconClass
-                        },
-                        name: 'iconSubmenuDropdown'
-                    }
-                })
+                // str += include('externe/components/Icon/Icon.ejs', {
+                //     icon_component: {
+                //         this: {
+                //             parent: iconClass
+                //         },
+                //         name: 'iconSubmenuDropdown'
+                //     }
+                // })
                 str += '</div>'
                 str += '\</span>'
                 str += generateMenu({

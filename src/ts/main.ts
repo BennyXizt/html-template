@@ -1,7 +1,7 @@
-import '~/test.scss'
+// @ts-ignore
 import '@/assets/styles/main.scss'
 // @ts-ignore
-import { BurgerMenu } from '~/components'
+import { BurgerMenu, ThemeToggle } from '~/components'
 // @ts-ignore
 import { autoloader } from '~/scripts/autoloader/autoloader'
 import { ClickedModule } from './types/plugin.type'
@@ -13,10 +13,14 @@ window.addEventListener('pointerdown', function(event) {
     if (!(target instanceof Element)) return
 
     const 
-        burger: HTMLElement | null = (target as HTMLElement).closest('.burger')
+        burger: HTMLElement | null = (target as HTMLElement).closest('.burger'),
+        themeToggle: HTMLElement | null = (target as HTMLElement).closest('.theme-toggle')
 
     if(burger)
         BurgerMenu(burger)
+
+    if(themeToggle)
+        ThemeToggle()
 })
 
 document.fonts.ready.then(async() => {
