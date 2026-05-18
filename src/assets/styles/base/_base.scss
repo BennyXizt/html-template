@@ -76,7 +76,7 @@ body {
     @if map.get($SETTINGS, responsive_type) == 1 {
       @include rem((
         padding: 0 math.div($padding_x, 2),
-        max-width: (map.get($BASE, max_width) + $padding_x)
+        max-width: map.get($BASE, max_width)
       ));
     }
     @else if map.get($SETTINGS, responsive_type) == 2 {
