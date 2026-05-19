@@ -1,11 +1,8 @@
 @use 'sass:map';
-@use 'sass:color';
-
 
 @mixin menuLink {
     position: relative;
-    color: map.get($BASE, main_color);
-    transition: color .5s ease-in-out;
+    @extend %themeToggleColor;
 
     &::after {
         content: "";
@@ -14,26 +11,29 @@
         left: 50%;
         width: 0;
         height: 0.5px;
-        transition: .5s ease-in-out;
+        transition: map.get($ANIMATIONSPEEDS, base) ease-in-out;
         transition-property: width, left, background-color;           
-        background-color: map.get($BASE, main_color);
+        background-color: var(--theme-text-color);
     }
 
     &--active {
+        color: color-mix(in srgb, var(--theme-text-color), white 80%);
+
         &::after {
             left: 0;
             width: 100%;
-            color: color.scale(map.get($BASE, main_color), $lightness: 100%);
+            color: color-mix(in srgb, var(--theme-text-color), white 80%);
         }
     }
 
     @media (hover: hover) and (pointer: fine) {
         &:hover {
-            color: color.scale(map.get($BASE, main_color), $lightness: 100%);
+            color: color-mix(in srgb, var(--theme-text-color), white 80%);
+
             &::after {
                 left: 0;
                 width: 100%;
-                color: color.scale(map.get($BASE, main_color), $lightness: 100%);
+                color: color-mix(in srgb, var(--theme-text-color), white 80%);
             }
         }
     }
