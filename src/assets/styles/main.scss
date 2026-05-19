@@ -17,10 +17,11 @@
 // internal layout END
 
 @import 
-        '../../../externe/components/Burger/Burger',
-        '../../../externe/components/HeaderMenu/HeaderMenu';
+        '../../../externe/components/Burger/Burger';
 
 // internal components START
+@import
+	'./components/headerMenu';
 // internal components END
 
 // @import
