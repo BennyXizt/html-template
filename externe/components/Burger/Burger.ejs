@@ -18,7 +18,7 @@
         return
     }
        
-    var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...burger_component, componentName: 'burger'})
+    var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...burger_component.this, componentName: 'burger'})
 %>
 
 <<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>

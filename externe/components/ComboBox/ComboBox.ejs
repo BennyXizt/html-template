@@ -57,7 +57,7 @@
 		tag: combobox_component.this?.tag ?? 'form'
 	}
     
-    var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...combobox_component, componentName: 'combobox'})
+    var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...combobox_component.this, componentName: 'combobox'})
 
     var input_placeholder = undefined
     if(typeof combobox_component.placeholder !== 'undefined' && combobox_component.placeholder)

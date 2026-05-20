@@ -47,7 +47,7 @@
 		return
 	}
 
-    var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...accordion_component, componentName: 'accordion'})
+    var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...accordion_component.this, componentName: 'accordion'})
     
     thisDataAttributes += ' data-fsc-accordion'
     if (typeof accordion_component.behaviour !== 'undefined' && accordion_component.behaviour) {

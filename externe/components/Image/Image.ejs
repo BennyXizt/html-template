@@ -16,19 +16,19 @@
   //             class: ['childClass'],
   //             style: ['customStyle'],
   //             dataAttribute: ['customDataAttributes']
-  //         },
-  //          img: {
+  //           },
+  //           img: {
   //              src: 'src',
   //              alt: 'alt',
   //              width: 600,
   //              height: 400,
   //              loading: 'lazy',
   //              decoding: 'async'
-  //          },
-  //          images: [
+  //           },
+  //           images: [
   //              { srcset: 'srcset', type: 'image/webp' },
   //              { srcset: 'srcset', type: 'image/png'  }
-  //          ]
+  //           ]
   //        }
   // }) %>
 %>
@@ -62,8 +62,7 @@
         displayType = 'image'
     }
 
-
-   var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...image_component, componentName: 'image'})
+   var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...image_component.this, componentName: 'image'})
             
 %>
 
