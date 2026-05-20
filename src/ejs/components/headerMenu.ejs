@@ -28,8 +28,8 @@
 
     function generateMenu({ menu, blockClass='menu', parentClass='menu',  depth=0 }) {
         if(!menu || menu.length == 0) return
-
-        let str = `\<ul class="${blockClass}__list">`
+        
+        let str = `\<ul class="${depth === 1 ? `${blockClass}__list ${blockClass}__list--first` : `${blockClass}__list`}">`
             for(const item of menu) {
                 let activeLinkPageClass = ''
 
@@ -41,12 +41,13 @@
                     hasSubmenu = item.submenus && item.submenus.length > 0,
                     submenuClass = hasSubmenu ? `submenu-${parentClass}` : '',
                     liClass = hasSubmenu ? `${blockClass}__item ${blockClass}__item--submenu ${submenuClass}` : `${blockClass}__item`,
+                    liData = depth === 0 && hasSubmenu ? 'data-fsc-submenu' : '',
                     linkClass = hasSubmenu ? `${blockClass}__link ${blockClass}__link--submenu ${activeLinkPageClass}` : `${blockClass}__link ${activeLinkPageClass}`,
                     spanClass = depth === 0 ? `${submenuClass}__trigger ${submenuClass}__trigger--first` : `${submenuClass}__trigger`,
                     iconClass = hasSubmenu ? submenuClass : blockClass,
                     wrapperIconClass = `${iconClass}__wrapper`
             
-                str += `\<li class="${liClass}">`
+                str += `\<li class="${liClass}" ${liData}>`
                 
                     if(hasSubmenu) {
                         // span start
@@ -62,10 +63,9 @@
                         //     icon_component: {
                         //         this: {
                         //             parent: iconClass,
-                        //             tag: 'div'
-                        //         },
-                        //         wrapper: {
-                        //             block: wrapperIconClass,
+                        //             dataAttribute: [
+                        //                 'data-fsc-submenu-trigger'
+                        //             ]
                         //         },
                         //         name: 'iconName'
                         //     }
@@ -87,7 +87,7 @@
     }
 %>
 
-<div class="header__menu menu" data-fsc-headermenu>
+<div class="header__menu menu">
     <nav class="menu__body">
         <% if(typeof header_menu_component.list !== 'undefined' && header_menu_component.list) { %>
             <%- generateMenu({menu: header_menu_component.list}) %>

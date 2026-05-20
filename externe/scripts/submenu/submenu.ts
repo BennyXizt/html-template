@@ -2,9 +2,9 @@
 
 const HTMLElements: HTMLElement[] = []
 
-export const headermenuClickArray = [headermenuClick, '[data-fsc-headermenu] .submenu-menu__wrapper']
+export const submenuClickArray = [submenuClick, '[data-fsc-submenu] [data-fsc-submenu-trigger]']
 
-function headermenuClick(element: HTMLElement) {
+function submenuClick(element: HTMLElement) {
     const 
         hoverSupported = window.matchMedia('(hover: hover) and (pointer: fine)').matches,
         root = element.closest<HTMLElement>('.submenu-menu')
