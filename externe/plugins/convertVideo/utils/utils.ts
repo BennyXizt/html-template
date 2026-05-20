@@ -157,3 +157,13 @@ export function convertToMOV({inputFile, outputFile}: ConvertVideo) {
     })
     .run();
 }
+
+export default {
+    convertToMP4scale320,
+    convertToMP4scale480,
+    convertToMP4scale720,
+    convertToMP4scale1080,
+    convertToWEBMscale320,
+    convertToWEBMscale480,
+    convertToMOV,
+}

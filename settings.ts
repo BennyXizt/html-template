@@ -1,5 +1,5 @@
 import { ConvertVideo } from "./externe/plugins/convertVideo/types/plugin.type"
-import { convertToMOV } from "./externe/plugins/convertVideo/utils/utils"
+import convert from "./externe/plugins/convertVideo/utils/utils"
 
 
 type Settings = {
@@ -17,7 +17,7 @@ export const settings: Settings = {
     SVGConvertType: 0,
     videoConverter: {
         outputFormat: '.mov',
-        convertVideoFunction: convertToMOV
+        convertVideoFunction: convert.convertToMOV
     },
     excludedSVG: [
         
