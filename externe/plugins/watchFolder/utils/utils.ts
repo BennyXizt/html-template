@@ -16,10 +16,10 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Dummy SVG</title>
-                    <link rel="stylesheet" href="../temporary/fontIcons.scss">
+                    <link rel="stylesheet" href="../temporary/html/fontIcons.scss">
                     </head>
                     <body>
-                        <%- include('externe/components/DummyAside/DummyAside.ejs') %>
+                        <%- include('externe/components/content/DummyAside/DummyAside.ejs') %>
                         <h1>Dummy SVG</h1>
                         <ul class="icons">
                         <li class="icon">

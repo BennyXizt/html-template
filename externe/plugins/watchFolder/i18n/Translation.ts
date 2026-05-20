@@ -9,14 +9,15 @@ export class Translation {
                 `🔄 Файл был перезаписан: ${destinationFile}`,
             fileHasBeenChanged: (filePath: string) =>
                 `🔄 Файл был изменен: ${filePath}`,
+            fileHasBeenIgnored: (fileName: string) =>
+                `🔄 Файл ${fileName} был проигнорирован`,
             errorReadingTheFile: (err: Error) =>
-                `❌ Ошибка при чтении файла:\n ${err}`
+                `❌ Ошибка при чтении файла:\n ${err}`,
         }
     }
 
     pluginName: string
     language: Language
-    
 
     constructor({pluginName, language}: { pluginName: string, language?: Language}) {
         this.pluginName = pluginName
@@ -30,6 +31,9 @@ export class Translation {
     }
     fileHasBeenUpdated(filePath: string) {
         console.log(`\x1b[32m[${this.pluginName}]:\x1b[0m ${this.messages[this.language]?.fileHasBeenUpdated(filePath)}`)
+    }
+    fileHasBeenIgnored(fileName: string) {
+        console.log(`\x1b[32m[${this.pluginName}]:\x1b[0m ${this.messages[this.language]?.fileHasBeenIgnored(fileName)}`)
     }
     errorReadingTheFile(err: Error) {
        console.error(`\x1b[32m[${this.pluginName}]:\x1b[0m ${this.messages[this.language]?.errorReadingTheFile(err)}`)
