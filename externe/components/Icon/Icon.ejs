@@ -26,20 +26,24 @@
 
 	icon_component.this = {
 		...icon_component.this,
-		tag: icon_component.this?.tag ?? 'svg'
+		tag: 'svg'
 	}
 	
-	var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...icon_component, componentName: 'icon'})
+	var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...icon_component.this, componentName: 'icon'})
+	var {isWrapper, blockClass: wrapperBlockClass, thisClass: wrapperThisClass, thisID: wrapperThisID, thisTag: wrapperThisTag, thisStyles: wrapperThisStyles, thisDataAttributes: wrapperThisDataAttributes} = externe.setupEJSComponent({...icon_component.wrapper, componentName: 'wrapper'})
+
+	var isWrapper = typeof icon_component.wrapper === 'object' && icon_component.wrapper 
+	
 %>
 
-<% if(thisTag === 'svg') { %>
+<% if(isWrapper) { %>
+	<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>
+<% } %>
+
 	<svg <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
 		<use href="/media/icons/sprite.svg#<%= icon_component.name%>"></use>   
 	</svg>
-<% } else { %>
-	<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
-		<svg>
-			<use href="/media/icons/sprite.svg#<%= icon_component.name%>"></use>   
-		</svg>
-	</<%=thisTag%>>
+
+<% if(isWrapper) { %>
+	</<%=wrapperThisTag%>>
 <% } %>

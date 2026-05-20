@@ -64,20 +64,39 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}: {
             `//\t\t\ttag: 'div',\n` +
             `//\t\t\tstyle: ['customStyle'],\n` +
             `//\t\t\tdataAttribute: ['customDataAttributes'], \n` +
+            `//\t\t},\n` +
+            `//\t\twrapper: {\n` +
+            `//\t\t\tparent: 'wrapperParentClass',\n` +
+            `//\t\t\tblock: 'wrapperChildBlockClass',\n` +
+            `//\t\t\tclass: ['wrapperChildClass'],\n` +
+            `//\t\t\tid: ['wrapperChildID'],\n` +
+            `//\t\t\ttag: 'div',\n` +
+            `//\t\t\tstyle: ['customStyle'],\n` +
+            `//\t\t\tdataAttribute: ['customDataAttributes'], \n` +
             `//\t\t}\n` +
             `//\t}\n` +
-            `//\t}) %>\n` +
+            `//}) %>\n` +
             `%>\n` +
 
             `<%\n` +
             `\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n` +
             `\t\treturn\n` +
             `\t}\n\n` +
-            `\tvar {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...${componentName}_component, componentName: '${componentName}'})\n` +
+            `\tvar {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...${componentName}_component.this, componentName: '${componentName}'})\n` +
+            `\tvar {isWrapper, blockClass: wrapperBlockClass, thisClass: wrapperThisClass, thisID: wrapperThisID, thisTag: wrapperThisTag, thisStyles: wrapperThisStyles, thisDataAttributes: wrapperThisDataAttributes} = externe.setupEJSComponent({...${componentName}_component.wrapper, componentName: '${componentName}'})\n\n` +
+            `\tvar isWrapper = typeof ${componentName}_component.wrapper === 'object' && ${componentName}_component.wrapper\n` +
             `%>\n\n` +
 
-            `<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>\n\n` +
-            `</<%=thisTag%>>`
+
+            `<% if(isWrapper) { %>\n` +
+            `\t<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>\n` +
+            `<% } %>\n` +
+            `<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>\n` +
+            `\t<!-- HTML Here -->\n` +
+            `</<%=thisTag%>>\n` +
+            `<% if(isWrapper) { %>\n` +
+            `\t</<%=wrapperThisTag%>>\n` +
+            `<% } %>\n`
             break
         }
         case 'layout': {

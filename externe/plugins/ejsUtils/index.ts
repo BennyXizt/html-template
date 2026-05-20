@@ -1,54 +1,54 @@
-import { Component } from "./types/plugin.interface"
+import { SetupComponent } from "./types/plugin.interface"
 
 export const externe = {
     setupEJSComponent
 }
 
-function setupEJSComponent(component: Component) {
+function setupEJSComponent(component: SetupComponent) {
     let 
         thisClass = component.componentName,
 	    blockClass = thisClass
-	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.block !== 'undefined' && component.this.block))
-        blockClass = component.this.block
+	if(typeof component.block !== 'undefined' && component.block)
+        blockClass = component.block
 	
 
-	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.parent !== 'undefined' && component.this.parent)) 
-        thisClass = `${component.this.parent}__${thisClass} ${blockClass}`
-    else if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.class !== 'undefined' && component.this.class)) {
-		if(typeof component.this.class === 'string') 
-            thisClass = `${component.this.class} ${blockClass}`
-        else if(typeof component.this.class === 'object') 
-            thisClass = `${component.this.class.join(' ')} ${blockClass}`
+	if(typeof component.parent !== 'undefined' && component.parent)
+        thisClass = `${component.parent}__${thisClass} ${blockClass}`
+    else if(typeof component.class !== 'undefined' && component.class) {
+		if(typeof component.class === 'string') 
+            thisClass = `${component.class} ${blockClass}`
+        else if(typeof component.class === 'object') 
+            thisClass = `${component.class.join(' ')} ${blockClass}`
 	} 
     else thisClass = blockClass
 
 	let thisID = ''
-	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.id !== 'undefined' && component.this.id)) {
-		if(typeof component.this.id === 'string') 
-            thisID = `id='${component.this.id}'`
-		else if(typeof component.this.id === 'object') 
-            thisID = `id='${component.this.id.join(' ')}'`
+	if(typeof component.id !== 'undefined' && component.id) {
+		if(typeof component.id === 'string') 
+            thisID = `id='${component.id}'`
+		else if(typeof component.id === 'object') 
+            thisID = `id='${component.id.join(' ')}'`
 	}
 
 	let thisTag = 'div'
-	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.tag !== 'undefined' && component.this.tag))
-        thisTag = component.this.tag
+	if(typeof component.tag !== 'undefined' && component.tag)
+        thisTag = component.tag
 
 	let thisStyles = undefined
-	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.style !== 'undefined' && component.this.style)) {
-		if(typeof component.this.style === 'string') 
-            thisStyles = `style='${component.this.style}'`
-        else if(typeof component.this.style === 'object') 
-            thisStyles = `style='${component.this.style.join(' ')}'`
+	if(typeof component.style !== 'undefined' && component.style) {
+		if(typeof component.style === 'string') 
+            thisStyles = `style='${component.style}'`
+        else if(typeof component.style === 'object') 
+            thisStyles = `style='${component.style.join(' ')}'`
 	}
 
 	let thisDataAttributes = ''
-	if((typeof component.this !== 'undefined' && component.this) && (typeof component.this.dataAttribute !== 'undefined' && component.this.dataAttribute)) {
-		if(typeof component.this.dataAttribute === 'string')
-		    thisDataAttributes += ' ' + component.this.dataAttribute
-		else if(typeof component.this.dataAttribute === 'object')
-		    thisDataAttributes += ' ' + component.this.dataAttribute.join(' ')
+	if(typeof component.dataAttribute !== 'undefined' && component.dataAttribute) {
+		if(typeof component.dataAttribute === 'string')
+		    thisDataAttributes += ' ' + component.dataAttribute
+		else if(typeof component.dataAttribute === 'object')
+		    thisDataAttributes += ' ' + component.dataAttribute.join(' ')
 	}
-
+	
     return {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes}
 }
