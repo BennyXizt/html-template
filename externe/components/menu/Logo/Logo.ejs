@@ -22,7 +22,6 @@
 
 	var {blockClass, thisClass, thisID, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...logo_component.this, componentName: 'logo'})
 
-
     var type = 'image'
     if(typeof logo_component.type !== 'undefined' || logo_component.type) {
         type = logo_component.type
@@ -53,7 +52,7 @@
 <% } %>
 
 <%if(type === 'image') { %>
-    <%- include('externe/components/Image/Image.ejs', {
+    <%- include('externe/components/media/Image/Image.ejs', {
         image_component: {
             this: logo_component.this,
             img: {

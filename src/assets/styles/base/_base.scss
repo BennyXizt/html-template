@@ -12,14 +12,16 @@
   color: var(--theme-main-text-color);
   background-color: var(--theme-main-background-color);
 
-  // transition:
-  //   map.get($ANIMATIONSPEEDS, short) ease-in-out;
-  // transition-property: background-color, color;
+  transition:
+    map.get($ANIMATIONSPEEDS, short) ease-in-out;
+  transition-property: background-color, color;
 
-  // &[data-theme='dark'] {
-  //   --theme-main-background-color: #{map.get($COLORS, value)};
-  //   --theme-main-text-color: #{map.get($COLORS, value)};
-  // }
+  &[data-theme='dark'] {
+    // --theme-main-background-color: #{map.get($COLORS, value)};
+    // --theme-main-text-color: #{map.get($COLORS, value)};
+    --theme-main-background-color: rgb(129, 83, 83);
+    --theme-main-text-color: white;
+  }
 }
 
 textarea,
@@ -46,7 +48,7 @@ body {
         background: rgba(0,0,0, .85);
         width: 100dvw;
         height: 100dvh;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         z-index: map.get($ZINDEXES, immortal);

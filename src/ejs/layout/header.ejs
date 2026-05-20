@@ -1,7 +1,7 @@
 <header class="header">
     <div class="header__container container">
         <div class="header__body">
-           <%- include('externe/components/Logo/Logo.ejs', {
+           <%- include('externe/components/menu/Logo/Logo.ejs', {
                 logo_component: {
                     this: {
                         parent: 'header'
@@ -24,14 +24,27 @@
                     activePage: header_component.activePage ?? ''
                 }
             }) %>
-            <%- include('externe/components/Burger/Burger.ejs', {
+            <%- include('externe/components/menu/Burger/Burger.ejs', {
                 burger_component: {
                     this: {
                         parent: 'header'
                     }
                 }
             })%>
-            <%- include('externe/components/ThemeToggle/ThemeToggle.ejs', {
+            <%- include('externe/components/menu/TextTrigger/TextTrigger.ejs', { 
+                texttrigger_component: {
+                    this: {
+                        parent: 'parentClass',
+                        block: 'childBlockClass',
+                        class: ['childClass'],
+                        id: ['childID'],
+                        tag: 'div',
+                        style: ['customStyle'],
+                        dataAttribute: ['customDataAttributes'], 
+                    }
+                }
+            }) %>
+            <%- include('externe/components/menu/ThemeToggle/ThemeToggle.ejs', {
                 theme_toggle_component: {}
             })%>
         </div>

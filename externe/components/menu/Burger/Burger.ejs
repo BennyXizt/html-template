@@ -19,6 +19,8 @@
     }
        
     var {thisClass, blockClass, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...burger_component.this, componentName: 'burger'})
+
+    thisDataAttributes += ' data-fsc-burger'
 %>
 
 <<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisStyles%>>

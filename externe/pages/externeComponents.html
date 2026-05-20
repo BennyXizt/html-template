@@ -7,35 +7,56 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <%- include('externe/components/DummyAside/DummyAside.ejs') %>
+    <%- include('externe/components/content/DummyAside/DummyAside.ejs') %>
     <div class="wrapper">
         <article class="components _accordion">
             <h1>Accordion</h1>
-            <%- include('externe/components/Accordion/Accordion.ejs', {
+            <%- include('externe/components/content/Accordion/Accordion.ejs', {
                 accordion_component: {
                     title: 'Accordion Summary',
                     body: 'Accordion Body'
                 }
             })%>
         </article>
-        <article class="components _burger">
-            <h1>Burger</h1>
-            <%- include('externe/components/Burger/Burger.ejs', {
-                burger_component: {
-                    title: 'Accordion Summary',
-                    body: 'Accordion Body'
-                }
-            })%>
+        <article class="components _triggerMenus">
+            <h1>Trigger Menus</h1>
+            <div class="flex gap-4">
+                <article class="flex flex-col items-center gap-2 components _burger">
+                    <h6>Burger</h6>
+                    <%- include('externe/components/menu/Burger/Burger.ejs', {
+                        burger_component: {
+                            title: 'Accordion Summary',
+                            body: 'Accordion Body'
+                        }
+                    })%>
+                </article>
+                <article class="flex flex-col items-center gap-2 components _textTrigger">
+                    <h6>TextTrigger</h6>
+                    <%- include('externe/components/menu/TextTrigger/TextTrigger.ejs', { 
+                        texttrigger_component: {
+                            this: {
+                                parent: 'parentClass',
+                                block: 'childBlockClass',
+                                class: ['childClass'],
+                                id: ['childID'],
+                                tag: 'div',
+                                style: ['customStyle'],
+                                dataAttribute: ['customDataAttributes'], 
+                            }
+                        }
+                    }) %>
+                </article>
+            </div>
         </article>
-         <article class="components _themeToggle">
+        <article class="components _themeToggle">
             <h1>Theme Toggle</h1>
-            <%- include('externe/components/ThemeToggle/ThemeToggle.ejs', {
+            <%- include('externe/components/menu/ThemeToggle/ThemeToggle.ejs', {
                 theme_toggle_component: {}
             })%>
         </article>
         <article class="components _marquee">
             <h1>Marquee</h1>
-            <%- include('externe/components/Marquee/Marquee.ejs', {
+            <%- include('externe/components/content/Marquee/Marquee.ejs', {
                 marquee_component: {
                     data: [
                         'someText',
@@ -45,7 +66,7 @@
                     ]
                 }
             }) %>
-            <%- include('externe/components/Marquee/Marquee.ejs', {
+            <%- include('externe/components/content/Marquee/Marquee.ejs', {
                 marquee_component: {
                     this: {
                         dataAttribute: 'data-fsc-marquee-direction=right',
@@ -60,16 +81,31 @@
             }) %>
         </article>
         <article class="components _combobox">
-            <h1>ComboBox</h1>
-            <%- include('externe/components/ComboBox/ComboBox.ejs', {
+            <h1>ComboBox Not Working</h1>
+            <%- include('externe/components/content/ComboBox/ComboBox.ejs', {
                 combobox_component: {
                     prestyled: 'all',
                     label: 'Выберите город',
                     placeholder: 'Начните вводить',
                     icons: {
-                        input_dispose: '../icons/sprite.svg#angle-down-solid-full',
-                        input_close: '../icons/sprite.svg#xmark-solid-full',
-                        p: '../icons/sprite.svg#plus-solid-full'
+                        input_dispose: {
+                            this: {
+                                tag: 'button'
+                            },
+                            path: '/externe/temporary/icons/sprite.svg#angle-down-solid-full'
+                        },
+                        input_close: {
+                            this: {
+                                tag: 'button'
+                            },
+                            path: '/externe/temporary/icons/sprite.svg#xmark-solid-full'
+                        },
+                        p: {
+                            this: {
+                                tag: 'button'
+                            },
+                            path: '/externe/temporary/icons/sprite.svg#plus-solid-full'
+                        }
                     },
                     data: [
                         { flag: 'de', city: 'Deutschland' },
@@ -78,7 +114,7 @@
                     ]
                 }
             }) %>
-            <%- include('externe/components/ComboBox/ComboBox.ejs', {
+            <%- include('externe/components/content/ComboBox/ComboBox.ejs', {
                 combobox_component: {
                     label: 'Выберите город',
                     placeholder: 'Начните вводить',
@@ -97,7 +133,7 @@
         </article>
         <article class="components _image">
             <h1>Image</h1>
-            <%- include('externe/components/Image/Image.ejs', {
+            <%- include('externe/components/media/Image/Image.ejs', {
                 image_component: {
                     this: {
                         style: 'display: flex; justify-content: space-around;'
@@ -113,7 +149,7 @@
         </article>
         <article class="components _counter">
             <h1>Counter</h1>
-            <%- include('externe/components/Counter/Counter.ejs', { 
+            <%- include('externe/components/content/Counter/Counter.ejs', { 
                 counter_component: {
                     this: {
                         dataAttribute: [
@@ -126,7 +162,7 @@
                     }
                 }
             }) %>
-            <%- include('externe/components/Counter/Counter.ejs', { 
+            <%- include('externe/components/content/Counter/Counter.ejs', { 
                 counter_component: {
                     value: {
                         start: '0',
@@ -137,7 +173,7 @@
         </article>
         <article data-fsc-dynamic data-fsc-dynamic-target="article._image" data-fsc-dynamic-media-query="max-width: 769px" class="script _dynamic">
             <h1>Dynamic max-width: 769px</h1>
-            <%- include('externe/components/Image/Image.ejs', {
+            <%- include('externe/components/media/Image/Image.ejs', {
                 image_component: {
                     this: {
                         style: 'display: flex; justify-content: space-around;',
@@ -152,7 +188,7 @@
             }) %>
         </article>
     </div>
-    <script type="module" src="../temporary/externeComponents.ts"></script>
+    <script type="module" src="../temporary/html/externeComponents.ts"></script>
     <script type="module" src="/src/ts/main.ts"></script>
 </body>
 </html>

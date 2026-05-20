@@ -1,0 +1,24 @@
+@use 'sass:map';
+
+.text-trigger {
+    background-color: transparent;
+    position: relative;
+    @extend %themeToggleColor;
+
+    &__disabled {
+        display: none;
+    }
+
+    &.active {
+        z-index: map.get($ZINDEXES, immortal);
+
+        .text-trigger {
+            &__disabled {
+                display: inline;
+            }
+            &__active {
+                display: none;
+            }
+        }
+    }
+}

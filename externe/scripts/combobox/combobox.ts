@@ -33,7 +33,7 @@ const
 
 export function comboboxAutoload() {
     const comboboxes = document.querySelectorAll<HTMLElement>('[data-fsc-combobox-id]')
-
+    
     for(const combobox of comboboxes) {
         const   
             ul = combobox.querySelector('ul')
@@ -134,7 +134,6 @@ function comboboxClick(_: HTMLElement, event: Event) {
             actionCloseComboBoxOnClick()
         }
     }
-    
     
     if(closeIconHTMLElement) {
         const 

@@ -31,8 +31,8 @@ $BASE: (
 );
 
 $BURGER: (
-    color_primary: map.get($BASE, main_color),
-    color_active: color.scale(map.get($BASE, main_color), $lightness: 80%),
+    color_primary: var(--theme-main-text-color),
+    color_active: color-mix(in srgb, var(--theme-main-text-color), white 80%),
     origin_top: 6px,
     origin_bottom: 6px,
     width: 32px,
