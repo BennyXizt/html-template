@@ -12,16 +12,14 @@
   color: var(--theme-main-text-color);
   background-color: var(--theme-main-background-color);
 
-  transition:
-    map.get($ANIMATIONSPEEDS, short) ease-in-out;
-  transition-property: background-color, color;
+  // transition:
+  //   map.get($ANIMATIONSPEEDS, short) ease-in-out;
+  // transition-property: background-color, color;
 
-  &[data-theme='dark'] {
-    // --theme-main-background-color: #{map.get($COLORS, value)};
-    // --theme-main-text-color: #{map.get($COLORS, value)};
-    --theme-main-background-color: rgb(129, 83, 83);
-    --theme-main-text-color: white;
-  }
+  // &[data-theme='dark'] {
+  //   --theme-main-background-color: #{map.get($COLORS, value)};
+  //   --theme-main-text-color: #{map.get($COLORS, value)};
+  // }
 }
 
 textarea,

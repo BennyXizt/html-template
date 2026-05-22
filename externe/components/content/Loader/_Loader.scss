@@ -1,0 +1,373 @@
+@use 'sass:map';
+
+.loader {
+    &--default {
+        border-radius: 50%;
+        animation: loader-default-rotate map.get($ANIMATIONSPEEDS, max) linear infinite;
+        transition: border-color map.get($ANIMATIONSPEEDS, short) ease-in-out;
+        
+        @include fluid((
+            border: (16px 8px) solid #d3d3d3,
+            border-top: (16px 8px) solid var(--theme-main-text-color),
+            width: 80px 40px,
+            height: 80px 40px
+        ));
+
+        @keyframes loader-default-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    }
+    &--custom-1 {
+        @extend %themeToggleColor;
+        text-indent: -9999em;
+        overflow: hidden;
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        position: relative;
+        transform: translateZ(0);
+        animation: 
+            loader-custom-1-spin map.get($ANIMATIONSPEEDS, max) infinite ease,
+            loader-custom-1-rotate map.get($ANIMATIONSPEEDS, max) infinite ease;
+
+        @include fluid(font-size, 40px 20px);
+
+        @keyframes loader-custom-1-spin {
+            0% {
+                box-shadow: 0 -0.83em 0 -0.4em,
+                0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+                0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            5%,
+            95% {
+                box-shadow: 0 -0.83em 0 -0.4em, 
+                0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 
+                0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            10%,
+            59% {
+                box-shadow: 0 -0.83em 0 -0.4em, 
+                -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, 
+                -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+            }
+            20% {
+                box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em,
+                -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, 
+                -0.749em -0.34em 0 -0.477em;
+            }
+            38% {
+                box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em,
+                -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, 
+                -0.82em -0.09em 0 -0.477em;
+            }
+            100% {
+                box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 
+                0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+        }
+
+        @keyframes loader-custom-1-rotate {
+            0% { transform: rotate(0deg) }
+            100% { transform: rotate(360deg) }
+        }
+    }
+    &--custom-2 {
+        @extend %themeToggleColor;
+        text-indent: -9999em;
+        overflow: hidden;
+        width: 12em;
+        height: 12em;
+        border-radius: 50%;
+        position: relative;
+        transform: translateZ(0);
+        animation: 
+            loader-custom-1-spin map.get($ANIMATIONSPEEDS, max) infinite ease,
+            loader-custom-1-rotate map.get($ANIMATIONSPEEDS, max) infinite ease;
+
+        @include rem(font-size, 3px);
+
+        @keyframes loader-custom-1-spin {
+            0% {
+                box-shadow: 0 -0.83em 0 -0.4em,
+                0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+                0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            5%,
+            95% {
+                box-shadow: 0 -0.83em 0 -0.4em, 
+                0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 
+                0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+            10%,
+            59% {
+                box-shadow: 0 -0.83em 0 -0.4em, 
+                -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, 
+                -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+            }
+            20% {
+                box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em,
+                -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, 
+                -0.749em -0.34em 0 -0.477em;
+            }
+            38% {
+                box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em,
+                -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, 
+                -0.82em -0.09em 0 -0.477em;
+            }
+            100% {
+                box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 
+                0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+            }
+        }
+
+        @keyframes loader-custom-1-rotate {
+            0% { transform: rotate(0deg) }
+            100% { transform: rotate(360deg) }
+        }
+    }
+    &--custom-3 {
+        border-radius: 50%;
+        display: inline-block;
+        border-top: 3px solid var(--theme-main-text-color);
+        border-right: 3px solid transparent;
+        box-sizing: border-box;
+        animation: loader-custom-3-rotation map.get($ANIMATIONSPEEDS, max) linear infinite;
+        transition: border-color map.get($ANIMATIONSPEEDS, short) ease-in-out;
+
+        @include fluid((
+            width: 80px 40px,
+            height: 80px 40px
+        ));
+
+        @keyframes loader-custom-3-rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        } 
+    }
+    &--custom-4 {
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        position: relative;
+        text-indent: -9999em;
+        animation: loader-custom-4-spin map.get($ANIMATIONSPEEDS, max) infinite ease;
+        transform: translateZ(0);
+        transition: box-shadow map.get($ANIMATIONSPEEDS, short) ease-in-out;
+
+        @include fluid(font-size, 10px 5px);
+
+        @keyframes loader-custom-4-spin {
+            0%, 100% {
+                box-shadow: 
+                    0em -2.6em 0em 0em var(--theme-main-text-color),
+                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
+                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
+                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
+                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
+                    -2.6em 0em 0 0em rgba(255,255,255, 0.5), 
+                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.7);
+            }
+            12.5% {
+                box-shadow: 
+                    0em -2.6em 0em 0em rgba(255,255,255, 0.7), 
+                    1.8em -1.8em 0 0em var(--theme-main-text-color), 
+                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
+                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
+                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
+                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.5);
+            }
+            25% {
+                box-shadow: 
+                    0em -2.6em 0em 0em rgba(255,255,255, 0.5), 
+                    1.8em -1.8em 0 0em rgba(255,255,255, 0.7), 
+                    2.5em 0em 0 0em var(--theme-main-text-color), 
+                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
+                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
+                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+            }
+            37.5% {
+                box-shadow: 
+                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
+                    1.8em -1.8em 0 0em rgba(255,255,255, 0.5), 
+                    2.5em 0em 0 0em rgba(255,255,255, 0.7), 
+                    1.75em 1.75em 0 0em var(--theme-main-text-color), 
+                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
+                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
+                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
+                    2.5em 0em 0 0em rgba(255,255,255, 0.5), 
+                    1.75em 1.75em 0 0em rgba(255,255,255, 0.7), 
+                    0em 2.5em 0 0em var(--theme-main-text-color), 
+                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
+                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+            }
+            62.5% {
+                box-shadow: 
+                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
+                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
+                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
+                    1.75em 1.75em 0 0em rgba(255,255,255, 0.5), 
+                    0em 2.5em 0 0em rgba(255,255,255, 0.7), 
+                    -1.8em 1.8em 0 0em var(--theme-main-text-color), 
+                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+            }
+            75% {
+                box-shadow: 
+                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
+                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
+                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
+                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
+                    0em 2.5em 0 0em rgba(255,255,255, 0.5), 
+                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.7), 
+                    -2.6em 0em 0 0em var(--theme-main-text-color), 
+                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+            }
+            87.5% {
+                box-shadow: 
+                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
+                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
+                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
+                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
+                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
+                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.5), 
+                    -2.6em 0em 0 0em rgba(255,255,255, 0.7), 
+                    -1.8em -1.8em 0 0em var(--theme-main-text-color);
+            }
+        }
+    }
+    &--custom-5 {
+        $firstBoxShaddow: 16px;
+        $secondBoxShaddow: -16px;
+
+        border-radius: 50%;
+        @extend %themeToggleBackground;
+        box-shadow: 
+            $firstBoxShaddow 0 var(--theme-main-text-color), 
+            $secondBoxShaddow 0 var(--theme-main-text-color);
+        position: relative;
+        animation: loader-custom-5-flash map.get($ANIMATIONSPEEDS, max) ease-out infinite alternate;
+        @include fluid((
+            width: 16px 8px,
+            height: 16px 8px
+        ));
+
+        @keyframes loader-custom-5-flash {
+            0% {
+                background-color: #FFF2;
+                box-shadow: $firstBoxShaddow 0 #FFF2, $secondBoxShaddow 0 var(--theme-main-text-color);
+            }
+            50% {
+                background-color: var(--theme-main-text-color);
+                box-shadow: $firstBoxShaddow 0 #FFF2, $secondBoxShaddow 0 #FFF2;
+            }
+            100% {
+                background-color: #FFF2;
+                box-shadow: $firstBoxShaddow 0 var(--theme-main-text-color), $secondBoxShaddow 0 #FFF2;
+            }
+        }
+    }
+    &--skeleton {
+        width: 360px;
+        height: 100px;
+        display: block;
+        background-image: 
+            linear-gradient(100deg, transparent, rgba(38, 50, 56, 0.5) 50%, transparent 80%),
+            radial-gradient(circle 50px at 50px 50px, #FFF 99%, transparent 0), 
+            linear-gradient(#FFF 20px, transparent 0), 
+            linear-gradient(#FFF 20px, transparent 0), linear-gradient(#FFF 20px, transparent 0);
+        background-repeat: no-repeat;
+        background-size: 
+            75px 100px, 
+            100px 100px, 
+            125px 20px, 
+            260px 20px, 
+            260px 20px;
+        background-position: 
+            -50% 0, 0 0, 120px 0, 
+            120px 40px, 
+            120px 80px, 
+            120px 120px;
+        box-sizing: border-box;
+        animation: loader-skeleton map.get($ANIMATIONSPEEDS, max) linear infinite;
+
+        @keyframes loader-skeleton {
+            0% {
+                background-position: 0% 0, 0 0, 120px 0, 120px 40px, 120px 80px, 120px 120px;
+            }
+            100% {
+                background-position: 100% 0, 0 0, 120px 0, 120px 40px, 120px 80px, 120px 120px;
+            }
+        }
+    }
+    &--skeleton-2 {
+        width: 360px;
+        height: 100px;
+        display: block;
+        background-image: linear-gradient(100deg, transparent, rgba(38, 50, 56, 0.5) 50%, transparent 80%), linear-gradient(#FFF 100px, transparent 0), linear-gradient(#FFF 20px, transparent 0), linear-gradient(#FFF 20px, transparent 0), linear-gradient(#FFF 20px, transparent 0);
+        background-repeat: no-repeat;
+        background-size: 75px 100px, 100px 100px, 125px 20px, 260px 20px, 260px 20px;
+        background-position: -50% 0, 0 0, 120px 0, 120px 40px, 120px 80px, 120px 120px;
+        box-sizing: border-box;
+        animation: loader-skeleton-2 map.get($ANIMATIONSPEEDS, max) linear infinite;
+
+        @keyframes loader-skeleton-2 {
+            0% {
+                background-position: 0% 0, 0 0, 120px 0, 120px 40px, 120px 80px, 120px 120px;
+            }
+            100% {
+                background-position: 100% 0, 0 0, 120px 0, 120px 40px, 120px 80px, 120px 120px;
+            }
+        }
+    }
+    &--skeleton-3 {
+        width: 215px;
+        height: 215px;
+        display: block;
+        margin: auto;
+        position: relative;
+        background: #FFF;
+        box-sizing: border-box;
+
+        &::after {
+            content: '';
+            width: calc(100% - 30px);
+            height: calc(100% - 15px);
+            top: 15px;
+            left: 15px;
+            position: absolute;
+            background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5) 50%, transparent 100%),
+            linear-gradient(#DDD 100px, transparent 0),
+            linear-gradient(#DDD 16px, transparent 0),
+            linear-gradient(#DDD 50px, transparent 0);
+            background-repeat: no-repeat;
+            background-size: 75px 175px, 100% 100px, 100% 16px, 100% 30px;
+            background-position: -185px 0, center 0, center 115px, center 142px;
+            box-sizing: border-box;
+            animation: loader-skeleton-3 1s linear infinite;
+        }
+
+        @keyframes loader-skeleton-3 {
+            to {
+                background-position: 185px 0, center 0, center 115px, center 142px;
+            }
+        }
+    }
+}
+

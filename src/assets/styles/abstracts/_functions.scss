@@ -3,150 +3,182 @@
 @use "sass:list";
 @use "sass:math";
 
-@function generateClamp($list, $reverse: null) {
-    $restriction: $HEADERS_CLAMP_WIDTH;
-    $important: null;
-    
-    @if meta.type-of(list.nth($list, 1)) == 'number' and meta.type-of(list.nth($list, 2)) == 'number' {
-            $max: list.nth($list, 1);
-            $min: list.nth($list, 2);
-
-            @if list.length($list) == 3 {
-                $tempVal: list.nth($list, 3);
-
-                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                    $important: $tempVal;
-                }
-                @else {
-                    $restriction: $tempVal;
-                }                
-            }
-            @else if list.length($list) == 4 {
-                $restriction: list.nth($list, 3);
-                $tempVal: list.nth($list, 4);
-
-                @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                    $important: $tempVal;
-                }                                    
-            }
-            @return if($important == '!important', calculateClamp($min, $max, $restriction, $reverse)!important, calculateClamp($min, $max, $restriction, $reverse));
+@function list-max($list) {
+    @if meta.type-of($list) != 'list' {
+        @warn 'FUNCTION list-max($list): The argument is NOT a list';
+        @return undefined;
     }
-    @else {
-        $tempFinalValue: ();
-        @for $i from 1 through list.length($list) {
-            @if meta.type-of(list.nth($list, $i)) == 'list' {
-                $sublist: list.nth($list, $i);
 
-                $max: list.nth($sublist, 1);
-                $min: list.nth($sublist, 2);
+    $max: list.nth($list, 1);
 
-                @if list.length($sublist) == 3 {
-                    $tempVal: list.nth($sublist, 3);
+    @if meta.type-of($max) != 'number' {
+        @warn 'FUNCTION list-max($list): The value ' + $min + ' is NOT a number';
+        @return undefined;
+    }
 
-                    @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                        $important: $tempVal;
-                    }
-                    @else {
-                        $restriction: $tempVal;
-                    }                
-                }
-                @else if list.length($sublist) == 4 {
-                    $restriction: list.nth($sublist, 3);
-                    $tempVal: list.nth($sublist, 4);
+    $unit: math.unit($max);
 
-                    @if(meta.type-of($tempVal) == 'string' and $tempVal == '!important') {
-                        $important: $tempVal;
-                    }                                    
-                }
-                
-                $tempFinalValue: list.append($tempFinalValue, calculateClamp($min, $max, $restriction, $reverse));
-            }
-            @else {
-                $tempFinalValue: list.append($tempFinalValue, list.nth($list, $i));
-            }
+    @for $i from 1 through list.length($list) {
+        $value: list.nth($list, $i);
+
+        @if meta.type-of($value) != 'number' or math.unit($value) != $unit  {
+            @warn 'FUNCTION list-max($list): either value ' + $value + ' is NOT a number or value`s unit is NOT ' + $unit;
+            @return undefined;
         }
-        @return if($important == '!important', $tempFinalValue !important,  $tempFinalValue);
+
+        @if($value > $max) {
+            $max: $value;
+        }
+    }
+
+    @return $max;
+}
+@function list-min($list) {
+    @if meta.type-of($list) != 'list' {
+        @warn 'FUNCTION list-min($list): The argument is NOT a list';
+        @return undefined;
+    }
+
+    $min: list.nth($list, 1);
+
+    @if meta.type-of($min) != 'number' {
+        @warn 'FUNCTION list-min($list): The value ' + $min + ' is NOT a number';
+        @return undefined;
+    }
+
+    $unit: math.unit($min);
+
+    @for $i from 1 through list.length($list) {
+        $value: list.nth($list, $i);
+
+        @if meta.type-of($value) != 'number' or math.unit($value) != $unit  {
+            @warn 'FUNCTION list-min($list): either value ' + $value + ' is NOT a number or value`s unit is NOT ' + $unit;
+            @return undefined;
+        }
+
+        @if($value < $min) {
+            $min: $value;
+        }
+    }
+
+    @return $min;
+}
+@function pxToRem($px, $base: null) {
+    @if map.get($SETTINGS, pixels_only) or math.unit($px) != 'px' {
+        @return $px;
+    }   
+    
+    @if not $base {
+        $base: map.get($BASE, font_size);
+    }
+
+    @if($base <= abs($px) + 5px) {
+       @return calc(round(($px / $base) * 100) / 100) * 1rem;
+    } @else {
+        @return $px;
     }
 }
-@function calculateClamp($min, $max, $restriction, $reverse: null) {
-   @if not ($reverse) {
+@function pxAdaptive($px, $base: null) {
+    @if meta.type-of($px) != 'number' {
+        @warn 'FUNCTION pxAdaptive($px, $base): The value ' + $px + ' is NOT a number';
+        @return undefined;
+    }
+
+    @if map.get($SETTINGS, pixels_only) or math.unit($px) != 'px' {
+        @return $px;
+    }   
+    @return pxToRem($px, $base);
+}
+
+/// Fluid sizing function for responsive values.
+///
+/// Generates a fluid value based on provided arguments.
+/// Can be used for responsive typography, spacing, widths, etc.
+///
+/// @param {Number|List}   $arg1 - Base value     (usually min/max size or single list)
+/// @param {Number|null|_} $arg2 - Max value      (optional, enables fluid scaling)
+/// @param {Number|null|_} $arg3 - Restriction    (optional, breakpoint)
+/// @param {Number|null}   $arg4 - Base Font Size (optional, breakpoint)
+///
+/// @return {String} - Returns a calc() expression
+@function fluid($arg1, $arg2: null, $arg3: null, $arg4: null) {
+    $min: null;
+    $max: null;
+    $restriction: null;
+
+    @if meta.type-of($arg1) == 'list' {
+        @for $i from 1 through list.length($arg1) {
+            $value: list.nth($arg1, $i);
+
+            @if meta.type-of($value) != 'number' {
+                @warn 'FUNCTION fluid($arg1, $arg2, $arg3, $arg4): The value ' + $value + ' is NOT a number';
+                @return undefined;
+            }
+            @if math.unit($value) != 'px' {
+                @warn 'FUNCTION fluid($arg1, $arg2, $arg3, $arg4): The number ' + $value + ' is NOT in px';
+                @return undefined;
+            }
+
+            @if $i == 1 {
+                $min: $value;
+            } @else if $i == 2 {
+                $max: $value;
+            } @else if $i == 3 {
+                $restriction: $value;
+            }
+        }
+    } @else {
+        @if not ($arg2) {
+            @warn 'FUNCTION fluid($arg1, $arg2, $arg3, $arg4): Second argument is empty!';
+            @return unfefined;
+        }
+
+        $min: $arg1;
+        $max: $arg2;
+
+        @if math.unit($min) != 'px' or math.unit($max) != 'px' {
+            @warn 'FUNCTION fluid($arg1, $arg2, $arg3, $arg4): The numbers (' + $min + ', ' + $max + ') is NOT in px';
+            @return undefined;
+        }
+
+        @if $arg3 {
+            $restriction: $arg3;
+        }
+    }
+
+    @if not $restriction {
+        $restriction: $HEADERS_CLAMP_WIDTH;
+    } @else if math.unit($restriction) != 'px' {
+        @warn 'FUNCTION fluid($arg1, $arg2, $arg3, $arg4): The number ' + $restriction + ' is NOT in px';
+        @return undefined;
+    }
+
+    @if $min > $max {
+        $temp: $min;
+        $min: min($min, $max);
+        $max: max($temp, $max);
+
         $modificator: 0.01 * $restriction;
         $preffered: math.div($max, $modificator) + vw;
-        $min: pxToRem($min);
-        $max: pxToRem($max);
-        @return clamp($min, $preffered, $max);
-   }
-   @else {
-        $range: $max - $min;
-        $mod: math.abs($range / $restriction);
+        $min: if($arg4, pxAdaptive($min, $arg4), pxAdaptive($min));
+        $max: if($arg4, pxAdaptive($max, $arg4), pxAdaptive($max));
 
-        $min: pxToRem($min);
-        $max: pxToRem($max);
-        $restriction: pxToRem($restriction);
-        $mod: pxToRem($mod);
+        @return clamp($min, $preffered, $max);
+    }
+    @else {
+        $temp: $min;
+        $min: max($min, $max);
+        $max: min($temp, $max);
+
+        $range: $max - $min;
+        $mod: math.abs(math.div($range, $restriction));
+
+        $min: if($arg4, pxAdaptive($min, $arg4), pxAdaptive($min));
+        $max: if($arg4, pxAdaptive($max, $arg4), pxAdaptive($max));
+        $restriction: pxAdaptive($restriction);
+        $mod: pxAdaptive($mod);
         $preferred: calc(#{$max} + (($restriction - 100vw) * #{$mod}));
 
         @return clamp($max, $preferred, $min);
-   }
-}
-@function pxToRem($px, $base: null) {
-    @if math.unit($px) != 'px' {
-        @return $px;
-    }       
-
-    @if(map.get($BASE, font_size) <= abs($px) + 5px and not map.get($SETTINGS, pixels_only)) {
-       @if $base != null {
-         @return calc(round(($px / $base) * 100) / 100) * 1rem;
-       }
-       @else {
-         @return calc(round(($px / map.get($BASE, font_size)) * 100) / 100) * 1rem;
-       }
     }
-    @return $px;
-}
-@function calculateValue($val, $base: null) {
-   @if $base != null {
-    @if meta.type-of($val) == "list" {
-        $isImportant: false;
-        $temp: ();
-        @each $elem in $val {
-            @if(meta.type-of($elem) == 'number') {
-                $temp: list.append($temp, pxToRem($elem, $base));
-            }
-            @else if(meta.type-of($elem) == 'string' and $elem == '!important') {
-                 $isImportant: true;
-            }
-        }
-        @if($isImportant) {
-            $temp: list.append($temp, !important);
-        }
-
-        @return $temp;
-    }
-    @else {
-        @return pxToRem($val, $base);
-    }
-   }
-   @else {
-     @if meta.type-of($val) == "list" {
-        $isImportant: false;
-        $temp: ();
-        @each $elem in $val {
-            @if(meta.type-of($elem) == 'number') {
-                $temp: list.append($temp, pxToRem($elem));
-            }
-            @else if(meta.type-of($elem) == 'string' and $elem == '!important') {
-                 $isImportant: true;
-            }
-        }
-        @if($isImportant) {
-            $temp: list.append($temp, !important);
-        }
-
-        @return $temp;
-    }
-    @else {
-        @return pxToRem($val);
-    }
-   }
 }

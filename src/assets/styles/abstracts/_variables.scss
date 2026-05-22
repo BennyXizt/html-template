@@ -2,10 +2,8 @@
 @use "sass:color";
 
 $SETTINGS: (    
-    // Mobile first
-    mobile_first: false,
     // pixels perfect
-    pixels_only: true,
+    pixels_only: false,
     // Тип адаптива контейнера
     // 1 = без брейкпоинтов
     // 2 = Boostrap сетка
@@ -24,7 +22,7 @@ $BASE: (
     line_height: 1,
     // font_family: ('FontFamilyName', sans-serif),
     main_color: rgb(0, 0, 0),
-    // background_color: #ffffff,
+    background_color: #ffffff,
     container_padding_x: (15px * 2),
     min_width: 320px,
     max_width: 1920px
@@ -47,6 +45,7 @@ $COLORS: (
 );
 
 $ANIMATIONSPEEDS: (
+    max: 1s,
     long: .5s,
     base: .4s,
     short: .3s

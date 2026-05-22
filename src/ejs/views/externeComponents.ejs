@@ -18,6 +18,58 @@
                 }
             })%>
         </article>
+        <article class="components _loader">
+            <h1>Loader</h1>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-row items-center gap-12">
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {}
+                    }) %>
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'custom-1'
+                        }
+                    }) %>
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'custom-2'
+                        }
+                    }) %>
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'custom-3'
+                        }
+                    }) %>
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'custom-4'
+                        }
+                    }) %>
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'custom-5'
+                        }
+                    }) %>
+                </div>
+                <div class="flex flex-row flex-wrap items-center gap-3">
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'skeleton'
+                        }
+                    }) %>
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'skeleton-2'
+                        }
+                    }) %>
+                    <%- include('externe/components/content/Loader/Loader.ejs', { 
+                        loader_component: {
+                            type: 'skeleton-3'
+                        }
+                    }) %>
+                </div>
+            </div>
+        </article>
         <article class="components _triggerMenus">
             <h1>Trigger Menus</h1>
             <div class="flex gap-4">

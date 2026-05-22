@@ -1,6 +1,7 @@
 @use 'sass:map';
 
 .text-trigger {
+    cursor: pointer;
     background-color: transparent;
     position: relative;
     @extend %themeToggleColor;
