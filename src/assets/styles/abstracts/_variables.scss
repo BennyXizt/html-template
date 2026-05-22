@@ -1,7 +1,9 @@
 @use "sass:map";
 @use "sass:color";
 
-$SETTINGS: (    
+@import './default/variables';
+
+$SETTINGS: (  
     // pixels perfect
     pixels_only: false,
     // Тип адаптива контейнера
@@ -41,7 +43,7 @@ $BURGER: (
 );
 
 $COLORS: (
-    base: map.get($BASE, main_color)
+    default: map.get($BASE, main_color)
 );
 
 $ANIMATIONSPEEDS: (
@@ -54,5 +56,10 @@ $ANIMATIONSPEEDS: (
 $ZINDEXES: (
     immortal: 5
 );
+
+$FONTS: (
+    
+);
+
 // Custom
-$FONTS: ();
+// Here

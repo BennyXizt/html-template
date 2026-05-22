@@ -1,0 +1,26 @@
+
+@mixin text_adaptive($type, $map) {
+    $font_size_first: map.get($map, font_size_original);
+    $font_size_last: map.get($map, font_size_adaptive);
+
+    $line_height: map.get($map, line_height);
+    $font_weight: map.get($map, font_weight);  
+
+    #{$type} {
+        font-weight: $font_weight;
+        overflow-wrap: break-word;
+        word-break: normal;
+        hyphens: auto;
+        text-wrap: pretty;
+        text-wrap: balance;
+
+        @if not math.is-unitless($line_height) {
+            @include line-height($line_height, $font_size_first);
+        }
+        @else {
+            line-height: $line_height;
+        }
+
+        @include fluid(font-size, $font_size_first $font_size_last);
+    }
+} 

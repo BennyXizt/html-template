@@ -1,5 +1,4 @@
 @import 
-        './abstracts/default',
         './abstracts/variables',
         './abstracts/mixins',
         './abstracts/functions',
@@ -17,7 +16,6 @@
 // internal layout END
 
 @import 
-        '../../../externe/components/content/Loader/Loader',
         '../../../externe/components/menu/TextTrigger/TextTrigger',
         '../../../externe/components/menu/Burger/Burger';
 
