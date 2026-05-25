@@ -11,26 +11,33 @@ export function convertImage({ file, name, extention, outputDestination, transla
             { suffix: 'xl', width: 1600, quality: 75 },
             { suffix: '2xl', width: 2400, quality: 70 },
         ],
-        tasks =  sizes.flatMap(({ suffix, width, quality }) => [
-            image
+        tasks =  sizes.flatMap(({ suffix, width, quality }) => {
+            const predefinedImage = image
                 .clone()
                 .resize({ width, withoutEnlargement: true })
-                .webp({ quality: quality })
-                .toFile(`${outputDestination}/${name}-${suffix}.webp`),
 
-            image
-                .clone()
-                .resize({ width, withoutEnlargement: true })
-                .avif({ quality: Math.max(quality - 20, 40) })
-                .toFile(`${outputDestination}/${name}-${suffix}.avif`)
-        ])
+                return [
+                    predefinedImage
+                        .webp({ quality: quality })
+                        .toFile(`${outputDestination}/${name}-${suffix}.webp`),
+
+                    predefinedImage
+                        .avif({ quality: Math.max(quality - 20, 40) })
+                        .toFile(`${outputDestination}/${name}-${suffix}.avif`),
+
+                    predefinedImage
+                        .jpeg({ quality: quality })
+                        .toFile(`${outputDestination}/${name}-${suffix}.jpg`),
+                ]
+               
+        })
 
     const total = tasks.length
     let completed = 0
     
     return Promise.all(
         tasks.map(e => {
-            e.then(result => {
+            return e.then(() => {
                 completed++
 
                 const percent = Math.round((completed / total) * 100)
