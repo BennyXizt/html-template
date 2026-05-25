@@ -5,7 +5,7 @@ import fs from 'fs'
 import type { SVGConvertToFile, SVGFolderInterface} from './types/plugin.interface'
 import { SVGFolderTranslation } from './i18n'
 import { updateDummySVGPage } from './utils/utils'
-
+import { settings } from '../../../settings'
 
 export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, language, dummy, convertType}: SVGFolderInterface): Plugin  {
     return {
@@ -23,6 +23,12 @@ export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, lan
 
             server.watcher.add(watchDir);
             server.watcher.on('add', (filePath) => {
+                if(settings.excludedSVG.includes(basename(filePath, extname(filePath)) ) ) {
+                    translation.newFileAdded(filePath)    
+                    translation.fileHasBeenIgnored(basename(filePath))
+                    return
+                }
+                
                 if (dirname(filePath) === watchDir && !basename(filePath)?.includes(nameOfTheOutputFile) && extname(filePath) === '.svg') {
                     translation.newFileAdded(filePath)    
                         
