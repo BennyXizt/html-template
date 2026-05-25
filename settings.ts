@@ -1,5 +1,5 @@
-import { ConvertVideo } from "./externe/plugins/convertVideo/types/plugin.type"
-import convert from "./externe/plugins/convertVideo/utils/utils"
+import { convertVideo } from "./externe/plugins/convertMedia"
+import { ConvertVideo } from "./externe/plugins/convertMedia/types/plugin.interface"
 
 
 type Settings = {
@@ -16,8 +16,8 @@ export const settings: Settings = {
     watcherNeeded: true,
     SVGConvertType: 0,
     videoConverter: {
-        outputFormat: '.mov',
-        convertVideoFunction: convert.convertToMOV
+        outputFormat: convertVideo.toMP4scale480.extention,
+        convertVideoFunction: convertVideo.toMP4scale480.function
     },
     excludedSVG: [
         
