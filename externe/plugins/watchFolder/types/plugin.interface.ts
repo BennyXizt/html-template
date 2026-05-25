@@ -42,6 +42,11 @@ export interface FontsFolderInterface {
     outputDestination: string,
     language?: Language
 }
+export interface IMGFolderInterface {
+    relativePath: string,
+    outputDestination: string,
+    language?: Language
+}
 export interface FontsConvertToFile {
     filePath: string,
     fonts: FontsTypes,

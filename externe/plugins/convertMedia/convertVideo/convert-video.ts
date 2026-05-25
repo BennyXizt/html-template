@@ -1,7 +1,7 @@
 import readline from 'node:readline'
 import path, { basename, dirname, extname } from 'node:path'
 import fs from 'fs'
-import { settings } from '../../../settings'
+import { settings } from '../../../../settings'
 
 const rl = readline.createInterface({
   input: process.stdin,

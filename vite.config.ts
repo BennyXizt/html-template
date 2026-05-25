@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { qrcode } from 'vite-plugin-qrcode'
 import { resolve } from 'path'
-import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin } from './externe/plugins/watchFolder'
+import { ViteWatchVideoFolderPlugin, ViteWatchEJSFolderPlugin, ViteWatchFontsFolderPlugin, ViteWatchSVGFolderPlugin, ViteWatchIMGFolderPlugin } from './externe/plugins/watchFolder'
 import { externe } from './externe/plugins/ejsUtils'
 import autoprefixer from 'autoprefixer'
 
@@ -94,7 +94,11 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {
-        additionalData: `$BUILD_ENV: "${process.env.NODE_ENV}";`
+        additionalData: `$BUILD_ENV: "${process.env.NODE_ENV}";`,
+        silenceDeprecations: [
+          'import',
+          'mixed-decls'
+        ]
       }
     }
   },
@@ -151,6 +155,10 @@ export default defineConfig({
       outputVideoDirectory: `${__dirname}/public/media/converted`,
       outputVideoFormat: [".mp4"],
       posterDirectory: `${__dirname}/public/media/image/poster`
+    }),
+    ViteWatchIMGFolderPlugin({
+      relativePath: `${__dirname}/public/media/image/watched`,
+      outputDestination: `${__dirname}/public/media/image`
     })
   ],
   define: {
