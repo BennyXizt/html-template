@@ -39,37 +39,55 @@ $DEFAULT_HEADERS: (
         font_size_original: 48px,
         font_size_adaptive: 32px,
         line_height: 56px,
-        font_weight: 700
+        font_weight: 700,
+        font_family: sans-serif,
+        font_style: regular,
+        letter_spacing: 3px,
     ),
     h2: (
         font_size_original: 40px,
         font_size_adaptive: 28px,
         line_height: 48px,
-        font_weight: 700
+        font_weight: 700,
+        font_family: sans-serif,
+        font_style: regular,
+        letter_spacing: 3px,
     ),
     h3: (
         font_size_original: 32px,
         font_size_adaptive: 24px,
         line_height: 40px,
-        font_weight: 600
+        font_weight: 600,
+        font_family: sans-serif,
+        font_style: regular,
+        letter_spacing: 3px,
    ),
    h4: (
         font_size_original: 24px,
         font_size_adaptive: 18px,
         line_height: 32px,
-        font_weight: 600
+        font_weight: 600,
+        font_family: sans-serif,
+        font_style: regular,
+        letter_spacing: 3px,
    ),
    h5: (
         font_size_original: 20px,
         font_size_adaptive: 18px,
         line_height: 28px,
-        font_weight: 500
+        font_weight: 500,
+        font_family: sans-serif,
+        font_style: regular,
+        letter_spacing: 3px,
    ),
    h6: (
         font_size_original: 16px,
         font_size_adaptive: 14px,
         line_height: 24px,
-        font_weight: 500
+        font_weight: 500,
+        font_family: sans-serif,
+        font_style: regular,
+        letter_spacing: 3px,
    ),
 );
 $DEFAULT_P: (
