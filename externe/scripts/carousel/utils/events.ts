@@ -1,4 +1,4 @@
-import { animate, calculateCarouselProps, renderCounter, step } from "./utils"
+import { animate, calculateCarouselProps, renderCounter, step, toggleDotActive } from "./utils"
 import { CarouselElementInterface } from "../types/plugin.interface";
 
 const carouselElements: CarouselElementInterface[] = []
@@ -25,6 +25,7 @@ export function carouselAutoload() {
         carouselElements.push(carouselElement)
 
         renderCounter(carouselElement)
+        toggleDotActive(carouselElement)
 
         carouselList.setAttribute('data-fsc-carousel-initialized', 'true')
     }
