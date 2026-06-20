@@ -16,9 +16,10 @@ export function animate(carousel: CarouselElementInterface) {
 
         carousel.timerNext = now + carousel.timerInterval
         remaining = carousel.timerNext - Date.now()
+
     } else if(seconds !== carousel.timerSeconds) {
         carousel.timerSeconds = seconds
-
+        
         renderTimer(carousel)
     } 
 
@@ -31,15 +32,25 @@ export function step(carousel: CarouselElementInterface) {
     }
 
     if(carousel.direction == 'left') {
-        carousel.position =
-            carousel.position - carousel.offset < -carousel.dimention ? 
-                0 : carousel.position - carousel.offset
+        if(carousel.index < carousel.length - 1) {
+            carousel.position = -(carousel.index + 1) * carousel.offset
+            carousel.index++
+        } else {
+            carousel.position = 0
+            carousel.index = 0
+        }
     } else if(carousel.direction == 'right') {
-        carousel.position += 
-            carousel.position == 0 ? -carousel.dimention : carousel.offset
+        if(carousel.index > 0) {
+            carousel.position = -(carousel.index - 1) * carousel.offset
+            carousel.index--
+        } else {
+            carousel.position = -(carousel.length - 1) * carousel.offset
+            carousel.index = carousel.length - 1
+        }
     } else if(carousel.direction == 'step') {
         carousel.position = -carousel.offset * carousel.step
-
+        carousel.index = carousel.step
+        
         carousel.step = undefined
     }
 
@@ -47,18 +58,17 @@ export function step(carousel: CarouselElementInterface) {
 
     toggleDotActive(carousel)
     renderCounter(carousel)
-    
-    carousel.root.style.transform = `translate3d(${carousel.position}px, 0, 0)`
+
+    carousel.carouselList.style.transform = `translate3d(${carousel.position}px, 0, 0)`
     
 }
 
 export function toggleDotActive(carousel) {
     const 
-        slideIndex = Math.abs(carousel.position) / carousel.offset,
-        slides = carousel.root.children,
-        slide = Array.from(slides)[slideIndex],
+        slides = carousel.carouselList.children,
+        slide = Array.from(slides)[carousel.index],
         dots = carousel.carousel.querySelector('[data-fsc-carousel-dots]').children,
-        dot = Array.from(dots)[slideIndex]
+        dot = Array.from(dots)[carousel.index]
 
     for (var item of [...slides, ...dots]) {
         item.classList.remove('active')
@@ -75,10 +85,9 @@ export function renderCounter(carousel) {
     if(!element) return
 
     const
-        slide = Math.abs(carousel.position) / carousel.offset + 1,
-        slides = carousel.root.children
+        slides = carousel.carouselList.children
 
-    element.innerHTML = `${slide} / ${slides.length}`
+    element.innerHTML = `${carousel.index + 1} / ${slides.length}`
 }
 
 function renderTimer(carousel) {
@@ -88,4 +97,16 @@ function renderTimer(carousel) {
     if(!element) return
 
     element.innerHTML = carousel.timerSeconds
+}
+
+export function calculateCarouselProps(carouselList) {
+    const
+        childrens = carouselList.querySelectorAll('[data-fsc-carousel-item]')
+
+    const
+        length = childrens.length,
+        offset = childrens[0].getBoundingClientRect().width,
+        dimention = offset * length
+
+    return { length, offset, dimention }
 }

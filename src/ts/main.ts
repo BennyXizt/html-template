@@ -109,8 +109,37 @@ document.fonts.ready.then(async() => {
         })
     })
     
+    let 
+        resizeOptimization = undefined,
+        lastResizeWidth = window.innerWidth,
+        lastResizeHeight = window.innerHeight
+
     window.addEventListener('resize', function(event) {
-        onResizeModules.forEach(e => e[1]())
+        cancelAnimationFrame(resizeOptimization)
+
+        resizeOptimization = requestAnimationFrame(() => {
+            const 
+                resizeWidth = window.innerWidth,
+                resizeHeight = window.innerHeight
+
+            const 
+                isWidthResized = resizeWidth !== lastResizeWidth,
+                isHeightResized = resizeHeight !== lastResizeHeight
+
+            let differenceWidth, differenceHeight
+
+            if(isWidthResized) differenceWidth = resizeWidth - lastResizeWidth
+            if(isHeightResized) differenceHeight = resizeHeight - lastResizeHeight
+            
+            if (isWidthResized || isHeightResized) {
+                onResizeModules.forEach(e => {
+                    e[1]({ event, isWidthResized, isHeightResized, differenceWidth, differenceHeight})    
+                })
+            }
+            
+            lastResizeWidth = resizeWidth
+            lastResizeHeight = resizeHeight
+        })
     })
 
     window.addEventListener('submit', function(event) {

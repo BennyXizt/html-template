@@ -1,4 +1,4 @@
-import { animate, renderCounter, step } from "./utils"
+import { animate, calculateCarouselProps, renderCounter, step } from "./utils"
 import { CarouselElementInterface } from "../types/plugin.interface";
 
 const carouselElements: CarouselElementInterface[] = []
@@ -8,31 +8,25 @@ export function carouselAutoload() {
     
     for (const carousel of carousels) {
         const 
-            root = carousel.querySelector<HTMLElement>('[data-fsc-carousel-list]')
+            carouselList = carousel.querySelector<HTMLElement>('[data-fsc-carousel-list]')
 
-        if (!root || root.getAttribute('data-fsc-carousel-initialized')) continue
+        if (!carouselList || carouselList.getAttribute('data-fsc-carousel-initialized')) continue
 
         const
             direction = carousel.getAttribute('data-fsc-carousel-direction') ?? 'left',
             interval = carousel.getAttribute('data-fsc-carousel-interval') ?
                 parseInt(carousel.getAttribute('data-fsc-carousel-interval')!) : 3000
 
-        const
-            childrens = root.querySelectorAll('[data-fsc-carousel-item]'),
-            offset = childrens[0].getBoundingClientRect().width
-
-        let childrensWidth = Array.from(childrens).reduce(
-            (acc, el) => acc + (el as HTMLElement).getBoundingClientRect().width,
-        0) - offset
+        const { dimention, offset, length } = calculateCarouselProps(carouselList)
 
         const carouselElement = 
-            {carousel, root, position: 0, originalDirection: direction, direction, dimention: childrensWidth, offset, timerInterval: interval, timerNext: undefined, timerSeconds: undefined, step: undefined, visible: false, animationID: undefined}
+            {carousel, carouselList, originalDirection: direction, direction, dimention, offset, length, position: 0, index: 0, timerInterval: interval, timerNext: undefined, timerSeconds: undefined, step: undefined, visible: false, animationID: undefined}
 
         carouselElements.push(carouselElement)
 
         renderCounter(carouselElement)
 
-        root.setAttribute('data-fsc-carousel-initialized', 'true')
+        carouselList.setAttribute('data-fsc-carousel-initialized', 'true')
     }
 }
 
@@ -85,4 +79,17 @@ export function carouselDotClick(element: HTMLElement) {
     carousel.direction = 'step'
     carousel.step = offset
     step(carousel)
+}
+
+export function carouselOnResize({ isHeightResized, differenceWidth }) {
+    if(isHeightResized) return
+
+    for (const carousel of carouselElements) {
+        const { dimention, offset } = calculateCarouselProps(carousel.carouselList)
+
+        carousel.dimention = dimention
+        carousel.offset = offset
+
+        carousel.position += differenceWidth 
+    }
 }
