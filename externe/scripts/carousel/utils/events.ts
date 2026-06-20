@@ -81,7 +81,7 @@ export function carouselDotClick(element: HTMLElement) {
     step(carousel)
 }
 
-export function carouselOnResize({ isHeightResized, differenceWidth }) {
+export function carouselOnResize({ isHeightResized }) {
     if(isHeightResized) return
 
     for (const carousel of carouselElements) {
@@ -89,7 +89,5 @@ export function carouselOnResize({ isHeightResized, differenceWidth }) {
 
         carousel.dimention = dimention
         carousel.offset = offset
-
-        carousel.position += differenceWidth 
     }
 }
