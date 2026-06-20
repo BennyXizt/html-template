@@ -46,16 +46,14 @@
         font-size: 12px;
     }
 
-    @media (any-hover: hover) {
-        &:hover {
-            width: max-content;
-            height: max-content;
-            padding: 30px;
-            background-color: rgba($bg_color, 1);
-        }
-        a:hover {
-            background-color: #fff;
-            color: black;
-        }
+    &:hover {
+        width: max-content;
+        height: max-content;
+        padding: 30px;
+        background-color: rgba($bg_color, 1);
+    }
+    a:hover {
+        background-color: #fff;
+        color: black;
     }
 }
