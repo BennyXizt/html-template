@@ -42,3 +42,9 @@
         @include fluid(font-size, $font_size_first $font_size_last);
     }
 } 
+
+@mixin theme_toggle($props...) {
+    transition:
+        map.get($ANIMATIONSPEEDS, short) ease-in-out;
+    transition-property: $props;
+}

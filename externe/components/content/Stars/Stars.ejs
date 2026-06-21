@@ -1,0 +1,59 @@
+<%
+// Пример вызова в шаблоне (EJS):
+//
+// <\%- include('externe/components/content/Stars/Stars.ejs', { 
+//	stars_component: {
+//		this: {
+//			parent: 'parentClass',
+//			block: 'childBlockClass',
+//			class: ['childClass'],
+//			id: ['childID'],
+//			tag: 'div',
+//			style: ['customStyle'],
+//			dataAttribute: ['customDataAttributes'], 
+//		},
+//		wrapper: {
+//			parent: 'wrapperParentClass',
+//			block: 'wrapperChildBlockClass',
+//			class: ['wrapperChildClass'],
+//			id: ['wrapperChildID'],
+//			tag: 'div',
+//			style: ['customStyle'],
+//			dataAttribute: ['customDataAttributes'], 
+//		}
+//	}
+//}) %>
+%>
+<%
+	if(typeof stars_component === 'undefined' || !stars_component || typeof stars_component.stars === 'undefined' || !stars_component.stars) {
+		return
+	}
+
+	var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...stars_component.this, componentName: 'stars'})
+	var {isWrapper, blockClass: wrapperBlockClass, thisClass: wrapperThisClass, thisID: wrapperThisID, thisTag: wrapperThisTag, thisStyles: wrapperThisStyles, thisDataAttributes: wrapperThisDataAttributes} = externe.setupEJSComponent({...stars_component.wrapper, componentName: 'stars'})
+
+	var isWrapper = typeof stars_component.wrapper === 'object' && stars_component.wrapper
+%>
+
+<% if(isWrapper) { %>
+	<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>
+<% } %>
+<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
+	<div class="<%=blockClass%>__front">
+		<% for(var i = 0; i < stars_component.stars; i++) { %>
+			<%- include('externe/components/Icon/Icon.ejs', {
+				icon_component: stars_component.icon_component
+			}) %>
+		<% } %>	
+	</div>
+	<div class="<%=blockClass%>__back">
+		<% for(var i = 0; i < stars_component.stars; i++) { %>
+			<%- include('externe/components/Icon/Icon.ejs', {
+				icon_component: stars_component.icon_component
+			}) %>
+		<% } %>	
+	</div>
+</<%=thisTag%>>
+<% if(isWrapper) { %>
+	</<%=wrapperThisTag%>>
+<% } %>
