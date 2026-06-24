@@ -1,6 +1,11 @@
 import { CarouselElementInterface } from "../types/plugin.interface";
 
 export function animate(carousel: CarouselElementInterface) {
+    if (!carousel.visible) {
+        carousel.animationID = undefined
+        return
+    }
+
     if(!carousel.timerNext) {
         carousel.timerNext = Date.now() + carousel.timerInterval
     }
@@ -26,11 +31,6 @@ export function animate(carousel: CarouselElementInterface) {
     carousel.animationID = requestAnimationFrame(() => animate(carousel))
 }
 export function step(carousel: CarouselElementInterface) {
-    if (!carousel.visible) {
-        carousel.animationID = undefined
-        return
-    }
-
     if(carousel.direction == 'left') {
         if(carousel.index < carousel.length - 1) {
             carousel.position = -(carousel.index + 1) * carousel.offset
