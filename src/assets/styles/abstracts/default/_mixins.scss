@@ -43,7 +43,7 @@
     }
 } 
 
-@mixin theme_toggle($props...) {
+@mixin transition($props...) {
     transition:
         map.get($ANIMATIONSPEEDS, short) ease-in-out;
     transition-property: $props;

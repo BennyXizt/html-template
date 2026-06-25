@@ -8,26 +8,6 @@
     }
 }
 
-// theme toggle color
-%themeToggleTransition {
-    transition:
-        map.get($ANIMATIONSPEEDS, short) ease-in-out;
-    transition-property: background-color, color;
-}
-%themeToggleColor {
-    color: var(--theme-text-color);
-    @extend %themeToggleTransition;
-}
-%themeToggleBackground {
-    background-color: var(--theme-background-color);
-    @extend %themeToggleTransition;
-}
-%themeToggle {
-    color: var(--theme-text-color);
-    background-color: var(--theme-background-color);
-    @extend %themeToggleTransition;
-}
-
 // watcher animate
 %watcherAlternative {
     &[data-fsc-watcher-animation] {
