@@ -44,14 +44,14 @@
 	<% if(typeof stars_component.icon_component !== 'undefined' && stars_component.icon_component) { %>
 		<div class="<%=blockClass%>__front">
 			<% for(var i = 0; i < stars_component.stars; i++) { %>
-				<%- include('externe/components/Icon/Icon.ejs', {
+				<%- include('externe/components/media/Icon/Icon.ejs', {
 					icon_component: stars_component.icon_component
 				}) %>
 			<% } %>	
 		</div>
 		<div class="<%=blockClass%>__back">
 			<% for(var i = 0; i < stars_component.stars; i++) { %>
-				<%- include('externe/components/Icon/Icon.ejs', {
+				<%- include('externe/components/media/Icon/Icon.ejs', {
 					icon_component: stars_component.icon_component
 				}) %>
 			<% } %>	
