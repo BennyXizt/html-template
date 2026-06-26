@@ -36,6 +36,20 @@
             </div>
         </div>
     </section>
+	<section class='button_component'>
+        <div class="outer container">
+            <div class="inner">
+                <h6 class="text-center">BUTTON Component</h6>
+                <div class="flex items-center gap-x-2">
+                    <%- include('src/ejs/components/button.ejs', {
+                        button_component: {
+                            
+                        }
+                    })%>
+                </div>
+            </div>
+        </div>
+	</section>
 	<script type="module" src="../temporary/html/test.ts"></script>
     <script type="module" src="../../../src/ts/main.ts"></script>
 </body>
