@@ -99,3 +99,13 @@ $DEFAULT_P: (
     // font_style: regular,
     // letter_spacing: 3px,
 );
+$DEFAULT_THEME: (
+    default: (
+        primary-text-color: red,
+        primary-background-color: red,
+        secondary-text-color: red,
+        secondary-background-color: red,
+        accent-text-color: red,
+        accent-background-color: red
+    ),
+);

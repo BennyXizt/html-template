@@ -1,14 +1,18 @@
 @use 'sass:map';
+@use 'sass:math';
 
 .loader {
     &--default {
+        $mainColor: getThemeTag(primary-text-color);
+        $backgroundColor: #d3d3d3;
+
         border-radius: 50%;
         animation: loader-default-rotate map.get($ANIMATIONSPEEDS, max) linear infinite;
-        transition: border-color map.get($ANIMATIONSPEEDS, short) ease-in-out;
+        @include transition(border-color);
         
         @include fluid((
-            border: (16px 8px) solid #d3d3d3,
-            border-top: (16px 8px) solid var(--theme-main-text-color),
+            border: (16px 8px) solid $backgroundColor,
+            border-top: (16px 8px) solid $mainColor,
             width: 80px 40px,
             height: 80px 40px
         ));
@@ -19,7 +23,9 @@
         }
     }
     &--custom-1 {
-        @extend %themeToggleColor;
+        $mainColor: getThemeTag(primary-text-color);
+
+        color: $mainColor;
         text-indent: -9999em;
         overflow: hidden;
         width: 1em;
@@ -30,6 +36,8 @@
         animation: 
             loader-custom-1-spin map.get($ANIMATIONSPEEDS, max) infinite ease,
             loader-custom-1-rotate map.get($ANIMATIONSPEEDS, max) infinite ease;
+
+        @include transition(color);
 
         @include fluid(font-size, 40px 20px);
 
@@ -73,7 +81,9 @@
         }
     }
     &--custom-2 {
-        @extend %themeToggleColor;
+        $mainColor: getThemeTag(primary-text-color);
+
+        color: $mainColor;
         text-indent: -9999em;
         overflow: hidden;
         width: 12em;
@@ -86,6 +96,7 @@
             loader-custom-1-rotate map.get($ANIMATIONSPEEDS, max) infinite ease;
 
         @include rem(font-size, 3px);
+        @include transition(color);
 
         @keyframes loader-custom-1-spin {
             0% {
@@ -127,13 +138,15 @@
         }
     }
     &--custom-3 {
+        $mainColor: getThemeTag(primary-text-color);
+
         border-radius: 50%;
         display: inline-block;
-        border-top: 3px solid var(--theme-main-text-color);
+        border-top: 3px solid $mainColor;
         border-right: 3px solid transparent;
-        box-sizing: border-box;
         animation: loader-custom-3-rotation map.get($ANIMATIONSPEEDS, max) linear infinite;
-        transition: border-color map.get($ANIMATIONSPEEDS, short) ease-in-out;
+       
+        @include transition(border-color);
 
         @include fluid((
             width: 80px 40px,
@@ -159,96 +172,101 @@
         transform: translateZ(0);
         transition: box-shadow map.get($ANIMATIONSPEEDS, short) ease-in-out;
 
+        $mainColor: red;
+        $backgroundColor: rgba(141, 24, 24, .3);
+        $accentColor: rgba(255, 0, 0, 0.5);
+        $accentSecondColor: rgba(255, 0, 0, 0.7);
+
         @include fluid(font-size, 10px 5px);
 
         @keyframes loader-custom-4-spin {
             0%, 100% {
                 box-shadow: 
-                    0em -2.6em 0em 0em var(--theme-main-text-color),
-                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
-                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
-                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
-                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
-                    -2.6em 0em 0 0em rgba(255,255,255, 0.5), 
-                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.7);
+                    0em -2.6em 0em 0em $mainColor,
+                    1.8em -1.8em 0 0em $backgroundColor, 
+                    2.5em 0em 0 0em $backgroundColor, 
+                    1.75em 1.75em 0 0em $backgroundColor, 
+                    0em 2.5em 0 0em $backgroundColor, 
+                    -1.8em 1.8em 0 0em $backgroundColor, 
+                    -2.6em 0em 0 0em $accentColor, 
+                    -1.8em -1.8em 0 0em $accentSecondColor;
             }
             12.5% {
                 box-shadow: 
-                    0em -2.6em 0em 0em rgba(255,255,255, 0.7), 
-                    1.8em -1.8em 0 0em var(--theme-main-text-color), 
-                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
-                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
-                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
-                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.5);
+                    0em -2.6em 0em 0em $accentSecondColor, 
+                    1.8em -1.8em 0 0em $mainColor, 
+                    2.5em 0em 0 0em $backgroundColor, 
+                    1.75em 1.75em 0 0em $backgroundColor, 
+                    0em 2.5em 0 0em $backgroundColor, 
+                    -1.8em 1.8em 0 0em $backgroundColor, 
+                    -2.6em 0em 0 0em $backgroundColor, 
+                    -1.8em -1.8em 0 0em $accentColor;
             }
             25% {
                 box-shadow: 
-                    0em -2.6em 0em 0em rgba(255,255,255, 0.5), 
-                    1.8em -1.8em 0 0em rgba(255,255,255, 0.7), 
-                    2.5em 0em 0 0em var(--theme-main-text-color), 
-                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
-                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
-                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+                    0em -2.6em 0em 0em $accentColor, 
+                    1.8em -1.8em 0 0em $accentSecondColor, 
+                    2.5em 0em 0 0em $mainColor, 
+                    1.75em 1.75em 0 0em $backgroundColor, 
+                    0em 2.5em 0 0em $backgroundColor, 
+                    -1.8em 1.8em 0 0em $backgroundColor, 
+                    -2.6em 0em 0 0em $backgroundColor, 
+                    -1.8em -1.8em 0 0em $backgroundColor;
             }
             37.5% {
                 box-shadow: 
-                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
-                    1.8em -1.8em 0 0em rgba(255,255,255, 0.5), 
-                    2.5em 0em 0 0em rgba(255,255,255, 0.7), 
-                    1.75em 1.75em 0 0em var(--theme-main-text-color), 
-                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
-                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+                    0em -2.6em 0em 0em $backgroundColor, 
+                    1.8em -1.8em 0 0em $accentColor, 
+                    2.5em 0em 0 0em $accentSecondColor, 
+                    1.75em 1.75em 0 0em $mainColor, 
+                    0em 2.5em 0 0em $backgroundColor, 
+                    -1.8em 1.8em 0 0em $backgroundColor, 
+                    -2.6em 0em 0 0em $backgroundColor, 
+                    -1.8em -1.8em 0 0em $backgroundColor;
             }
             50% {
                 box-shadow: 
-                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
-                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
-                    2.5em 0em 0 0em rgba(255,255,255, 0.5), 
-                    1.75em 1.75em 0 0em rgba(255,255,255, 0.7), 
-                    0em 2.5em 0 0em var(--theme-main-text-color), 
-                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.2), 
-                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+                    0em -2.6em 0em 0em $backgroundColor, 
+                    1.8em -1.8em 0 0em $backgroundColor, 
+                    2.5em 0em 0 0em $accentColor, 
+                    1.75em 1.75em 0 0em $accentSecondColor, 
+                    0em 2.5em 0 0em $mainColor, 
+                    -1.8em 1.8em 0 0em $backgroundColor, 
+                    -2.6em 0em 0 0em $backgroundColor, 
+                    -1.8em -1.8em 0 0em $backgroundColor;
             }
             62.5% {
                 box-shadow: 
-                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
-                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
-                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
-                    1.75em 1.75em 0 0em rgba(255,255,255, 0.5), 
-                    0em 2.5em 0 0em rgba(255,255,255, 0.7), 
-                    -1.8em 1.8em 0 0em var(--theme-main-text-color), 
-                    -2.6em 0em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+                    0em -2.6em 0em 0em $backgroundColor, 
+                    1.8em -1.8em 0 0em $backgroundColor, 
+                    2.5em 0em 0 0em $backgroundColor, 
+                    1.75em 1.75em 0 0em $accentColor, 
+                    0em 2.5em 0 0em $accentSecondColor, 
+                    -1.8em 1.8em 0 0em $mainColor, 
+                    -2.6em 0em 0 0em $backgroundColor, 
+                    -1.8em -1.8em 0 0em $backgroundColor;
             }
             75% {
                 box-shadow: 
-                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
-                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
-                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
-                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
-                    0em 2.5em 0 0em rgba(255,255,255, 0.5), 
-                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.7), 
-                    -2.6em 0em 0 0em var(--theme-main-text-color), 
-                    -1.8em -1.8em 0 0em rgba(255,255,255, 0.2);
+                    0em -2.6em 0em 0em $backgroundColor, 
+                    1.8em -1.8em 0 0em $backgroundColor, 
+                    2.5em 0em 0 0em $backgroundColor, 
+                    1.75em 1.75em 0 0em $backgroundColor, 
+                    0em 2.5em 0 0em $accentColor, 
+                    -1.8em 1.8em 0 0em $accentSecondColor, 
+                    -2.6em 0em 0 0em $mainColor, 
+                    -1.8em -1.8em 0 0em $backgroundColor;
             }
             87.5% {
                 box-shadow: 
-                    0em -2.6em 0em 0em rgba(255,255,255, 0.2), 
-                    1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 
-                    2.5em 0em 0 0em rgba(255,255,255, 0.2), 
-                    1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 
-                    0em 2.5em 0 0em rgba(255,255,255, 0.2), 
-                    -1.8em 1.8em 0 0em rgba(255,255,255, 0.5), 
-                    -2.6em 0em 0 0em rgba(255,255,255, 0.7), 
-                    -1.8em -1.8em 0 0em var(--theme-main-text-color);
+                    0em -2.6em 0em 0em $backgroundColor, 
+                    1.8em -1.8em 0 0em $backgroundColor, 
+                    2.5em 0em 0 0em $backgroundColor, 
+                    1.75em 1.75em 0 0em $backgroundColor, 
+                    0em 2.5em 0 0em $backgroundColor, 
+                    -1.8em 1.8em 0 0em $accentColor, 
+                    -2.6em 0em 0 0em $accentSecondColor, 
+                    -1.8em -1.8em 0 0em $mainColor;
             }
         }
     }
@@ -256,13 +274,17 @@
         $firstBoxShaddow: 16px;
         $secondBoxShaddow: -16px;
 
+        $mainColor: getThemeTag(primary-text-color);
+        $backgroundColor: rgba(159, 78, 78, 0.133);
+
         border-radius: 50%;
-        @extend %themeToggleBackground;
+        background-color: $mainColor;
         box-shadow: 
-            $firstBoxShaddow 0 var(--theme-main-text-color), 
-            $secondBoxShaddow 0 var(--theme-main-text-color);
+            $firstBoxShaddow 0 $mainColor, 
+            $secondBoxShaddow 0 $mainColor;
         position: relative;
         animation: loader-custom-5-flash map.get($ANIMATIONSPEEDS, max) ease-out infinite alternate;
+
         @include fluid((
             width: 16px 8px,
             height: 16px 8px
@@ -270,28 +292,31 @@
 
         @keyframes loader-custom-5-flash {
             0% {
-                background-color: #FFF2;
-                box-shadow: $firstBoxShaddow 0 #FFF2, $secondBoxShaddow 0 var(--theme-main-text-color);
+                background-color: $backgroundColor;
+                box-shadow: $firstBoxShaddow 0 $backgroundColor, $secondBoxShaddow 0 $mainColor;
             }
             50% {
-                background-color: var(--theme-main-text-color);
-                box-shadow: $firstBoxShaddow 0 #FFF2, $secondBoxShaddow 0 #FFF2;
+                background-color: $mainColor;
+                box-shadow: $firstBoxShaddow 0 $backgroundColor, $secondBoxShaddow 0 $backgroundColor;
             }
             100% {
-                background-color: #FFF2;
-                box-shadow: $firstBoxShaddow 0 var(--theme-main-text-color), $secondBoxShaddow 0 #FFF2;
+                background-color: $backgroundColor;
+                box-shadow: $firstBoxShaddow 0 $mainColor, $secondBoxShaddow 0 $backgroundColor;
             }
         }
     }
     &--skeleton {
+        $mainColor: getThemeTag(primary-background-color);
+        $backgroundColor: getThemeTag(primary-text-color);
+
         width: 360px;
         height: 100px;
         display: block;
         background-image: 
-            linear-gradient(100deg, transparent, rgba(38, 50, 56, 0.5) 50%, transparent 80%),
-            radial-gradient(circle 50px at 50px 50px, #FFF 99%, transparent 0), 
-            linear-gradient(#FFF 20px, transparent 0), 
-            linear-gradient(#FFF 20px, transparent 0), linear-gradient(#FFF 20px, transparent 0);
+            linear-gradient(100deg, transparent, $mainColor 50%, transparent 80%),
+            radial-gradient(circle 50px at 50px 50px, $backgroundColor 99%, transparent 0), 
+            linear-gradient($backgroundColor 20px, transparent 0), 
+            linear-gradient($backgroundColor 20px, transparent 0), linear-gradient($backgroundColor 20px, transparent 0);
         background-repeat: no-repeat;
         background-size: 
             75px 100px, 
@@ -304,7 +329,7 @@
             120px 40px, 
             120px 80px, 
             120px 120px;
-        box-sizing: border-box;
+        
         animation: loader-skeleton map.get($ANIMATIONSPEEDS, max) linear infinite;
 
         @keyframes loader-skeleton {
@@ -317,14 +342,17 @@
         }
     }
     &--skeleton-2 {
+        $mainColor: getThemeTag(primary-background-color);
+        $backgroundColor: getThemeTag(primary-text-color);
+
         width: 360px;
         height: 100px;
         display: block;
-        background-image: linear-gradient(100deg, transparent, rgba(38, 50, 56, 0.5) 50%, transparent 80%), linear-gradient(#FFF 100px, transparent 0), linear-gradient(#FFF 20px, transparent 0), linear-gradient(#FFF 20px, transparent 0), linear-gradient(#FFF 20px, transparent 0);
+        background-image: linear-gradient(100deg, transparent, $mainColor 50%, transparent 80%), linear-gradient($backgroundColor 100px, transparent 0), linear-gradient($backgroundColor 20px, transparent 0), linear-gradient($backgroundColor 20px, transparent 0), linear-gradient($backgroundColor 20px, transparent 0);
         background-repeat: no-repeat;
         background-size: 75px 100px, 100px 100px, 125px 20px, 260px 20px, 260px 20px;
         background-position: -50% 0, 0 0, 120px 0, 120px 40px, 120px 80px, 120px 120px;
-        box-sizing: border-box;
+        
         animation: loader-skeleton-2 map.get($ANIMATIONSPEEDS, max) linear infinite;
 
         @keyframes loader-skeleton-2 {
@@ -337,35 +365,76 @@
         }
     }
     &--skeleton-3 {
-        width: 215px;
-        height: 215px;
+        $mainColor: getThemeTag(primary-background-color);
+        $accentColor: gray;
+        $backgroundColor: getThemeTag(primary-text-color);
+
+        $width: 300px;
+        $height: 210px;
+        $padding-x: 30px;
+        $padding-y: 20px;
+
+        $h1: 10px;
+        $h2: 50px;
+        $h3: 50px;
+        $h4: 50px;
+
+        $space: 10px;
+
+        $p1: 0px;
+        $p2: $p1 + $h1 + $space;
+        $p3: $p2 + $h2 + $space;
+        $p4: $p3 + $h3 + $space;
+
+        $wCarret: 75px;
+        $hCarret: $p4 + $h4 - $p1;
+        $startCarret: -$width - $padding-x;
+        $endCarret: $width - $padding-x;
+
         display: block;
+        width: $width;
+        height: $height;
+        padding: math.div($padding-y, 2) math.div($padding-x, 2);
         margin: auto;
         position: relative;
-        background: #FFF;
-        box-sizing: border-box;
-
+        background: $backgroundColor;
+        
         &::after {
             content: '';
-            width: calc(100% - 30px);
-            height: calc(100% - 15px);
-            top: 15px;
-            left: 15px;
-            position: absolute;
-            background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5) 50%, transparent 100%),
-            linear-gradient(#DDD 100px, transparent 0),
-            linear-gradient(#DDD 16px, transparent 0),
-            linear-gradient(#DDD 50px, transparent 0);
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, transparent, $mainColor 50%, transparent 100%),
+                linear-gradient($accentColor $h1, transparent 0),
+                linear-gradient($accentColor $h2, transparent 0),
+                linear-gradient($accentColor $h3, transparent 0),
+                linear-gradient($accentColor $h4, transparent 0),
+                ;
             background-repeat: no-repeat;
-            background-size: 75px 175px, 100% 100px, 100% 16px, 100% 30px;
-            background-position: -185px 0, center 0, center 115px, center 142px;
-            box-sizing: border-box;
+            background-size: 
+                $wCarret $hCarret, 
+                100% $h1, 
+                100% $h2, 
+                100% $h3,
+                100% $h4;
+            background-position: 
+                $startCarret $p1, 
+                center $p1, 
+                center $p2, 
+                center $p3,
+                center $p4;
+            
             animation: loader-skeleton-3 1s linear infinite;
         }
 
         @keyframes loader-skeleton-3 {
             to {
-                background-position: 185px 0, center 0, center 115px, center 142px;
+                background-position: 
+                    $endCarret $p1, 
+                    center $p1, 
+                    center $p2, 
+                    center $p3,
+                    center $p4;
             }
         }
     }

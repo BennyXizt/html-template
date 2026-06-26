@@ -12,6 +12,8 @@
 
 
 @import
+    '../../../externe/components/content/Marquee/Marquee',
+    '../../../externe/components/media/Carousel/Carousel',
     '../../../externe/components/content/Loader/Loader',
     '../../components/content/Accordion/Accordion',
     '../../components/content/ComboBox/ComboBox';
@@ -19,12 +21,5 @@
 .components {
     h1 {
         text-align: center;
-    }
-}
-
-.marquee {
-    ul {
-        display: flex;
-        gap: 15px;
     }
 }

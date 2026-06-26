@@ -2,7 +2,7 @@
 
 @mixin menuLink {
     position: relative;
-    @extend %themeToggleColor;
+    color: map.get($COLORS, default);
 
     &::after {
         content: "";

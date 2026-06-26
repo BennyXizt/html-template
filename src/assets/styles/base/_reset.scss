@@ -15,13 +15,13 @@ a {
   display: inline-block;
   color: inherit;
 }
+button {
+  background-color: transparent;
+}
 ul,
 ol,
 li {
   list-style: none;
-}
-td, img {
-  vertical-align: top;
 }
 h1,
 h2,
@@ -38,6 +38,13 @@ body {
 }
 table {
   border-collapse: collapse;
+  border-spacing: unset;
+}
+th {
+  font-weight: inherit;
+}
+td, img {
+  vertical-align: top;
 }
 input,
 textarea {

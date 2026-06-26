@@ -59,3 +59,16 @@
 
     @return $min;
 }
+@function getTheme($theme, $value) {
+    @return map.get(map.get($THEME, $theme), $value);
+}
+
+@function getThemeTag($target) {
+    @each $key, $value in map.get($THEME, default) {
+        @if $key == $target {
+            @return #{'var(--#{$key})'};
+        }
+    }
+
+    @return null;
+}

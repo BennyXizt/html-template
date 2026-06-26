@@ -43,6 +43,24 @@
     }
 } 
 
+@mixin initiateThemeVars {
+  @include transition(background-color, color);
+  
+  @each $theme, $map in $THEME {
+    @if($theme == 'default') {
+      @each $key, $value in $map {
+        #{"--" + $key}: $value;
+      }
+    } @else {
+      &[data-theme=#{$theme}] {
+        @each $key, $value in $map {
+          #{"--" + $key}: $value;
+        }
+      }
+    }
+  }
+}
+
 @mixin transition($props...) {
     transition:
         map.get($ANIMATIONSPEEDS, short) ease-in-out;

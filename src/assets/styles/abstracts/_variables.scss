@@ -30,20 +30,9 @@ $BASE: (
     max_width: 1920px
 );
 
-$BURGER: (
-    color_primary: var(--theme-main-text-color),
-    color_active: color-mix(in srgb, var(--theme-main-text-color), white 80%),
-    origin_top: 6px,
-    origin_bottom: 6px,
-    width: 32px,
-    height: 32px,
-    line_height: 2px,
-    border_radius: 4px,
-    animation_speed: .2s
-);
-
 $COLORS: (
-    default: map.get($BASE, main_color)
+    default: map.get($BASE, main_color),
+    background: map.get($BASE, background_color),
 );
 
 $ANIMATIONSPEEDS: (
@@ -52,6 +41,31 @@ $ANIMATIONSPEEDS: (
     base: .4s,
     short: .3s
 );
+
+$THEME: (
+    default: (
+        primary-text-color: map.get($COLORS, default),
+        primary-background-color: map.get($COLORS, background),
+    ),
+    dark: (
+        primary-text-color: #fff,
+        primary-background-color: #000,
+    ),
+);
+
+$BURGER: (
+    color_primary: var(--primary-text-color),
+    color_active: color-mix(in srgb, var(--primary-text-color), white 80%),
+    origin_top: 6px,
+    origin_bottom: 6px,
+    width: 32px,
+    height: 32px,
+    line_height: 2px,
+    border_radius: 4px,
+    animation_speed: map.get($ANIMATIONSPEEDS, short)
+);
+
+
 
 $ZINDEXES: (
     immortal: 5

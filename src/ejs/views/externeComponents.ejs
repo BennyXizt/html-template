@@ -9,6 +9,32 @@
 <body>
     <%- include('externe/components/content/DummyAside/DummyAside.ejs') %>
     <div class="wrapper">
+        <article class="components _marquee">
+            <h1>Marquee</h1>
+            <%- include('externe/components/content/Marquee/Marquee.ejs', {
+                marquee_component: {
+                    data: [
+                        'someText',
+                        '-',
+                        'anotherText',
+                        '-'
+                    ]
+                }
+            }) %>
+            <%- include('externe/components/content/Marquee/Marquee.ejs', {
+                marquee_component: {
+                    this: {
+                        dataAttribute: 'data-fsc-marquee-direction=right',
+                    },
+                    data: [
+                        'someText',
+                        '-',
+                        'anotherText',
+                        '-'
+                    ]
+                }
+            }) %>
+        </article>
         <article class="components _accordion">
             <h1>Accordion</h1>
             <%- include('externe/components/content/Accordion/Accordion.ejs', {
@@ -106,34 +132,8 @@
                 theme_toggle_component: {}
             })%>
         </article>
-        <article class="components _marquee">
-            <h1>Marquee</h1>
-            <%- include('externe/components/content/Marquee/Marquee.ejs', {
-                marquee_component: {
-                    data: [
-                        'someText',
-                        '-',
-                        'anotherText',
-                        '-'
-                    ]
-                }
-            }) %>
-            <%- include('externe/components/content/Marquee/Marquee.ejs', {
-                marquee_component: {
-                    this: {
-                        dataAttribute: 'data-fsc-marquee-direction=right',
-                    },
-                    data: [
-                        'someText',
-                        '-',
-                        'anotherText',
-                        '-'
-                    ]
-                }
-            }) %>
-        </article>
         <article class="components _combobox">
-            <h1>ComboBox Not Working</h1>
+            <h1>ComboBox Need Fix</h1>
             <%- include('externe/components/content/ComboBox/ComboBox.ejs', {
                 combobox_component: {
                     prestyled: 'all',
@@ -179,6 +179,31 @@
                         { flag: 'de', city: 'Deutschland' },
                         { flag: 'fr', city: 'France' },
                         { flag: 'es', city: 'España' }
+                    ]
+                }
+            }) %>
+        </article>
+        <article class="components _carousel">
+            <h1>Carousel Need Fix</h1>
+            <%- include('externe/components/media/Carousel/Carousel.ejs', {
+                carousel_component: {
+                    list: [
+                        {
+                            img: {
+                                src: 'https://shorthand.com/the-craft/raster-images/assets/5kVrMqC0wp/sh-unsplash_5qt09yibrok-4096x2731.jpeg',
+                                alt: 'image here',
+                                width: '230px',
+                                height: '230px'
+                            }
+                        },
+                        {
+                            img: {
+                                src: 'https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg',
+                                alt: 'image here',
+                                width: '230px',
+                                height: '230px'
+                            }
+                        },
                     ]
                 }
             }) %>

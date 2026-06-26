@@ -2,21 +2,14 @@
 @use "sass:math";
 
 :root {
-  line-height: map.get($BASE, line_height);
-  font-size:   map.get($BASE, font_size);
-  font-family: map.get($BASE, font_family);
-  font-weight: map.get($BASE, font_weight);
-  color:       map.get($BASE, main_color);
-  background-color: map.get($BASE, background_color);
+  line-height:      map.get($BASE, line_height);
+  font-size:        map.get($BASE, font_size);
+  font-family:      map.get($BASE, font_family);
+  font-weight:      map.get($BASE, font_weight);
+  color:            getThemeTag(primary-text-color);
+  background-color: getThemeTag(primary-background-color);
 
-  // transition:
-  //     map.get($ANIMATIONSPEEDS, short) ease-in-out;
-  // transition-property: background-color, color;
-
-  // &[data-theme='dark'] {
-  //     --theme-main-background-color: #{map.get($COLORS, value)};
-  //     --theme-main-text-color: #{map.get($COLORS, value)};
-  // }
+  @include initiateThemeVars;
 }
 
 textarea,

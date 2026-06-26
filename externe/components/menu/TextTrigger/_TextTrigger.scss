@@ -2,9 +2,9 @@
 
 .text-trigger {
     cursor: pointer;
-    background-color: transparent;
     position: relative;
-    @extend %themeToggleColor;
+    color: getThemeTag(primary-text-color);
+    @include transition(color);
 
     &__disabled {
         display: none;
