@@ -47,10 +47,6 @@ $THEME: (
         primary-text-color: map.get($COLORS, default),
         primary-background-color: map.get($COLORS, background),
     ),
-    dark: (
-        primary-text-color: #fff,
-        primary-background-color: #000,
-    ),
 );
 
 $BURGER: (
