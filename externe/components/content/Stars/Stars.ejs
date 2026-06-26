@@ -20,7 +20,9 @@
 //			tag: 'div',
 //			style: ['customStyle'],
 //			dataAttribute: ['customDataAttributes'], 
-//		}
+//		},
+//		stars: 5,
+//		icon_component: {},
 //	}
 //}) %>
 %>
@@ -39,20 +41,22 @@
 	<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>
 <% } %>
 <<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
-	<div class="<%=blockClass%>__front">
-		<% for(var i = 0; i < stars_component.stars; i++) { %>
-			<%- include('externe/components/Icon/Icon.ejs', {
-				icon_component: stars_component.icon_component
-			}) %>
-		<% } %>	
-	</div>
-	<div class="<%=blockClass%>__back">
-		<% for(var i = 0; i < stars_component.stars; i++) { %>
-			<%- include('externe/components/Icon/Icon.ejs', {
-				icon_component: stars_component.icon_component
-			}) %>
-		<% } %>	
-	</div>
+	<% if(typeof stars_component.icon_component !== 'undefined' && stars_component.icon_component) { %>
+		<div class="<%=blockClass%>__front">
+			<% for(var i = 0; i < stars_component.stars; i++) { %>
+				<%- include('externe/components/Icon/Icon.ejs', {
+					icon_component: stars_component.icon_component
+				}) %>
+			<% } %>	
+		</div>
+		<div class="<%=blockClass%>__back">
+			<% for(var i = 0; i < stars_component.stars; i++) { %>
+				<%- include('externe/components/Icon/Icon.ejs', {
+					icon_component: stars_component.icon_component
+				}) %>
+			<% } %>	
+		</div>
+	<% } %>
 </<%=thisTag%>>
 <% if(isWrapper) { %>
 	</<%=wrapperThisTag%>>
