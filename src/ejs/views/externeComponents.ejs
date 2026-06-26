@@ -8,7 +8,7 @@
 </head>
 <body>
     <%- include('externe/components/content/DummyAside/DummyAside.ejs') %>
-    <div class="wrapper">
+    <div class="root">
         <article class="components _marquee">
             <h1>Marquee</h1>
             <%- include('externe/components/content/Marquee/Marquee.ejs', {
@@ -225,10 +225,19 @@
             }) %>
         </article>
         <article class="components _stars">
-            <h1>Stars</h1>
+            <h1>Stars Need Fix</h1>
             <%- include('externe/components/content/Stars/Stars.ejs', { 
                 stars_component: {
-                    stars: 5
+                    stars: 5,
+                    icon_component: {
+                        wrapper: {
+                            parent: 'stars',
+                            tag: 'a',
+                            dataAttribute: 'href=#'
+                        },
+                        name: 'ph_star',
+                        path: '/externe/temporary/icons/sprite.svg'
+                    }
                 }
             }) %>
         </article>

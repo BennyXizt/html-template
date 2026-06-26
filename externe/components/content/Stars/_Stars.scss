@@ -8,15 +8,24 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
+
         @include rem(gap, 2px);
+
+        svg {
+            display: block;
+            @include rem((
+                width: 150px,
+                height: 150px,
+            ));
+        }
     }
 
     &__front {
+        overflow: hidden;
         position: absolute;
         top: 0;
         left: 0;
-        overflow: hidden;
-        width: 0;
+        width: 75%;
         transition: width map.get($ANIMATIONSPEEDS, base) ease-in-out;
        
         svg {

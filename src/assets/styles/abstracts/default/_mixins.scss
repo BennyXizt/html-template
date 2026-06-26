@@ -1,15 +1,29 @@
 
-@mixin text_adaptive($type, $map) {
-    $font_size_first: map.get($map, font_size_original);
-    $font_size_last: map.get($map, font_size_adaptive);
+@mixin text_adaptive($args...) { 
+    @if list.length($args) == 0 {
+        @include text_adaptive($P);
+    } @else if list.length($args) == 2 {
+        $type: list.nth($args, 1);
+        $map: list.nth($args, 2);
 
-    $line_height: map.get($map, line_height);
-    $font_weight: map.get($map, font_weight);  
-    $font_family: map.get($map, font_family);
-    $font_style: map.get($map, font_style);
-    $letter_spacing: map.get($map, letter_spacing);
+        #{$type} {
+            @include text_adaptive($map);
+        }
+    }
+    
+    @if list.length($args) == 1 {
 
-    #{$type} {
+        $map: list.nth($args, 1);
+
+        $font_size_first: map.get($map, font_size_original);
+        $font_size_last: map.get($map, font_size_adaptive);
+
+        $line_height: map.get($map, line_height);
+        $font_weight: map.get($map, font_weight);  
+        $font_family: map.get($map, font_family);
+        $font_style: map.get($map, font_style);
+        $letter_spacing: map.get($map, letter_spacing);
+
         @if $font_family {
             font-family: $font_family;
         }
@@ -19,7 +33,7 @@
         @if $font_weight {
             font-weight: $font_weight;
         }
-        
+
         overflow-wrap: break-word;
         word-break: normal;
         hyphens: auto;
@@ -38,7 +52,7 @@
                 line-height: $line_height;
             }
         }
-        
+
         @include fluid(font-size, $font_size_first $font_size_last);
     }
 } 

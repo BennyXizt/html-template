@@ -27,7 +27,11 @@
 //}) %>
 %>
 <%
-	if(typeof stars_component === 'undefined' || !stars_component || typeof stars_component.stars === 'undefined' || !stars_component.stars) {
+	if(
+		(typeof stars_component === 'undefined' || !stars_component) ||
+		(typeof stars_component.stars === 'undefined' || !stars_component.stars ) ||
+		(typeof stars_component.icon_component === 'undefined' && !stars_component.icon_component)
+	) {
 		return
 	}
 
@@ -41,22 +45,20 @@
 	<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>
 <% } %>
 <<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
-	<% if(typeof stars_component.icon_component !== 'undefined' && stars_component.icon_component) { %>
-		<div class="<%=blockClass%>__front">
-			<% for(var i = 0; i < stars_component.stars; i++) { %>
-				<%- include('externe/components/media/Icon/Icon.ejs', {
-					icon_component: stars_component.icon_component
-				}) %>
-			<% } %>	
-		</div>
-		<div class="<%=blockClass%>__back">
-			<% for(var i = 0; i < stars_component.stars; i++) { %>
-				<%- include('externe/components/media/Icon/Icon.ejs', {
-					icon_component: stars_component.icon_component
-				}) %>
-			<% } %>	
-		</div>
-	<% } %>
+	<div class="<%=blockClass%>__front">
+		<% for(var i = 0; i < stars_component.stars; i++) { %>
+			<%- include('externe/components/media/Icon/Icon.ejs', {
+				icon_component: stars_component.icon_component
+			}) %>
+		<% } %>	
+	</div>
+	<div class="<%=blockClass%>__back">
+		<% for(var i = 0; i < stars_component.stars; i++) { %>
+			<%- include('externe/components/media/Icon/Icon.ejs', {
+				icon_component: stars_component.icon_component
+			}) %>
+		<% } %>	
+	</div>
 </<%=thisTag%>>
 <% if(isWrapper) { %>
 	</<%=wrapperThisTag%>>

@@ -50,3 +50,7 @@
         }
     }
 }
+
+%textDefault { 
+    @include text_adaptive;
+}
