@@ -13,20 +13,20 @@ rl.question('Придумайте название компонента: ', (com
     ejsDir = resolve(process.cwd(), "src/ejs"),
     scssDir = resolve(process.cwd(), "src/assets/styles"),
     blockType = 'components'
-   
-    if(fs.existsSync(`${ejsDir}/components/${componentName}`)) 
-    {
-        console.log(`Ошибка: Компонент ${componentName} уже существует!`);
-        
-        rl.close()
-        return
-    }
+  
+  if(fs.existsSync(`${ejsDir}/${blockType}/${componentName}`)) 
+  {
+      console.log(`Ошибка: Компонент ${componentName} уже существует!`);
+      
+      rl.close()
+      return
+  }
 
-    createEJSFile({ejsDir, blockType, componentName, fs})
-    createSCSSFile({scssDir, blockType, componentName, fs})
-    updateMainSCSS({scssDir, blockType, componentName, fs})
-    updateTestEJSFile({ejsDir, componentName, fs})
+  createEJSFile({ejsDir, blockType, componentName, fs})
+  createSCSSFile({scssDir, blockType, componentName, fs})
+  updateMainSCSS({scssDir, blockType, componentName, fs})
+  updateTestEJSFile({ejsDir, componentName, fs})
     
-    console.log(`Компонент ${componentName} создан!`)
-    rl.close()
+  console.log(`Компонент ${componentName} создан!`)
+  rl.close()
 })

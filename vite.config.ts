@@ -119,7 +119,10 @@ export default defineConfig({
       }
     }),
     ViteWatchEJSFolderPlugin({
-      relativePath: `${__dirname}/src/ejs/views/`,
+      paths: [
+        `${__dirname}/src/ejs/views/`,
+        `${__dirname}/src/ejs/pages/`,
+      ],
       outputDestination: {
          pages: {
            fileNameException: [

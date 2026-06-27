@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<% if(typeof head_component.lang !== 'undefined' && head_component.lang) { %>
-   <html lang="<%= head_component.lang %>">
-<% } else { %>
-   <html lang="en">
-<% } %>
+    <% if(typeof head_component.lang !== 'undefined' && head_component.lang) { %>
+        <html lang="<%= head_component.lang %>">
+    <% } else { %>
+        <html lang="en">
+    <% } %>
 <head>
-   <%- include('src/ejs/layout/head.ejs') %>
+    <%- include('src/ejs/layout/head.ejs') %>
 </head>
 <body>
     <%- include('externe/components/content/DummyAside/DummyAside.ejs') %>

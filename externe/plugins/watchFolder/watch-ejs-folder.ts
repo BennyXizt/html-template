@@ -5,14 +5,13 @@ import fs from 'fs'
 import type { EJSFolderInterface } from './types/plugin.interface'
 import { EJSFolderTranslation } from './i18n'
 
-export function ViteWatchEJSFolderPlugin({relativePath, outputDestination, language}: EJSFolderInterface): Plugin {
+export function ViteWatchEJSFolderPlugin({paths, outputDestination, language}: EJSFolderInterface): Plugin {
     return {
         name: 'watch-ejs-folder-plugin',
         configureServer(server: ViteDevServer) {
             const 
                 __filename = fileURLToPath(import.meta.url),
                 __dirname = dirname(__filename),
-                watchDir = resolve(__dirname, relativePath),
                 finalDestinationPages = outputDestination.pages ? outputDestination.pages :  {
                     fileNameException: ['test.ejs'],
                     fileDestination: __dirname
@@ -23,12 +22,19 @@ export function ViteWatchEJSFolderPlugin({relativePath, outputDestination, langu
                 },
                 destinationPagesHTML = outputDestination.pages ? resolve(__dirname, outputDestination.pages.fileDestination) : undefined,
                 destinationRestHTML = outputDestination.rest ? resolve(__dirname, outputDestination.rest.fileDestination) : undefined,
-                translation = new EJSFolderTranslation({pluginName: 'watchEJSFolderPlugin', language})
+                translation = new EJSFolderTranslation({pluginName: 'watchEJSFolderPlugin', language}),
+                watchedDirs: string[] = []
 
-            translation.pluginStart(watchDir, { destinationPagesHTML, destinationRestHTML })
+            for (const relativePath of paths) {
+                const watchDir = resolve(__dirname, relativePath)
+
+                watchedDirs.push(watchDir)
+            }
+
+            translation.pluginStart(watchedDirs, { destinationPagesHTML, destinationRestHTML })
 
             server.watcher.on('change', (changedFile) => {
-                if (dirname(changedFile) !== watchDir) 
+                if (!watchedDirs.includes(dirname(changedFile))) 
                     return
 
                 translation.fileHasBeenChanged(changedFile)

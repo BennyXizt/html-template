@@ -51,52 +51,52 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}: {
     switch(blockType) {
         case 'components': {
             ejsFileContent = 
-            `<%\n` +
-            `// Пример вызова в шаблоне (EJS):\n` +
-            `//\n` +
-            `// <\\%- include('src/ejs/components/${componentName}.ejs', { \n` +
-            `//\t${componentName}_component: {\n` +
-            `//\t\tthis: {\n` +
-            `//\t\t\tparent: 'parentClass',\n` +
-            `//\t\t\tblock: 'childBlockClass',\n` +
-            `//\t\t\tclass: ['childClass'],\n` +
-            `//\t\t\tid: ['childID'],\n` +
-            `//\t\t\ttag: 'div',\n` +
-            `//\t\t\tstyle: ['customStyle'],\n` +
-            `//\t\t\tdataAttribute: ['customDataAttributes'], \n` +
-            `//\t\t},\n` +
-            `//\t\twrapper: {\n` +
-            `//\t\t\tparent: 'wrapperParentClass',\n` +
-            `//\t\t\tblock: 'wrapperChildBlockClass',\n` +
-            `//\t\t\tclass: ['wrapperChildClass'],\n` +
-            `//\t\t\tid: ['wrapperChildID'],\n` +
-            `//\t\t\ttag: 'div',\n` +
-            `//\t\t\tstyle: ['customStyle'],\n` +
-            `//\t\t\tdataAttribute: ['customDataAttributes'], \n` +
-            `//\t\t}\n` +
-            `//\t}\n` +
-            `//}) %>\n` +
-            `%>\n` +
+                `<%\n` +
+                `// Пример вызова в шаблоне (EJS):\n` +
+                `//\n` +
+                `// <\\%- include('src/ejs/components/${componentName}.ejs', { \n` +
+                `//\t${componentName}_component: {\n` +
+                `//\t\tthis: {\n` +
+                `//\t\t\tparent: 'parentClass',\n` +
+                `//\t\t\tblock: 'childBlockClass',\n` +
+                `//\t\t\tclass: ['childClass'],\n` +
+                `//\t\t\tid: ['childID'],\n` +
+                `//\t\t\ttag: 'div',\n` +
+                `//\t\t\tstyle: ['customStyle'],\n` +
+                `//\t\t\tdataAttribute: ['customDataAttributes'], \n` +
+                `//\t\t},\n` +
+                `//\t\twrapper: {\n` +
+                `//\t\t\tparent: 'wrapperParentClass',\n` +
+                `//\t\t\tblock: 'wrapperChildBlockClass',\n` +
+                `//\t\t\tclass: ['wrapperChildClass'],\n` +
+                `//\t\t\tid: ['wrapperChildID'],\n` +
+                `//\t\t\ttag: 'div',\n` +
+                `//\t\t\tstyle: ['customStyle'],\n` +
+                `//\t\t\tdataAttribute: ['customDataAttributes'], \n` +
+                `//\t\t}\n` +
+                `//\t}\n` +
+                `//}) %>\n` +
+                `%>\n` +
 
-            `<%\n` +
-            `\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n` +
-            `\t\treturn\n` +
-            `\t}\n\n` +
-            `\tvar {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...${componentName}_component.this, componentName: '${componentName}'})\n` +
-            `\tvar {isWrapper, blockClass: wrapperBlockClass, thisClass: wrapperThisClass, thisID: wrapperThisID, thisTag: wrapperThisTag, thisStyles: wrapperThisStyles, thisDataAttributes: wrapperThisDataAttributes} = externe.setupEJSComponent({...${componentName}_component.wrapper, componentName: '${componentName}'})\n\n` +
-            `\tvar isWrapper = typeof ${componentName}_component.wrapper === 'object' && ${componentName}_component.wrapper\n` +
-            `%>\n\n` +
+                `<%\n` +
+                `\tif(typeof ${componentName}_component === 'undefined' || !${componentName}_component) {\n` +
+                `\t\treturn\n` +
+                `\t}\n\n` +
+                `\tvar {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...${componentName}_component.this, componentName: '${componentName}'})\n` +
+                `\tvar {isWrapper, blockClass: wrapperBlockClass, thisClass: wrapperThisClass, thisID: wrapperThisID, thisTag: wrapperThisTag, thisStyles: wrapperThisStyles, thisDataAttributes: wrapperThisDataAttributes} = externe.setupEJSComponent({...${componentName}_component.wrapper, componentName: '${componentName}'})\n\n` +
+                `\tvar isWrapper = typeof ${componentName}_component.wrapper === 'object' && ${componentName}_component.wrapper\n` +
+                `%>\n\n` +
 
 
-            `<% if(isWrapper) { %>\n` +
-            `\t<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>\n` +
-            `<% } %>\n` +
-            `<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>\n` +
-            `\t<!-- HTML Here -->\n` +
-            `</<%=thisTag%>>\n` +
-            `<% if(isWrapper) { %>\n` +
-            `\t</<%=wrapperThisTag%>>\n` +
-            `<% } %>\n`
+                `<% if(isWrapper) { %>\n` +
+                `\t<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>\n` +
+                `<% } %>\n` +
+                `<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>\n` +
+                `\t<!-- HTML Here -->\n` +
+                `</<%=thisTag%>>\n` +
+                `<% if(isWrapper) { %>\n` +
+                `\t</<%=wrapperThisTag%>>\n` +
+                `<% } %>\n`
             break
         }
         case 'layout': {
@@ -107,6 +107,34 @@ export function createEJSFile({ejsDir, blockType, componentName, fs}: {
                 `\n\n<section class='layout__<%=blockClass%> <%=blockClass%>'>` +
                 `\n\t<div class='<%=blockClass%>__container container'>` +
                 `\n\n\t</div>\n</section>` 
+            break
+        }
+        case 'pages': {
+            ejsFileContent = 
+                `<!DOCTYPE html>` +
+                `\n\t<% if(typeof head_component.lang !== 'undefined' && head_component.lang) { %>` +
+                `\n\t\t<html lang="<%= head_component.lang %>">` +
+                `\n\t<% } else { %>` +
+                `\n\t\t<html lang="en">` +
+                `\n\t<% } %>` +
+                `\n<head>` +
+                `\n\t<%- include('src/ejs/layout/head.ejs') %>` +
+                `\n</head>` +
+                `\n<body>` +
+                `\n\t<%- include('externe/components/content/DummyAside/DummyAside.ejs') %>` +
+                `\n\t<div class="root">` +
+                `\n\t\t<%- include('src/ejs/layout/header.ejs', {` +
+                `\n\t\t\theader_component: {` +
+                `\n\t\t\t\thomePage: false,` +
+                `\n\t\t\t\tactivePage: '${componentName}'` +
+                `\n\t\t\t}` +
+                `\n\t\t})%>` +
+                `\n\t\t<main class="layout layout--${componentName}"></main>` +
+                `\n\t\t<%- include('src/ejs/layout/footer.ejs') %>` +
+                `\n\t</div>` +
+                `\n\t<script type="module" src="/src/ts/main.ts"></script>` +
+                `\n</body>` +
+                `\n</html>` 
             break
         }
         default:
@@ -139,7 +167,7 @@ export function updateTestEJSFile({ejsDir, componentName, fs}: {
     fs: typeof import('fs')
 }) {
     const
-        data = fs.readFileSync(`${ejsDir}/views/test.ejs`, 'utf-8'),
+        data:string = fs.readFileSync(`${ejsDir}/views/test.ejs`, 'utf-8'),
         ejsFile = `${ejsDir}/views/test.ejs`,
         lastIndex = data.lastIndexOf('</section>')
 
@@ -182,7 +210,7 @@ export function updateMainEJSFile({ejsDir, componentName, rootPage, fs}: {
     fs: typeof import('fs')
 }) {
     const
-        data = fs.readFileSync(`${ejsDir}/views/${rootPage}`, 'utf-8'),
+        data:string = fs.readFileSync(`${ejsDir}/views/${rootPage}`, 'utf-8'),
         ejsFile = `${ejsDir}/views/${rootPage}`,
         lastIndex = data.lastIndexOf('</main>'),
         fileContent = 
@@ -190,5 +218,27 @@ export function updateMainEJSFile({ejsDir, componentName, rootPage, fs}: {
             `\t\t<%- include('src/ejs/layout/${componentName}.ejs')%>\n\t\t` +
             data.slice(lastIndex).trim()
             
-        fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
+    fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
+}
+
+export function updateHeaderEJSFile({ejsDir, componentName, fs}: {
+    ejsDir: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
+    const
+        data:string = fs.readFileSync(`${ejsDir}/layout/header.ejs`, 'utf-8'),
+        ejsFile = `${ejsDir}/layout/header.ejs`
+       
+    const 
+        regEx = /var\s+pages\s*=\s*\[(?<pages>[\s\S]*?)\]/,
+        match = data.match(regEx),
+        searchedString = match ? match.groups.pages.trim() : ''
+    
+    const
+        newPage =  `{'href': './${componentName}', 'anchor': '${componentName[0].toUpperCase() + componentName.slice(1)}'},`,
+        updatedPages = `var pages = [\n\t\t${searchedString}\n\t\t${newPage}\n\t]`,
+        fileContent = data.replace(regEx, updatedPages)
+
+    fs.writeFileSync(ejsFile, fileContent, 'utf-8') 
 }
