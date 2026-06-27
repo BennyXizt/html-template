@@ -1,10 +1,17 @@
 @use 'sass:map';
 @use 'sass:math';
 
+@mixin activeMenu {
+    background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
+    color: if(map.get($SETTINGS, theme), getThemeTag(secondary-text-color), map.get($COLORS, default));
+}
+
 .menu {
     &__list {
         display: flex;
         flex-flow: column wrap;
+        justify-content: space-between;
+        @include rem(row-gap, 10px);
     }
 
     &__link {
@@ -13,6 +20,7 @@
 
     @include media(tablet, max) {
         $padding_x: map.get($BASE, container_padding_x);
+
         position: fixed;
         opacity: 0;
         visibility: hidden;
@@ -22,35 +30,30 @@
         height: 80dvh;
 
         @include rem((
-            padding-left: math.div($padding_x, 2),
-            padding-right: math.div($padding_x, 2),
-            padding-bottom: math.div($padding_x, 2)
+            padding-left: 12px,
+            padding-right: 12px,
+            padding-bottom: 12px
         ));
 
         &__body {
-            overflow-y: auto;
-            background-color: var(--theme-toggle-current-background-color);
             height: 100%;
-            @include rem((
-            border-radius: 20px,
-                padding: 12px
-            ));
+            overflow-y: auto;
+            background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
+            @include transition(background-color);
         }
 
         &__item {
-            background-color: var(--theme-toggle-current-alternate-background-color);
-            color: var(--theme-toggle-current-color);
+            background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
+            @include transition(background-color);
 
             @media (hover: hover) and (pointer: fine) {
                 &:hover {
-                    background-color: var(--theme-toggle-next-background-color);
-                    color: var(--theme-toggle-next-color);
+                    @include activeMenu;
                 }
             }
 
             &.active {
-                background-color: var(--theme-toggle-next-background-color);
-                color: var(--theme-toggle-next-color);
+                @include activeMenu;
             }
         }
 
@@ -59,111 +62,18 @@
         }
 
         &.active {
-            z-index: map.get($ZINDEXES, immortal);
             opacity: 1;
             visibility: visible;
             bottom: 0;
+            z-index: map.get($ZINDEXES, immortal);
         }
     }
     @include media(tablet) {
         &__list {
             flex-flow: row wrap;
         }
-    }
-}
-
-.menu .submenu-menu {
-    position: relative;
-
-    &__icon {
-        cursor: pointer;
-        flex-shrink: 0;
-    }
-
-    &__trigger {
-        display: flex;
-        flex-flow: row nowrap;
-    }
-
-    &__list {
-        height: 0;
-        opacity: 0;
-        visibility: hidden;
-        color: var(--theme-text-color);
-        transition: map.get($ANIMATIONSPEEDS, base) ease-in-out;    
-        transition-property: background-color, transform, opacity, visibility;
-
-        &--first {
-            position: absolute;
-            right: 0;
-            top: 100%;
-            overflow: hidden;
-            transform: translateY(-10px);
-            background-color: var(--theme-background-color);
-
-            &:before {
-                content: '';
-                background-color: red;
-                position: absolute;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                bottom: 100%;
-                
-            }
-        }
-        &:not(&--first) {
+        &__item {
             position: relative;
-        }
-    }
-
-    &__item {
-        overflow: hidden;
-    }
-    &__link {
-        display: flex;
-    }
-
-    @include media(tablet, max) {
-        &__list {
-            width: 100%;
-            
-            &--first {
-                right: unset;
-                left: 0;
-            }
-        }
-    }
-
-    &.active {
-        > .submenu-menu {
-            &__list {
-                overflow: unset;
-                height: max-content;
-                opacity: 1;
-                visibility: visible;
-
-                &--first {
-                    transform: translateY(10px);
-                }
-            }
-        }
-    }
-
-    @media (hover:hover) and (pointer: fine) {
-        &:hover {
-            > .submenu-menu {
-                &__list {
-                    overflow: unset;
-                    height: max-content;
-                    opacity: 1;
-                    visibility: visible;
-
-                    &--first {
-                        transform: translateY(10px);
-                    }
-                }
-            }
         }
     }
 }

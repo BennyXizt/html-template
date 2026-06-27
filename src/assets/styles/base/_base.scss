@@ -6,8 +6,8 @@
   font-size:        map.get($BASE, font_size);
   font-family:      map.get($BASE, font_family);
   font-weight:      map.get($BASE, font_weight);
-  color:            getThemeTag(primary-text-color);
-  background-color: getThemeTag(primary-background-color);
+  color:            if(map.get($SETTINGS, theme), getThemeTag(primary-text-color), map.get($COLORS, default));
+  background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
 
   @include initiateThemeVars;
 }

@@ -64,9 +64,13 @@
 }
 
 @function getThemeTag($target) {
+    @if not map.get($SETTINGS, theme) {
+        @return null;
+    }
+
     @each $key, $value in map.get($THEME, default) {
         @if $key == $target {
-            @return #{'var(--#{$key})'};
+            @return #{'var(#{$THEMEPREFIX}#{$key})'};
         }
     }
 

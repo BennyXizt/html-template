@@ -3,7 +3,7 @@
 .text-trigger {
     cursor: pointer;
     position: relative;
-    color: getThemeTag(primary-text-color);
+    color: if(map.get($SETTINGS, theme), getThemeTag(primary-text-color), map.get($COLORS, default));
     @include transition(color);
 
     &__disabled {
