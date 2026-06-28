@@ -226,7 +226,7 @@ export function updateTestEJSFile({ejsDir, componentName, fs}: {
     const fileContent = 
         data.slice(0, lastIndex + '</section>'.length).trim() + '\n\t' +
         `
-        <section class='${componentName}_component'>
+        <section class='${componentName}_component !mt-5'>
         <div class="outer container">
             <div class="inner">
                 <h6 class="text-center">${componentName.toUpperCase()} Component</h6>
