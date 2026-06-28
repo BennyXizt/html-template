@@ -45,7 +45,7 @@
             })%>
         </article>
         <article class="components _loader">
-            <h1>Loader</h1>
+            <h1>Loaders</h1>
             <div class="flex flex-col gap-5">
                 <div class="flex flex-row items-center gap-12">
                     <%- include('externe/components/content/Loader/Loader.ejs', { 
@@ -133,55 +133,59 @@
             })%>
         </article>
         <article class="components _combobox">
-            <h1>ComboBox Need Fix</h1>
-            <%- include('externe/components/content/ComboBox/ComboBox.ejs', {
-                combobox_component: {
-                    prestyled: 'all',
-                    label: 'Выберите город',
-                    placeholder: 'Начните вводить',
-                    icons: {
-                        input_dispose: {
-                            this: {
-                                tag: 'button'
+            <h1>ComboBox</h1>
+            <div>
+                <%- include('externe/components/content/ComboBox/ComboBox.ejs', {
+                    combobox_component: {
+                        prestyled: 'all',
+                        label: 'Выберите город',
+                        placeholder: 'Начните вводить',
+                        icons: {
+                            input_dispose: {
+                                this: {
+                                    tag: 'button'
+                                },
+                                path: '/externe/temporary/icons/sprite.svg#angle-down-solid-full'
                             },
-                            path: '/externe/temporary/icons/sprite.svg#angle-down-solid-full'
+                            input_close: {
+                                this: {
+                                    tag: 'button'
+                                },
+                                path: '/externe/temporary/icons/sprite.svg#xmark-solid-full'
+                            },
+                            p: {
+                                this: {
+                                    tag: 'button'
+                                },
+                                path: '/externe/temporary/icons/sprite.svg#plus-solid-full'
+                            }
                         },
-                        input_close: {
-                            this: {
-                                tag: 'button'
-                            },
-                            path: '/externe/temporary/icons/sprite.svg#xmark-solid-full'
+                        data: [
+                            { flag: 'de', city: 'Deutschland' },
+                            { flag: 'fr', city: 'France' },
+                            { flag: 'es', city: 'España' }
+                        ]
+                    }
+                }) %>
+            </div>
+            <div class="!mt-5">
+                <%- include('externe/components/content/ComboBox/ComboBox.ejs', {
+                    combobox_component: {
+                        label: 'Выберите город',
+                        placeholder: 'Начните вводить',
+                        icons: {
+                            input_dispose: '../icons/sprite.svg#angle-down-solid-full',
+                            input_close: '../icons/sprite.svg#xmark-solid-full',
+                            p: '../icons/sprite.svg#plus-solid-full'
                         },
-                        p: {
-                            this: {
-                                tag: 'button'
-                            },
-                            path: '/externe/temporary/icons/sprite.svg#plus-solid-full'
-                        }
-                    },
-                    data: [
-                        { flag: 'de', city: 'Deutschland' },
-                        { flag: 'fr', city: 'France' },
-                        { flag: 'es', city: 'España' }
-                    ]
-                }
-            }) %>
-            <%- include('externe/components/content/ComboBox/ComboBox.ejs', {
-                combobox_component: {
-                    label: 'Выберите город',
-                    placeholder: 'Начните вводить',
-                    icons: {
-                        input_dispose: '../icons/sprite.svg#angle-down-solid-full',
-                        input_close: '../icons/sprite.svg#xmark-solid-full',
-                        p: '../icons/sprite.svg#plus-solid-full'
-                    },
-                    data: [
-                        { flag: 'de', city: 'Deutschland' },
-                        { flag: 'fr', city: 'France' },
-                        { flag: 'es', city: 'España' }
-                    ]
-                }
-            }) %>
+                        data: [
+                            { flag: 'de', city: 'Deutschland' },
+                            { flag: 'fr', city: 'France' },
+                            { flag: 'es', city: 'España' }
+                        ]
+                    }
+                }) %>
+            </div>
         </article>
         <article class="components _carousel">
             <h1>Carousel Need Fix</h1>
@@ -225,7 +229,7 @@
             }) %>
         </article>
         <article class="components _stars">
-            <h1>Stars Need Fix</h1>
+            <h1>Stars</h1>
             <%- include('externe/components/content/Stars/Stars.ejs', { 
                 stars_component: {
                     stars: 5,

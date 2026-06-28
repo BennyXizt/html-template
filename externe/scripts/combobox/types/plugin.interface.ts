@@ -1,3 +1,5 @@
+
+// @ts-ignore
 import { SearchType } from "./plugin.enum"
 
 export interface ComboBoxSettings {

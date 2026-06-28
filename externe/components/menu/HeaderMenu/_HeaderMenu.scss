@@ -70,7 +70,7 @@
             position: absolute;
             top: 100%;
             right: 0;
-            z-index: map.get($ZINDEXES, immortal);
+            z-index: map.get($ZINDEXES, highest);
             transform: translate3d(100dvw,0,0);
             transition: transform var(--animation-speed) ease-in-out;
             will-change: transform;

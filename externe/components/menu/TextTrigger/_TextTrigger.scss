@@ -11,7 +11,7 @@
     }
 
     &.active {
-        z-index: map.get($ZINDEXES, immortal);
+        z-index: map.get($ZINDEXES, highest);
 
         .text-trigger {
             &__disabled {

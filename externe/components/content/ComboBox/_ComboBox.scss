@@ -1,8 +1,6 @@
 @use 'sass:map';
 
 
-$z_index: map.get($ZINDEXES, immortal);
-
 [data-fsc-combobox-id] {
     @mixin hoverEffect {
         --animationDelay: 0s;
@@ -60,11 +58,12 @@ $z_index: map.get($ZINDEXES, immortal);
 
         position: relative;
         display: flex;
+        z-index: map.get($ZINDEXES, highest);
 
         &[data-fsc-combobox-prestyled-list] {
             ul {
                 position: absolute;
-                z-index: calc($z_index + 2);
+                // z-index: map.get($ZINDEXES, highest);
                 top: 100%;
                 max-height: 0;
                 width: 100%;
@@ -89,10 +88,10 @@ $z_index: map.get($ZINDEXES, immortal);
         &[data-fsc-combobox-prestyled-input] {
             input {
                 flex: 1;
-                z-index: $z_index;
+                // z-index: map.get($ZINDEXES, highest);
             }
             label {
-                z-index: calc($z_index + 1);
+                // z-index: map.get($ZINDEXES, highest);
             }
         }
         &[data-fsc-combobox-prestyled-icons] {
@@ -101,7 +100,7 @@ $z_index: map.get($ZINDEXES, immortal);
                 &[data-fsc-combobox-p-icon],
                 &[data-fsc-combobox-input-icon-close] {
                     position: absolute;
-                    z-index: $z_index;
+                    // z-index: map.get($ZINDEXES, highest);
                     top: 50%;           
                     transform: translate(0, -50%);
                     transform-origin: center;
@@ -134,7 +133,7 @@ $z_index: map.get($ZINDEXES, immortal);
             label {
                 position: absolute;
                 background-color: #fff;
-                z-index: calc($z_index + 1);
+                // z-index: map.get($ZINDEXES, highest);
                 @include rem((
                     top: -12px,
                     left: 8px,
@@ -147,7 +146,7 @@ $z_index: map.get($ZINDEXES, immortal);
                 border: 2px solid black;
                 background-color: #fff;
                 flex: 1;
-                z-index: $z_index;
+                // z-index: map.get($ZINDEXES, highest);
                 @include rem((
                     border-radius: 8px,
                     font-size: 18px,
@@ -170,7 +169,7 @@ $z_index: map.get($ZINDEXES, immortal);
                 &[data-fsc-combobox-p-icon],
                 &[data-fsc-combobox-input-icon-close] {
                     position: absolute;
-                    z-index: $z_index;
+                    // z-index: map.get($ZINDEXES, highest);
                     top: 50%;          
                     @include rem(right, 7px);
                     transform: translate(0, -50%);
@@ -195,7 +194,7 @@ $z_index: map.get($ZINDEXES, immortal);
             ul {               
                 position: absolute;
                 background-color: #fff;
-                z-index: calc($z_index + 2);
+                // z-index: map.get($ZINDEXES, highest);
                 top: 100%;
                 max-height: 0;
                 width: 100%;
@@ -240,19 +239,14 @@ $z_index: map.get($ZINDEXES, immortal);
         &[data-fsc-combobox-collapsed='true'] {
            @include hoverEffect;
         }
-        @media (hover: hover) and (pointer:fine) {
-            &:hover {
-               @include hoverEffect;
-            }
-        }
     }
 }
 
 [data-fsc-combobox-blank] {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     min-height: 100%;
-    z-index: $z_index;
+    z-index: map.get($ZINDEXES, high);
 }

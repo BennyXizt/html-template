@@ -65,7 +65,7 @@
             opacity: 1;
             visibility: visible;
             bottom: 0;
-            z-index: map.get($ZINDEXES, immortal);
+            z-index: map.get($ZINDEXES, highest);
         }
     }
     @include media(tablet) {

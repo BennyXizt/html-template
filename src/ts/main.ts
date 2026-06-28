@@ -69,6 +69,22 @@ document.fonts.ready.then(async() => {
             })
             .filter(e => typeof e !== 'undefined')
 
+    const
+        onHoverModules = Array.from(loadedModules)
+            .flatMap(([_, e]) =>
+                Object.entries(e)
+                    .filter(([key]) => key.endsWith('HoverArray'))
+                    .map(([, value]) => value)
+            )
+
+    const
+        onUnhoverModules = Array.from(loadedModules)
+            .flatMap(([_, e]) =>
+                Object.entries(e)
+                    .filter(([key]) => key.endsWith('UnhoverArray'))
+                    .map(([, value]) => value)
+            )
+
     // Intersection Event
     for(const element of Object.values(onIntersectionModules)) {
         let observer: IntersectionObserver | undefined  = 
@@ -157,10 +173,30 @@ document.fonts.ready.then(async() => {
     onKeyUpModules.forEach(e => {
         if(!Array.isArray(e)) return 
 
-        const HTMLElement = document.querySelectorAll(e[1]) 
-        HTMLElement.forEach(el => el.addEventListener('keyup', function(event: KeyboardEvent) {
+        const HTMLElements = document.querySelectorAll<HTMLElement>(`${e[1]}`)
+
+        HTMLElements.forEach(el => el.addEventListener('keyup', function(event: KeyboardEvent) {
             e[0](event)
         }))
     })
-    
+
+    // Hover Start Event
+    onHoverModules.forEach(e => {
+        const HTMLElements = document.querySelectorAll<HTMLElement>(`${e[1]}`)
+
+        HTMLElements.forEach(el => el.addEventListener('mouseenter', function(this, event) {
+            e[0](this, event)
+        }))
+    })
+
+    // Hover End Event
+    onUnhoverModules.forEach(e => {
+        const HTMLElements = document.querySelectorAll<HTMLElement>(`${e[1]}`)
+
+        HTMLElements.forEach(el => el.addEventListener('mouseleave', function(this, event) {
+            e[0](this, event)
+        }))
+    })
+
+
 })

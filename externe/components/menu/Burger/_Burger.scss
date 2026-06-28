@@ -53,7 +53,7 @@
     }
 
     &.active {       
-        z-index: map.get($ZINDEXES, immortal);
+        z-index: map.get($ZINDEXES, highest);
     
         @mixin combo-animation($side) {
             @if $side !=middle {

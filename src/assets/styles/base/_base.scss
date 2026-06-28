@@ -39,7 +39,7 @@ body {
         position: fixed;
         top: 0;
         left: 0;
-        z-index: map.get($ZINDEXES, immortal);
+        z-index: map.get($ZINDEXES, highest);
     }
   }
 }

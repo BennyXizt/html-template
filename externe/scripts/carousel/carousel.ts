@@ -6,8 +6,9 @@
  * - data-fsc-carousel           — инициализирует элемент как карусель
  */
 
+// @ts-ignore
 import { carouselDotClick, carouselLeftClick, carouselObserver, carouselRightClick } from "./utils/events";
-
+// @ts-ignore
 export { carouselAutoload, carouselOnResize } from "./utils/events";
 
 export const carouselObserverArray = [carouselObserver, '[data-fsc-carousel]', {             

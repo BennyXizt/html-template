@@ -66,7 +66,7 @@
     }
 
     var input_id = `cb${Math.random().toString(36).slice(2, 8)}-${new Date().getTime()}`
-    thisDataAttributes += ` data-fsc-combobox-id=${input_id} data-fsc-combobox-collapsed=false`
+    thisDataAttributes += ` data-fsc-combobox data-fsc-combobox-id=${input_id} data-fsc-combobox-collapsed=false`
 
     var prestyledList = ['all', 'input', 'list', 'icons']
 
@@ -93,7 +93,7 @@
     <% if(typeof combobox_component.label !== 'undefined' && combobox_component.label) { %>
         <label for=<%=input_id%> class='combobox__label'><%=combobox_component.label%></label> 
     <% } %>
-    <input type="text" id=<%=input_id%> <%-input_placeholder%> data-fsc-combobox class='combobox__input'>
+    <input type="text" id=<%=input_id%> <%-input_placeholder%> class='combobox__input'>
     <% if (
         (typeof combobox_component.icons !== 'undefined' && combobox_component.icons) &&
         (typeof combobox_component.icons.input_dispose !== 'undefined' && combobox_component.icons.input_dispose) &&
@@ -104,12 +104,12 @@
             (typeof combobox_component.icons.input_dispose.this.tag !== 'undefined' && combobox_component.icons.input_dispose.this.tag !== 'svg') 
         ) { %>
             <<%=combobox_component.icons.input_dispose.this.tag %> type='button' class='combobox__dispose-wrapper'>
-                <svg data-fsc-combobox-input-icon-dispose data-fsc-combobox class="combobox__dispose">
+                <svg data-fsc-combobox-input-icon-dispose class="combobox__dispose">
                     <use href='<%=combobox_component.icons.input_dispose.path%>'></use>
                 </svg>
             </<%=combobox_component.icons.input_dispose.this.tag %>>
         <% } else { %>
-            <svg data-fsc-combobox-input-icon-dispose data-fsc-combobox class="combobox__dispose">
+            <svg data-fsc-combobox-input-icon-dispose class="combobox__dispose">
                 <use href='<%=combobox_component.icons.input_dispose.path%>'></use>
             </svg>
         <% } %>
@@ -124,12 +124,12 @@
             (typeof combobox_component.icons.input_close.this.tag !== 'undefined' && combobox_component.icons.input_close.this.tag !== 'svg') 
         ) { %>
             <<%=combobox_component.icons.input_close.this.tag %> type='button' class='combobox__close-wrapper'>
-                <svg data-fsc-combobox-input-icon-close data-fsc-combobox class="combobox__close">
+                <svg data-fsc-combobox-input-icon-close class="combobox__close">
                     <use href='<%=combobox_component.icons.input_close.path%>'></use>
                 </svg>
             </<%=combobox_component.icons.input_close.this.tag %>>
         <% } else { %>
-            <svg data-fsc-combobox-input-icon-close data-fsc-combobox class="combobox__close">
+            <svg data-fsc-combobox-input-icon-close class="combobox__close">
                 <use href='<%=combobox_component.icons.input_close.path%>'></use>
             </svg>
         <% } %>
@@ -151,12 +151,12 @@
                                 (typeof combobox_component.icons.p.this.tag !== 'undefined' && combobox_component.icons.p.this.tag !== 'svg') 
                             ) { %>
                                 <<%=combobox_component.icons.p.this.tag %> type='button' class='combobox__p-icon-wrapper'>
-                                    <svg data-fsc-combobox-item data-fsc-combobox-p-icon class="combobox__p-icon">
+                                    <svg data-fsc-combobox-p-icon class="combobox__p-icon">
                                         <use href='<%=combobox_component.icons.p.path%>'></use>
                                     </svg>
                                 </<%=combobox_component.icons.p.this.tag %>>
                             <% } else { %>
-                                <svg data-fsc-combobox-item data-fsc-combobox-p-icon class="combobox__p-icon">
+                                <svg data-fsc-combobox-p-icon class="combobox__p-icon">
                                     <use href='<%=combobox_component.icons.p.path%>'></use>
                                 </svg>
                             <% } %>

@@ -44,18 +44,30 @@
 <% if(isWrapper) { %>
 	<<%=wrapperThisTag%> <%-wrapperThisDataAttributes%> class='<%=wrapperThisClass%>' <%-wrapperThisID%> <%-wrapperThisStyles%>>
 <% } %>
-<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
+<<%=thisTag%> data-fsc-stars <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
 	<div class="<%=blockClass%>__front">
 		<% for(var i = 0; i < stars_component.stars; i++) { %>
 			<%- include('externe/components/media/Icon/Icon.ejs', {
-				icon_component: stars_component.icon_component
+				icon_component: {
+					...stars_component.icon_component,
+					wrapper: {
+						...stars_component.icon_component.wrapper,
+						dataAttribute: stars_component.icon_component.wrapper.dataAttribute ? `${stars_component.icon_component.wrapper.dataAttribute} data-index=${i}` : `data-index=${i}`
+					}
+				}
 			}) %>
 		<% } %>	
 	</div>
 	<div class="<%=blockClass%>__back">
 		<% for(var i = 0; i < stars_component.stars; i++) { %>
 			<%- include('externe/components/media/Icon/Icon.ejs', {
-				icon_component: stars_component.icon_component
+				icon_component: {
+					...stars_component.icon_component,
+					wrapper: {
+						...stars_component.icon_component.wrapper,
+						dataAttribute: stars_component.icon_component.wrapper.dataAttribute ? `${stars_component.icon_component.wrapper.dataAttribute} data-index=${i}` : `data-index=${i}`
+					}
+				}
 			}) %>
 		<% } %>	
 	</div>
