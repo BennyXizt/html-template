@@ -1,5 +1,5 @@
 <%
-// Пример вызова в шаблоне (EJS):
+// Пример вызова в шаблоне (EJS): #TODO
 //
 // <\%- include('externe/components/Logo/Logo.ejs', { 
 //	logo_component: {
@@ -22,10 +22,6 @@
 
 	var {blockClass, thisClass, thisID, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...logo_component.this, componentName: 'logo'})
 
-    var type = 'image'
-    if(typeof logo_component.type !== 'undefined' || logo_component.type) {
-        type = logo_component.type
-    }
 
     var linkBlockClass = ''
     if((typeof logo_component.this !== 'undefined' && logo_component.this) && (typeof logo_component.this.block !== 'undefined' && logo_component.this.block)) {
@@ -51,20 +47,14 @@
     <a href="./" class='<%=thisLinkClass%>'>
 <% } %>
 
-<%if(type === 'image') { %>
+<% if(typeof logo_component.image_component !== 'undefined' && logo_component.image_component) { %>
     <%- include('externe/components/media/Image/Image.ejs', {
-        image_component: {
-            this: logo_component.this,
-            img: {
-                src: '/media/image/logo.svg',
-                alt: 'website-logo'
-            }
-        }
+        image_component: logo_component.image_component
     })%>
-<% } else if(type === 'icon') { %>
-    <svg <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
-		<use href="/media/image/logo.svg"></use>   
-	</svg>
+<% } else if(typeof logo_component.icon_component !== 'undefined' && logo_component.icon_component) { %>
+    <%- include('externe/components/media/Icon/Icon.ejs', {
+        icon_component: logo_component.icon_component
+    })%>
 <% } %>
 
 <%if(logo_component.homePage === false) { %>

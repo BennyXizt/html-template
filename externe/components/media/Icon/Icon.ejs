@@ -23,14 +23,12 @@
 //		},
 //		name: 'iconName',
 //		path: 'iconDirectory',
+//		fullpath: 'iconFullPath',
 //	}
 //	}) %>
 %>
 <%
-	if(
-		(typeof icon_component === 'undefined' || !icon_component) ||
-		(typeof icon_component.name === 'undefined' || !icon_component.name)
-	) {
+	if(typeof icon_component === 'undefined' || !icon_component)  {
 		return
 	}
 
@@ -44,7 +42,15 @@
 
 	var isWrapper = typeof icon_component.wrapper === 'object' && icon_component.wrapper 
 
-	var iconPath = icon_component.path ? `${icon_component.path}#${icon_component.name}` : `/media/icons/sprite.svg#${icon_component.name}`
+	var iconPath = undefined
+	if(typeof icon_component.fullpath !== 'undefined' && icon_component.fullpath) {
+		iconPath = icon_component.fullpath
+	} else if(typeof icon_component.path !== 'undefined' && icon_component.path) {
+		iconPath = `${icon_component.path}#${icon_component.name}`
+	} else {
+		iconPath = `/media/icons/sprite.svg#${icon_component.name}`
+	}
+
 %>
 
 <% if(isWrapper) { %>
@@ -52,7 +58,7 @@
 <% } %>
 
 	<svg <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
-		<use href="<%=iconPath%>"></use>   
+		<use href="<%=iconPath%>" xlink:href="<%=iconPath%>"></use>   
 	</svg>
 
 <% if(isWrapper) { %>

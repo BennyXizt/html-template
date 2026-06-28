@@ -10,6 +10,21 @@
                         parent: 'header'
                     },
                     homePage: header_component.homePage,
+                    // icon_component: {
+                    //     this: {
+                    //         class: 'header__logo'
+                    //     },
+                    //     fullpath: "/media/image/logo.svg"
+                    // },
+                    image_component: {
+                        this: {
+                            class: 'header__logo'
+                        },
+                        img: {
+                            src: '/media/image/logo.svg',
+                            alt: 'website-logo'
+                        }
+                    }
                 }
            })%>
             <%- include('src/ejs/components/headerMenu.ejs', {
