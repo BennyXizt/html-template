@@ -1,4 +1,4 @@
-
+import { Language } from "../types/plugin.type"
 import { Translation } from "./Translation"
 
 export class EJSFolderTranslation extends Translation {

@@ -1,6 +1,6 @@
 import type { Plugin, ViteDevServer } from 'vite'
 import { fileURLToPath } from 'url'
-import { resolve, dirname, basename, extname } from 'path'
+import { resolve, dirname, basename } from 'path'
 import fs from 'fs'
 import type { FontsConvertToFile, FontsFolderInterface, FontsTypes} from './types/plugin.interface'
 import { FontsFolderTranslation } from './i18n'

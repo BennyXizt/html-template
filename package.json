@@ -12,6 +12,7 @@
     "component": "tsx ./externe/plugins/createElements/create-new-component.ts",
     "section": "tsx ./externe/plugins/createElements/create-new-section.ts",
     "page": "tsx ./externe/plugins/createElements/create-new-page.ts",
+    "delete": "tsx ./externe/plugins/createElements/delete-element.ts",
     "video": "tsx ./externe/plugins/convertMedia/convertVideo/convert-video.ts"
   },
   "devDependencies": {

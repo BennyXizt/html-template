@@ -2,7 +2,9 @@
 import '@/assets/styles/main.scss'
 // @ts-ignore
 import { autoloader } from '~/scripts/autoloader/autoloader'
+// @ts-ignore
 import { ClickedModule } from './types/plugin.type'
+// @ts-ignore
 import { IntersectionObserverElements } from './types/plugin.interface'
 
 // window.addEventListener('pointerdown', function(event) {
@@ -67,6 +69,7 @@ document.fonts.ready.then(async() => {
             })
             .filter(e => typeof e !== 'undefined')
 
+    // Intersection Event
     for(const element of Object.values(onIntersectionModules)) {
         let observer: IntersectionObserver | undefined  = 
             IntersectionElements
@@ -95,6 +98,7 @@ document.fonts.ready.then(async() => {
         document.querySelectorAll(element.elementSelector).forEach(el => observer.observe(el))
     }
     
+    // Click Event
     window.addEventListener('pointerdown', function(event) {
         const target = event.target
 
@@ -110,12 +114,14 @@ document.fonts.ready.then(async() => {
     })
     
     let 
-        resizeOptimization = undefined,
+        resizeOptimization: number | undefined = undefined,
         lastResizeWidth = window.innerWidth,
         lastResizeHeight = window.innerHeight
 
+    // Resize Event
     window.addEventListener('resize', function(event) {
-        cancelAnimationFrame(resizeOptimization)
+        if(resizeOptimization)
+            cancelAnimationFrame(resizeOptimization)
 
         resizeOptimization = requestAnimationFrame(() => {
             const 
@@ -126,7 +132,7 @@ document.fonts.ready.then(async() => {
                 isWidthResized = resizeWidth !== lastResizeWidth,
                 isHeightResized = resizeHeight !== lastResizeHeight
 
-            let differenceWidth, differenceHeight
+            let differenceWidth: number, differenceHeight: number
 
             if(isWidthResized) differenceWidth = resizeWidth - lastResizeWidth
             if(isHeightResized) differenceHeight = resizeHeight - lastResizeHeight
@@ -142,10 +148,12 @@ document.fonts.ready.then(async() => {
         })
     })
 
+    // Submit Event
     window.addEventListener('submit', function(event) {
         onSubmitModules.forEach(e => e[1](event))
     })
     
+    // KeuUp Event
     onKeyUpModules.forEach(e => {
         if(!Array.isArray(e)) return 
 

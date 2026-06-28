@@ -2,7 +2,8 @@ import readline from 'node:readline';
 import fs from 'fs'
 import { readdir } from 'fs/promises'
 import { resolve } from 'path';
-import { createEJSFile, createSCSSFile, updateMainEJSFile, updateMainSCSS, updateTestEJSFile } from './utils/utils';
+// @ts-ignore
+import { createEJSFile, createSCSSFile, updateMainEJSFile, updateMainSCSS } from './utils/utils';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -15,30 +16,21 @@ const
     .filter(e => /^.+\.html$/.test(e))
     .map(e => `${e.slice(0, -5)}.ejs`)
 
-let 
-  questionChoosePage = 'Выберите файл для записи('
+const 
+  questionFirstString = 
+    `Выберите файл для записи (${pages.map((e, i) => {
+      return i == 0 ? `${i + 1} - ${e}(По умолчанию)` : `${i + 1} - ${e}`
+    }).join(', ')}): `,
+  answer = await new Promise<string>(resolve => rl.question(questionFirstString, resolve)),
+  page = pages[Number.parseInt(answer) - 1 || 0]
 
-  pages.forEach((e, i) => {
-    if(i === 0)
-      questionChoosePage += `${i} - ${e}(по умолчанию), `
-    else if(i !== pages.length - 1) 
-      questionChoosePage += `${i} - ${e}, `
-    else
-      questionChoosePage += `${i} - ${e}): `
-  })
-
-const
-  indexChoosePage = await new Promise<string>(resolve => rl.question(questionChoosePage, resolve)),
-  page = pages[Number.parseInt(indexChoosePage) || 0]
-
-
-if(!page)
-{
+if(!page) {
   console.log(`Ошибка: Такого элемента не существует!`)
   rl.close()
 }
 
-rl.question('Придумайте название секции: ', (componentName) => {
+
+rl.question('Придумайте название секции: ', (componentName: string) => {
   const 
     ejsDir = resolve(process.cwd(), "src/ejs"),
     scssDir = resolve(process.cwd(), "src/assets/styles"),
@@ -59,4 +51,4 @@ rl.question('Придумайте название секции: ', (componentNa
     
     console.log(`Секция ${componentName} создана!`)
     rl.close()
-});
+})

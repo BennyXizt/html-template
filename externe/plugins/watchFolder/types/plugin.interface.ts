@@ -147,7 +147,7 @@ export interface EJSFolderDestination {
     }
 }
 export interface EJSFolderInterface {
-    relativePath: string,
+    paths: string[],
     outputDestination: EJSFolderDestination,
     language?: Language
 }

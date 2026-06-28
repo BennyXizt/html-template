@@ -16,17 +16,43 @@ export function updateMainSCSS({scssDir, blockType, componentName, fs}: {
         slicedText = data.slice(startIndex + `// internal ${blockType} START`.length, lastIndex).trim()
         
     if(slicedText.length == 0) {
-            fileContent = 
+        fileContent = 
             `
             ${data.slice(0, startIndex + `// internal ${blockType} START`.length).trim()}\n@import\n\t'./${blockType}/${componentName}';\n${data.slice(lastIndex).trim()}
             `.trim()   
     }
     else {
-            fileContent = 
+        fileContent = 
             `
             ${data.slice(0, startIndex + `// internal ${blockType} START`.length).trim()}\n${slicedText.slice(0, -1)},\n\t'./${blockType}/${componentName}';\n${data.slice(lastIndex).trim()}
             `.trim()   
     }
+    fs.writeFileSync(outputFile, fileContent, 'utf-8')  
+}
+
+export function deleteUpdatedRecordFromMainScss({scssDir, blockType, componentName, fs}: {
+    scssDir: string,
+    blockType: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
+    const 
+        data = fs.readFileSync(`${scssDir}/main.scss`, 'utf-8'),
+        targetFile = `'./${blockType}/${componentName}'`,
+        outputFile = `${scssDir}/main.scss`
+    
+    const
+        fileContent = data.replace(/@import([\s\S]*?);/g, match => {
+            const items = match 
+                .replace('@import', '')
+                .replace(';', '')
+                .split(',')
+                .map(s => s.trim())
+                .filter(item => !item.includes(targetFile))
+            
+            return items.length > 0 ? `@import\n  ${items.join(',\n  ')};` : ''
+        })
+
     fs.writeFileSync(outputFile, fileContent, 'utf-8')  
 }
 
@@ -161,6 +187,22 @@ export function createSCSSFile({scssDir, blockType, componentName, fs}: {
     fs.writeFileSync(scssFile, scssFileContent, 'utf-8')  
 }
 
+export function deleteFile({fileDir, blockType, componentName, extention, fs}: {
+    fileDir: string,
+    blockType: string,
+    componentName: string,
+    extention: string,
+    fs: typeof import('fs')
+}) {
+    const file = `${fileDir}/${blockType}/${componentName}${extention}`
+
+    fs.unlink(file, err => {
+        if (err) throw err;
+
+        console.log(`${file} удален!`)
+    })
+}
+
 export function updateTestEJSFile({ejsDir, componentName, fs}: {
     ejsDir: string,
     componentName: string,
@@ -203,6 +245,29 @@ export function updateTestEJSFile({ejsDir, componentName, fs}: {
     fs.writeFileSync(ejsFile, fileContent, 'utf-8')  
 }
 
+export function deleteUpdatedRecordFromTestEJSFile({ejsDir, componentName, fs}: {
+    ejsDir: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
+    const 
+        outputFile = `${ejsDir}/views/test.ejs`,
+        data = fs.readFileSync(outputFile, 'utf-8'),
+        regEx = /<section\b[^>]*>[\s\S]*?<\/section>\s*/g,
+        fileContent = data.replace(regEx, (match) => {
+            const classMatch = match.match(/class\s*=\s*["']([^"']+)["']/);
+
+            if (!classMatch) return match;
+
+            const classes = classMatch[1].split(/\s+/);
+
+            return classes.includes(`${componentName}_component`) ? '' : match;
+        })
+        
+    fs.writeFileSync(outputFile, fileContent, 'utf-8')     
+    console.log(`${outputFile} очищен от ${componentName}!`)
+}
+
 export function updateMainEJSFile({ejsDir, componentName, rootPage, fs}: {
     ejsDir: string,
     componentName: string,
@@ -233,7 +298,7 @@ export function updateHeaderEJSFile({ejsDir, componentName, fs}: {
     const 
         regEx = /var\s+pages\s*=\s*\[(?<pages>[\s\S]*?)\]/,
         match = data.match(regEx),
-        searchedString = match ? match.groups.pages.trim() : ''
+        searchedString = match ? match.groups?.pages.trim() : ''
     
     const
         newPage =  `{'href': './${componentName}', 'anchor': '${componentName[0].toUpperCase() + componentName.slice(1)}'},`,
@@ -241,4 +306,41 @@ export function updateHeaderEJSFile({ejsDir, componentName, fs}: {
         fileContent = data.replace(regEx, updatedPages)
 
     fs.writeFileSync(ejsFile, fileContent, 'utf-8') 
+}
+
+export function deleteUpdatedRecordFromHeaderEJSFile({ejsDir, componentName, fs}: {
+    ejsDir: string,
+    componentName: string,
+    fs: typeof import('fs')
+}) {
+    const
+        data:string = fs.readFileSync(`${ejsDir}/layout/header.ejs`, 'utf-8'),
+        outputFile = `${ejsDir}/layout/header.ejs`
+
+    const 
+        regEx = /var\s+pages\s*=\s*\[(?<pages>[\s\S]*?)\]/,
+        match = data.match(regEx),
+        searchedString = match ? match.groups?.pages.trim() : ''
+
+    const
+        newElement = searchedString
+            ?.split('},')
+            .map(s => s.trim())
+            .filter(e => {
+                const anchor = e.match(/.*'anchor': '(?<anchor>[\s\S]*?)'/)?.groups?.anchor
+
+                return anchor && anchor.toLowerCase() !== componentName
+            })
+
+    if(!newElement) return
+
+    const
+        updatedPages = 
+            newElement?.length > 0 ? 
+                `var pages = [\n\t\t${newElement?.join('},\n\t\t')}},\n\t]` :
+                `var pages = []`,
+        fileContent = data.replace(regEx, updatedPages)
+    
+    fs.writeFileSync(outputFile, fileContent, 'utf-8') 
+    console.log(`${outputFile} очищен от ${componentName}!`)
 }

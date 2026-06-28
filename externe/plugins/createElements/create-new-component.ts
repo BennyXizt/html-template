@@ -1,6 +1,7 @@
 import readline from 'node:readline'
 import fs from 'fs'
 import { resolve } from 'path'
+// @ts-ignore
 import { createEJSFile, createSCSSFile, updateMainSCSS, updateTestEJSFile } from './utils/utils'
 
 const rl = readline.createInterface({
