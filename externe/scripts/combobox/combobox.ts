@@ -24,10 +24,8 @@
  * - data-fsc-combobox-p-icon (svg)
  */
 
-// @ts-ignore
-import { comboboxItemClick, comboboxInputClick, comboboxCloseClick, comboboxBlankClick, comboboxOnKeyUp, comboboxHovered, comboboxUnhovered } from './utils/events'
-// @ts-ignore
-export { comboboxAutoload } from './utils/events'
+import { comboboxItemClick, comboboxInputClick, comboboxCloseClick, comboboxBlankClick, comboboxOnKeyUp, comboboxHovered, comboboxUnhovered } from './utils/events.js'
+export { comboboxAutoload } from './utils/events.js'
 
 export const comboboxOnKeyUpArray = [comboboxOnKeyUp, '[data-fsc-combobox] input']
 export const comboboxInputClickArray = [comboboxInputClick, '[data-fsc-combobox] input']

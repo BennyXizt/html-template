@@ -9,38 +9,47 @@
 //
 // Accordion({
 //     this: {
-//		 parent: 'parentClass',
-//		 class: ['childClass'],
-//		 style: ['customStyle']
-//	   }  
-//     title: 'Подробнее' || {tag:'h1-6', label:'Подробнее'},                                          // заголовок аккордиона (строка или объект с типом и текстом)
-//     body: 'Содержимое аккордиона' || [label:'Содержимое аккордиона', icon_component, this],         // контент (строка или объект или массив объектов с label)
-//     icon: 'Пример иконки' || {label: 'Пример иконки', div: true | false},                           // имя иконки после title из спрайта (опционально)
-//     behaviour: 'default',                                                                           // режим поведения (например: default - одиночное раскрытие)                                                                                  
-//     media: {type:'min-width' | 'max-width' | 'min-height' | 'max-height', label: '999px'}           // с какого диапазона в пикселях будет работать аккордион
+//         parent: 'parentClass',
+//         block: 'childBlockClass',
+//         class: ['childClass'],
+//         id: ['childID'],
+//         tag: 'div',
+//         style: ['customStyle'],
+//         dataAttribute: ['customDataAttributes'], 
+//     }  
+//     summary:   {this: {wrapperNeeded: 'true' | 'false'}, content: ['']},                       // заголовок аккордиона
+//     body:      {this: {wrapperNeeded: 'true' | 'false'}, content: ['']},                       // контент
+//     behaviour: 'default' | 'alternative' | 'active',                                           // режим поведения (например: default - одиночное раскрытие, alternative - один раскрытый аккордион на сайт, active - изначально раскрыт)                                                                                  
+//     media:     {type:'min-width' | 'max-width' | 'min-height' | 'max-height', label: '999px'}  // с какого диапазона в пикселях будет работать аккордион
 // })
 //
 // Пример вызова в шаблоне (EJS):
 //
-// </%- include('externe/components/Accordion/Accordion.ejs', {
-//   accordion_component: {
-//     this: {
-//         parent: 'parentClass',
-//     },  
-//     title: { this: { tag: 'a', dataAttribute: 'href=tel:+123456789' }, label: 'Заголовок' },
-//     body: [
-//       { this: {tag: 'button', dataAttribute: ['custoDataAttributes']}, label: 'СкрытаяИнформация', icon_component: {} }
-//     ],
-//     icon: 'arrow-down',
-//     behaviour: 'default',
-//     media: {
-//      type:'min-width',
-//      label: '999px'
-//     }     
-//   }
+// <\%- include('externe/components/Accordion/Accordion.ejs', {
+//     accordion_component: {
+// 		this: {
+// 			parent: 'parentClass',
+// 		},
+//         summary: {
+//             this: {
+//                 wrapperNeeded: 'false', 
+//             },
+//             content: ['']
+//         },
+//         body: {
+//             this: {
+//                 wrapperNeeded: 'false', 
+//             },
+//             content: ['']
+//         },
+//         behaviour: 'default',
+//         media: {
+//             type:'min-width',
+//             label: '999px'
+//         }     
+//     }
 // }) %>
 %>
-
 
 <%
 	if (typeof accordion_component === 'undefined' || !accordion_component) {
@@ -48,8 +57,19 @@
 	}
 
     var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...accordion_component.this, componentName: 'accordion'})
+
+    accordion_component.summary.this = {
+        ...accordion_component.summary.this,
+        block: accordion_component.summary.this && accordion_component.summary.this.class ? accordion_component.summary.this.class : `${blockClass}__summary`
+    }
+    accordion_component.body.this = {
+        ...accordion_component.body.this,
+        block: accordion_component.body.this && accordion_component.body.this.class ? accordion_component.body.this.class : `${blockClass}__body`
+    }
+
+    var {thisClass: summaryThisClass, thisID: summaryThisID, thisTag: summaryThisTag, thisStyles: summaryThisStyles, thisDataAttributes: summaryThisDataAttributes} = externe.setupEJSComponent({...accordion_component.summary.this, componentName: blockClass})
+    var {thisClass: bodyThisClass, thisID: bodyThisID, thisTag: bodyThisTag, thisStyles: bodyThisStyles, thisDataAttributes: bodyThisDataAttributes} = externe.setupEJSComponent({...accordion_component.body.this, componentName: blockClass})
     
-    thisDataAttributes += ' data-fsc-accordion'
     if (typeof accordion_component.behaviour !== 'undefined' && accordion_component.behaviour) {
         thisDataAttributes += ` data-fsc-accordion-behaviour=${accordion_component.behaviour}`
     }
@@ -63,75 +83,42 @@
     ) {
         thisDataAttributes += ` data-fsc-accordion-media-query='${accordion_component.media.type}: ${accordion_component.media.label}'`
     }
-    
+
 %>
 
-<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
-    <div data-fsc-accordion-summary class="accordion__top">
-            <% if (typeof accordion_component.title === 'string') { %>
-                <h6 class="accordion__title">
-                    <%= accordion_component.title%>
-                </h6>
-            <% } else if (typeof accordion_component.title === 'object') { 
-                accordion_component.title.this = {
-                    ...accordion_component.title.this,
-                    tag: accordion_component.title.this?.tag ?? 'h6'
-                }
-
-                var {thisClass: titleThisClass, thisID: titleThisID, thisTag: titleThisTag, thisStyles: titleThisStyles, thisDataAttributes: titleThisDataAttributes} = externe.setupEJSComponent({...accordion_component.title, componentName: 'accordion__title'})
-            %>
-                <<%=titleThisTag%> <%-titleThisDataAttributes%> class='<%=titleThisClass%>' <%-titleThisID%> <%-titleThisStyles%>>
-                    <%= accordion_component.title.label%>
-                </<%= titleThisTag%>>
-            <% } %>
-
-            <% if (typeof accordion_component.icon !== 'undefined' && accordion_component.icon) { %>
-                <% if (typeof accordion_component.icon === 'object' && accordion_component.icon.div) { %>
-                    <div class="accordion__figure" data-fsc-accordion-touch>
-                        <svg class="accordion__icon" data-fsc-accordion-icon>
-                            <use href="public/media/icons/sprite.svg#<%= accordion_component.icon.label %>"></use>                                           
-                        </svg>
-                    </div>
-                <% } else { %>
-                    <div class="accordion__figure" data-fsc-accordion-touch>
-                        <svg class="accordion__icon" data-fsc-accordion-icon>
-                            <use href="public/media/icons/sprite.svg#<%= accordion_component.icon %>"></use>                                           
-                        </svg>
-                    </div>
-                <% } %>
-            <% } %>
-    </div>
-
-    <% if (typeof accordion_component.body === 'string') { %>
-       <div data-fsc-accordion-body class="accordion__body">
-            <p><%= accordion_component.body%></p>
-       </div>
-    <% } else if (typeof accordion_component.body === 'object' && !Array.isArray(accordion_component.body) && typeof accordion_component.body.label !== 'undefined') {
-        var {thisClass: bodyThisClass, thisID: bodyThisID, thisTag: bodyThisTag, thisStyles: bodyThisStyles, thisDataAttributes: bodyThisDataAttributes} = externe.setupEJSComponent({...accordion_component.body, componentName: 'accordion__body-wrapper'})
+<<%=thisTag%> data-fsc-accordion <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
+    <% if(accordion_component.summary !== 'undefined' && accordion_component.summary) { 
+        isWrapperNeeded = accordion_component.summary.this.wrapperNeeded ?? true
     %>
-        <div data-fsc-accordion-body class="accordion__body">
-            <<%=bodyThisTag%> <%-bodyThisDataAttributes%> class='<%=bodyThisClass%>' <%-bodyThisID%> <%-bodyThisStyles%>>
-                <%= accordion_component.body.label%>
-            </<%=bodyThisTag%>>
-        </div>
-    <% } else if (typeof accordion_component.body === 'object' && Array.isArray(accordion_component.body)) { %>
-        <ul data-fsc-accordion-body class="accordion__body"> 
-            <% for (const item of accordion_component.body) { 
-                var {thisClass: bodyThisClass, thisID: bodyThisID, thisTag: bodyThisTag, thisStyles: bodyThisStyles, thisDataAttributes: bodyThisDataAttributes} = externe.setupEJSComponent({...item, componentName: 'accordion__body-wrapper'})
+        <% if(isWrapperNeeded) { %>
+            <<%=summaryThisTag%> data-fsc-accordion-summary <%-summaryThisDataAttributes%> class='<%=summaryThisClass%>' <%-summaryThisID%> <%-summaryThisStyles%>>
+        <% } %>
+
+            <% for (var content of accordion_component.summary.content) { 
+                var regEx = /(<svg\s+)(class=)/
+                
+                content = content.replace(regEx, `$1data-fsc-accordion-touch $2`)
             %>
-                <% if (bodyThisTag !== 'div' && bodyThisTag !== 'li') { %>
-                    <li class="accordion__item">
-                        <<%=bodyThisTag%> <%-bodyThisDataAttributes%> class='<%=bodyThisClass%>' <%-bodyThisID%> <%-bodyThisStyles%>>
-                            <%= item.label %>
-                        </<%=bodyThisTag%>>
-                    </li>
-                <% } else { bodyThisTag = 'li', bodyThisClass = 'accordion__item' %>
-                    <<%=bodyThisTag%> <%-bodyThisDataAttributes%> class='<%=bodyThisClass%>' <%-bodyThisID%> <%-bodyThisStyles%>>
-                        <%= item.label %>
-                    </<%=bodyThisTag%>>
-                <% } %>
+                <%-content%>
             <% } %>
-        </ul>
+
+        <% if(isWrapperNeeded) { %>
+            </<%=summaryThisTag%>>
+        <% } %>
     <% } %>
-   
+    <% if(accordion_component.body !== 'undefined' && accordion_component.body) { 
+        isWrapperNeeded = accordion_component.body.this.wrapperNeeded ?? true    
+    %>
+        <% if(isWrapperNeeded) { %>
+            <<%=bodyThisTag%> data-fsc-accordion-body <%-bodyThisDataAttributes%> class='<%=bodyThisClass%>' <%-bodyThisID%> <%-bodyThisStyles%>>
+        <% } %>
+
+            <% for (var content of accordion_component.body.content) { %>
+                <%-content%>
+            <% } %>
+
+        <% if(isWrapperNeeded) { %>
+            </<%=bodyThisTag%>>
+        <% } %>
+     <% } %>
 </<%=thisTag%>>

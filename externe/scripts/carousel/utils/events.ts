@@ -1,5 +1,5 @@
-import { animate, calculateCarouselProps, renderCounter, step, toggleDotActive } from "./utils"
-import { CarouselElementInterface } from "../types/plugin.interface";
+import { animate, calculateCarouselProps, renderCounter, step, toggleDotActive } from "./utils.js"
+import { CarouselElementInterface } from "../types/plugin.interface.js";
 
 const carouselElements: CarouselElementInterface[] = []
 

@@ -4,10 +4,9 @@
  *
  * Поддерживаемые атрибуты `data-fsc-empty-*`:
  * 
- */
+*/
 
-// @ts-ignore
-// export { emptyAutoload, emptyOnSubmit, emptyOnResize } from './utils/events'
+// export { emptyAutoload, emptyOnSubmit, emptyOnResize } from './utils/events.js'
 
 // const intersectionOptions: IntersectionObserverInit = {rootMargin: '50px 0px 50px 0px',}
 
