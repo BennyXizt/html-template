@@ -275,8 +275,9 @@ export function updateMainEJSFile({ejsDir, componentName, rootPage, fs}: {
     fs: typeof import('fs')
 }) {
     const
-        data:string = fs.readFileSync(`${ejsDir}/views/${rootPage}`, 'utf-8'),
-        ejsFile = `${ejsDir}/views/${rootPage}`,
+        blockType = rootPage === 'index.ejs' ? 'views' : 'pages',
+        ejsFile = `${ejsDir}/${blockType}/${rootPage}`,
+        data:string = fs.readFileSync(ejsFile, 'utf-8'),
         lastIndex = data.lastIndexOf('</main>'),
         fileContent = 
             data.slice(0, lastIndex).trim() + '\n\t' +
