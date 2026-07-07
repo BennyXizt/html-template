@@ -46,7 +46,9 @@ export function timerStart() {
         seconds++;
 
         if (seconds % 1800 === 0) {
+            console.log("\n\n--\tВажное объявление\t--\n\n")
             console.log("⏰ 30 минут прошло — сделай паузу")
+            console.log("\n\n--\tВажное объявление\t--\n\n")
         }
     }, 1000)
 

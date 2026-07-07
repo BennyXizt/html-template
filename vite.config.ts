@@ -20,26 +20,26 @@ export default defineConfig({
 
         // ассеты (шрифты, картинки)
         assetFileNames: ({ name }) => {
-          if (!name) return 'assets/[name][extname]';
-          if (/\.(woff2?|ttf|otf|eot)$/.test(name)) {
-            return 'assets/fonts/[name][extname]';
+          if (!name) return 'assets/[name]-[hash][extname]'
+
+          if (/\.(woff2?|ttf|otf|eot)$/i.test(name)) {
+            return 'assets/fonts/[name][extname]'
           }
           if (/\.(png|jpe?g|gif|svg|webp|mp4|mov|webm)$/i.test(name)) {
-            return 'assets/media/[name][extname]';
+            return 'assets/media/[name][extname]'
           }
-          if (/\.(css)$/.test(name)) {
-            return 'assets/styles/[name][extname]';
+          if (/\.(css)$/i.test(name)) {
+            return 'assets/styles/[name][extname]'
           }
-          if (/\.html$/i.test(name)) {
-            return 'assets/pages/[name][extname]';
-          }
-          return 'assets/[name][extname]';
+
+          return 'assets/[name][extname]'
         },
       },
       external: [
         /externe\/plugins\/.*/,
         /externe\/scripts\/phpmailer\/.*/,
-        /externe\/scripts\/dummyaside\/.*/
+        /externe\/scripts\/dummyaside\/.*/,
+        /externe\/scripts\/!empty\/.*/,
       ]
     }
   },
@@ -103,8 +103,8 @@ export default defineConfig({
     }
   },
   plugins: [
-     qrcode(),
-     ViteEjsPlugin({
+    qrcode(),
+    ViteEjsPlugin({
       head_component: {
         lang: 'en',
         title: 'My App',

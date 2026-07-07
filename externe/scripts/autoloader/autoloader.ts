@@ -1,7 +1,8 @@
+import type { Autoloader } from "./types/plugin.type.js"
 
-export async function autoloader(loadedModules: Map<string, any>) {
-    for(const el of document.querySelectorAll('*')) {
-        for (const attr of el.attributes) {
+export async function autoloader({ loadedModules }: Autoloader) {
+    for(const HTMLElement of document.querySelectorAll<HTMLElement>('*')) {
+        for (const attr of HTMLElement.attributes) {
             if (
                 attr.name.startsWith('data-fsc-') &&
                 !attr.name.replace(/data-fsc-[^-]+/, '').includes('-')  
@@ -20,4 +21,6 @@ export async function autoloader(loadedModules: Map<string, any>) {
             }
         }
     }    
+
+   
 }

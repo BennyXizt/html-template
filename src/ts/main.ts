@@ -14,14 +14,16 @@ import { IntersectionObserverElements } from './types/plugin.interface'
 // })
 
 document.fonts.ready.then(async() => {
-    const loadedModules = new Map<string, any>()
-    await autoloader(loadedModules)
+    const 
+        loadedModules = new Map<string, any>()
+
+    await autoloader({loadedModules})
 
     const
         autoloadedModules = Array.from(loadedModules)
             .map(([k, e]) => e?.[`${k}Autoload`])
             .filter(e => typeof e === 'function')
-            .forEach(e => e())
+            .forEach(func => func())
 
     const
         onClickedModules: ClickedModule[] = Array.from(loadedModules)
@@ -84,6 +86,21 @@ document.fonts.ready.then(async() => {
                     .filter(([key]) => key.endsWith('UnhoverArray'))
                     .map(([, value]) => value)
             )
+    
+    // Click Event
+    window.addEventListener('pointerdown', function(event) {
+        const target = event.target
+
+        if (!(target instanceof Element)) return
+
+        onClickedModules.forEach(([func, query]) => {
+            const 
+                DOMElement: HTMLElement | null = (target as HTMLElement).closest(query)
+                
+            if(DOMElement)
+                func(DOMElement, event)
+        })
+    })
 
     // Intersection Event
     for(const element of Object.values(onIntersectionModules)) {
@@ -113,28 +130,18 @@ document.fonts.ready.then(async() => {
 
         document.querySelectorAll(element.elementSelector).forEach(el => observer.observe(el))
     }
-    
-    // Click Event
-    window.addEventListener('pointerdown', function(event) {
-        const target = event.target
 
-        if (!(target instanceof Element)) return
-
-        onClickedModules.forEach(e => {
-            const 
-                DOMElement: HTMLElement | null = (target as HTMLElement).closest(e[1])
-                
-            if(DOMElement)
-                e[0](DOMElement, event)
-        })
+    // Submit Event
+    window.addEventListener('submit', function(event) {
+        onSubmitModules.forEach(e => e[1](event))
     })
-    
+
+    // Resize Event
     let 
         resizeOptimization: number | undefined = undefined,
         lastResizeWidth = window.innerWidth,
         lastResizeHeight = window.innerHeight
 
-    // Resize Event
     window.addEventListener('resize', function(event) {
         if(resizeOptimization)
             cancelAnimationFrame(resizeOptimization)
@@ -163,40 +170,49 @@ document.fonts.ready.then(async() => {
             lastResizeHeight = resizeHeight
         })
     })
-
-    // Submit Event
-    window.addEventListener('submit', function(event) {
-        onSubmitModules.forEach(e => e[1](event))
-    })
     
     // KeuUp Event
     onKeyUpModules.forEach(e => {
-        if(!Array.isArray(e)) return 
+        if(!Array.isArray(e)) return
+        
+        const [func, query] = e
 
-        const HTMLElements = document.querySelectorAll<HTMLElement>(`${e[1]}`)
+        const HTMLElements = document.querySelectorAll<HTMLElement>(query)
 
         HTMLElements.forEach(el => el.addEventListener('keyup', function(event: KeyboardEvent) {
-            e[0](event)
+            func(event)
         }))
     })
 
     // Hover Start Event
     onHoverModules.forEach(e => {
-        const HTMLElements = document.querySelectorAll<HTMLElement>(`${e[1]}`)
+        if(!Array.isArray(e)) return
+
+        const [func, query] = e
+
+        const HTMLElements = document.querySelectorAll<HTMLElement>(query)
 
         HTMLElements.forEach(el => el.addEventListener('mouseenter', function(this, event) {
-            e[0](this, event)
+            func(this, event)
         }))
     })
 
-    // Hover End Event
+    // Unhover Event
     onUnhoverModules.forEach(e => {
-        const HTMLElements = document.querySelectorAll<HTMLElement>(`${e[1]}`)
+        if(!Array.isArray(e)) return
+
+        const [func, query] = e
+
+        const HTMLElements = document.querySelectorAll<HTMLElement>(query)
 
         HTMLElements.forEach(el => el.addEventListener('mouseleave', function(this, event) {
-            e[0](this, event)
+            func(this, event)
         }))
     })
 
-
+    if (process.env.NODE_ENV === 'development') {
+        console.log(`Mode: ${process.env.NODE_ENV}`)
+        
+        console.log(`Активные модули: ${[...loadedModules.keys()]}`)
+    }
 })

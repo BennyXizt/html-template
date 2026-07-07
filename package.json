@@ -4,9 +4,10 @@
   "version": "2.1.3",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm run server\"",
+    "dev": "tsx ./externe/plugins/trackTime/trackTime.ts",
+    "dev:notrack": "concurrently \"vite\" \"npm run server\"",
     "server": "php -S localhost:8000 -t ./externe/php",
-    "online": "vite --host",
+    "online": "concurrently \"vite --host\" \"npm run server\"",
     "build": "vite build",
     "preview": "npm run build && vite preview --host",
     "component": "tsx ./externe/plugins/createElements/create-new-component.ts",

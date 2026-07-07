@@ -2,7 +2,7 @@
 import { timerStart, timerStop } from "./utils/utils.js"
 import { spawn } from "child_process"
 
-const dev = spawn("npm", ["run", "dev"], {
+const dev = spawn("npm", ["run", "dev:notrack"], {
   shell: true,
   stdio: "inherit",
 })
