@@ -1,5 +1,5 @@
-import { convertVideo } from "./externe/plugins/convertMedia"
-import { ConvertVideo } from "./externe/plugins/convertMedia/types/plugin.interface"
+import { convertVideo } from "./externe/plugins/convertMedia/index.js"
+import { ConvertVideo } from "./externe/plugins/convertMedia/types/plugin.interface.js"
 
 
 type Settings = {

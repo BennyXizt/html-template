@@ -1,6 +1,6 @@
 import fs from 'fs'
 import {relative, dirname} from 'path'
-import { SVGFolderTranslation } from '../i18n'
+import { SVGFolderTranslation } from '../i18n/index.js'
 
 export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {watchedFile: string, dummyFile: string, id: string, translation: SVGFolderTranslation}) {
     try {
@@ -19,7 +19,7 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                     <link rel="stylesheet" href="../fontIcons.scss">
                     </head>
                     <body>
-                        <%- include('externe/components/DummyAside/DummyAside.ejs') %>
+                        <%- include('externe/components/content/DummyAside/DummyAside.ejs') %>
                         <h1>Dummy SVG</h1>
                         <ul class="icons">
                         <li class="icon">

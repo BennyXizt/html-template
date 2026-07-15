@@ -2,10 +2,10 @@ import type { Plugin, ViteDevServer } from 'vite'
 import { fileURLToPath } from 'url'
 import { resolve, dirname, basename, extname } from 'path'
 import fs from 'fs'
-import type { SVGConvertToFile, SVGFolderInterface} from './types/plugin.interface'
-import { SVGFolderTranslation } from './i18n'
-import { updateDummySVGPage } from './utils/utils'
-import { settings } from '../../../settings'
+import type { SVGConvertToFile, SVGFolderInterface} from './types/plugin.interface.js'
+import { SVGFolderTranslation } from './i18n/index.js'
+import { updateDummySVGPage } from './utils/utils.js'
+import { settings } from '../../../template.config.js'
 
 export function ViteWatchSVGFolderPlugin({relativePath, nameOfTheOutputFile, language, dummy, convertType}: SVGFolderInterface): Plugin  {
     return {
