@@ -11,28 +11,35 @@
       height: 30px;
    }
 
-   ul {
+   .icons {
+      margin-top: 20px;
+      padding: 10px;
       display: flex;
       flex-flow: row wrap;
       gap: 10px;
    }
 
-   li {
+   .icon {
+      flex: 1 1 400px;
       display: grid;
       align-items: center;
       justify-items: center;
-      grid-template-columns: 30px 400px;
+      grid-template-columns: 30px 1fr 1fr; 
+      grid-template-rows: 30px 1fr 1fr;
       border: 1px solid black;
       padding: 12px;
       font-weight: bold;
-   }
 
-   .icon {
       div {
-         grid-column: 1 / -1;
+         grid-column: 2 / -1;
+      }
+      svg,
+      div {
+         grid-row: 2 / -1;
       }
       span {
          text-align: center;
+         grid-column: 1 / -1;
       }
    }
 }

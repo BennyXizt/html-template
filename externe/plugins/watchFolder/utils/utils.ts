@@ -16,7 +16,6 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Dummy SVG</title>
-                    <link rel="stylesheet" href="../temporary/html/fontIcons.scss">
                     </head>
                     <body>
                         <%- include('externe/components/content/DummyAside/DummyAside.ejs') %>
@@ -34,6 +33,8 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                             </div>
                         </li>
                         </ul>
+
+                        <script type="module" src="../temporary/html/fontIcons.ts"></script>
                         <script type="module" src="/src/ts/main.ts"></script>
                     </body>
                     </html>
