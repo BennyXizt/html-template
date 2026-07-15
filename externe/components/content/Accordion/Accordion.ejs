@@ -25,7 +25,7 @@
 //
 // Пример вызова в шаблоне (EJS):
 //
-// <\%- include('externe/components/Accordion/Accordion.ejs', {
+// <\%- include('externe/components/content/Accordion/Accordion.ejs', {
 //     accordion_component: {
 // 		this: {
 // 			parent: 'parentClass',
@@ -72,6 +72,8 @@
     
     if (typeof accordion_component.behaviour !== 'undefined' && accordion_component.behaviour) {
         thisDataAttributes += ` data-fsc-accordion-behaviour=${accordion_component.behaviour}`
+    } else {
+        thisDataAttributes += ` data-fsc-accordion-behaviour=default`
     }
 
     var mediaVisibilityTypes = ['min-width', 'max-width', 'min-height', 'max-height']

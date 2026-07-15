@@ -39,8 +39,12 @@
             <h1>Accordion</h1>
             <%- include('externe/components/content/Accordion/Accordion.ejs', {
                 accordion_component: {
-                    title: 'Accordion Summary',
-                    body: 'Accordion Body'
+                    summary: {
+                        content: 'Accordion Summary'
+                    },
+                    body: {
+                        content: 'Accordion Body'
+                    }
                 }
             })%>
         </article>

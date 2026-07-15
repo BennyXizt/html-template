@@ -18,20 +18,22 @@
             }
         }
 
-        &__summary {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-        }
+        .accordion {
+            &__summary {
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+            }
 
-        &__body {
-            transform: scaleY(0);
-            transform-origin: top;
-            max-height: 0;
-            opacity: 0;
-            visibility: hidden;
+            &__body {
+                transform: scaleY(0);
+                transform-origin: top;
+                max-height: 0;
+                opacity: 0;
+                visibility: hidden;
 
-            @include transition(max-height, transform, opacity, visibility);
+                @include transition(max-height, transform, opacity, visibility);
+            }
         }
 
         @media (hover: hover) and (pointer: fine) {
