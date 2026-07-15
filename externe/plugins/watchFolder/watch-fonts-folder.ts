@@ -2,8 +2,8 @@ import type { Plugin, ViteDevServer } from 'vite'
 import { fileURLToPath } from 'url'
 import { resolve, dirname, basename } from 'path'
 import fs from 'fs'
-import type { FontsConvertToFile, FontsFolderInterface, FontsTypes} from './types/plugin.interface'
-import { FontsFolderTranslation } from './i18n'
+import type { FontsConvertToFile, FontsFolderInterface, FontsTypes} from './types/plugin.interface.js'
+import { FontsFolderTranslation } from './i18n/index.js'
 
 export function ViteWatchFontsFolderPlugin({relativePath, outputDestination, language}: FontsFolderInterface): Plugin {
     return {
@@ -46,6 +46,10 @@ export function ViteWatchFontsFolderPlugin({relativePath, outputDestination, lan
                     style: 'normal'
                 },
                 'normalitalic': {
+                    weight: 400,
+                    style: 'italic'
+                },
+                'italic': {
                     weight: 400,
                     style: 'italic'
                 },

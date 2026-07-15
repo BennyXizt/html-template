@@ -1,5 +1,5 @@
-import { SVGFolderTranslation, FontsFolderTranslation } from '../i18n';
-import type { Language, Video } from './plugin.type'
+import { SVGFolderTranslation, FontsFolderTranslation } from '../i18n/index.js';
+import type { Language, Video } from './plugin.type.js'
 
 export interface FFmpegProgressInterface {
   frames?: number;
@@ -84,6 +84,10 @@ export interface FontsTypes {
         style: string;
     }
     normalitalic: {
+        weight: number;
+        style: string;
+    }
+    italic: {
         weight: number;
         style: string;
     }

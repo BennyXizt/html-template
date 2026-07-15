@@ -1,5 +1,5 @@
-import { Language } from "../types/plugin.type"
-import { Translation } from "./Translation"
+import { Language } from "../types/plugin.type.js"
+import { Translation } from "./Translation.js"
 
 export class EJSFolderTranslation extends Translation {
     constructor({pluginName, language}: {pluginName: string, language?: Language}) {
