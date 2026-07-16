@@ -45,6 +45,12 @@ body {
 }
 
 .root {
+  $max_width: map.get($BASE, page_max_width);
+
+  @if $max_width != null {
+    @include rem(max-width, $max_width);
+  }
+
   min-height: 100%;
   overflow: clip;
   position: relative;
@@ -54,7 +60,7 @@ body {
   & > main {
     flex: 1 1 auto;
   }
-  // Фикс слайдеров
+  // Фикс слайдеров из-за flex поведения
   > * {
     min-width: 0;
   }
@@ -65,12 +71,12 @@ body {
 
     width: 100%;
     margin: 0 auto;
-    @include rem(min-width, map.get($BASE, min_width));
+    @include rem(min-width, map.get($BASE, container_min_width));
 
     @if map.get($SETTINGS, responsive_type) == 1 {
       @include rem((
         padding: 0 math.div($padding_x, 2),
-        max-width: map.get($BASE, max_width)
+        max-width: map.get($BASE, container_max_width)
       ));
     }
     @else if map.get($SETTINGS, responsive_type) == 2 {
