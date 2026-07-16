@@ -56,7 +56,6 @@ function scrollClick(target: HTMLElement, event: Event) {
         event.preventDefault()
     }
     
-    
     // Определяем поведение прокрутки
     const behavior: ScrollBehavior =
         behaviourAttr === 'auto' ||
