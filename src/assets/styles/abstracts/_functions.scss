@@ -96,6 +96,10 @@
     }
 
     @if $min > $max {
+        @if not map.get($SETTINGS, fluid) {
+            @return $min;
+        }
+
         $temp: $min;
         $min: min($min, $max);
         $max: max($temp, $max);
@@ -108,6 +112,10 @@
         @return clamp($min, $preffered, $max);
     }
     @else {
+        @if not map.get($SETTINGS, fluid) {
+            @return $max;
+        }
+
         $temp: $min;
         $min: max($min, $max);
         $max: min($temp, $max);
