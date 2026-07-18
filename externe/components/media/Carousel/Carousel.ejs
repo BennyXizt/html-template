@@ -13,7 +13,7 @@
 //			dataAttribute: ['customDataAttributes'], 
 //		},
 //		list: [
-//			image_component: {},
+//			{image_component: {}, content: {}}
 //		]
 //	}
 //}) %>
@@ -34,12 +34,16 @@
 
 <<%=thisTag%> data-fsc-carousel <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
 	<ul class="<%=blockClass%>__list" data-fsc-carousel-list>
-		<% for (var image_component of carousel_component.list) { %>
+		<% for (var carousel of carousel_component.list) { %>
 			<li class="<%=blockClass%>__element" data-fsc-carousel-item>
 				
 				<%- include('externe/components/media/Image/Image.ejs', {
-					image_component: image_component
+					image_component: carousel.image_component
 				}) %>
+
+				<% if(carousel.content) { content = slider.content %>
+
+				<% } %>
 			
 			</li>
 		<% } %>
@@ -49,13 +53,22 @@
 		<button data-fsc-carousel-button-left>Left</button>
 		<button data-fsc-carousel-button-right>Right</button>
 	</div>
-	<ul class="<%=blockClass%>__dots" data-fsc-carousel-dots>
-		<% for (var i = 0; i < carousel_component.list.length; i++) { %>
-			<li class="<%=blockClass%>__dot" data-fsc-carousel-dot>
-				<%= i + 1 %>
-			</li>
-		<% } %>
-	</ul>
+
+	<% subBlockClass = 'dots-slider' %> 
+	<div class="<%=blockClass%>__dots <%=subBlockClass%>">
+		<ul class="<%=subBlockClass%>__list" data-fsc-carousel-dots>
+			<% for (var i = 0; i < carousel_component.list.length; i++) { %>
+				<li class="<%=subBlockClass%>__element" data-fsc-carousel-dot>
+					<button class="<%=subBlockClass%>__button">
+						<span class="<%=subBlockClass%>__dot">
+							<%=i+1%>
+						</span>
+					</button>
+				</li>
+			<% } %>
+		</ul>
+	</div>
+	
 	<div class="<%=blockClass%>__counter">
 		<span data-fsc-carousel-timer></span>
 		<span data-fsc-carousel-counter></span>
