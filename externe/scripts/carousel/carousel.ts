@@ -1,9 +1,11 @@
 /**
  * carousel.ts
- * Компонент бесшовной карусели/марки с горизонтальным скроллом.
+ * Компонент бесшовной карусели/marquee с горизонтальным скроллом.
  *
  * Поддерживаемые атрибуты `data-fsc-carousel-*`:
- * - data-fsc-carousel           — инициализирует элемент как карусель
+ * - data-fsc-carousel              — инициализирует элемент как карусель
+ * - data-fsc-carousel-direction    — направление карусели
+ * - data-fsc-carousel-interval     — тик смены слайдера
  */
 
 import { carouselDotClick, carouselLeftClick, carouselObserver, carouselRightClick } from "./utils/events.js";

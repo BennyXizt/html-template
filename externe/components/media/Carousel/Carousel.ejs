@@ -41,8 +41,10 @@
 					image_component: carousel.image_component
 				}) %>
 
-				<% if(carousel.content) { content = slider.content %>
-
+				<% if(carousel.content) { content = carousel.content %>
+					<div class="<%=blockClass%>__content">
+						
+					</div>
 				<% } %>
 			
 			</li>

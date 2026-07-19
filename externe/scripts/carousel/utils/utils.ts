@@ -1,4 +1,4 @@
-import { CarouselElementInterface } from "../types/plugin.interface";
+import { CarouselElementInterface } from "../types/plugin.interface.js";
 
 export function animate(carousel: CarouselElementInterface) {
     if (!carousel.visible) {
@@ -48,8 +48,8 @@ export function step(carousel: CarouselElementInterface) {
             carousel.index = carousel.length - 1
         }
     } else if(carousel.direction == 'step') {
-        carousel.position = -carousel.offset * carousel.step
-        carousel.index = carousel.step
+        carousel.position = -carousel.offset * carousel.step!
+        carousel.index = carousel.step!
         
         carousel.step = undefined
     }
@@ -63,11 +63,16 @@ export function step(carousel: CarouselElementInterface) {
     
 }
 
-export function toggleDotActive(carousel) {
+export function toggleDotActive(carousel: CarouselElementInterface) {
     const 
         slides = carousel.carouselList.children,
         slide = Array.from(slides)[carousel.index],
-        dots = carousel.carousel.querySelector('[data-fsc-carousel-dots]').children,
+        dotsHTML = carousel.carousel.querySelector('[data-fsc-carousel-dots]')
+
+    if(!dotsHTML) return
+        
+    const
+        dots = dotsHTML.children,
         dot = Array.from(dots)[carousel.index]
 
     for (var item of [...slides, ...dots]) {
@@ -78,7 +83,7 @@ export function toggleDotActive(carousel) {
     dot.classList.toggle('active')
 }
 
-export function renderCounter(carousel) {
+export function renderCounter(carousel: CarouselElementInterface) {
     const
         element = carousel.carousel.querySelector('[data-fsc-carousel-counter]')
    
@@ -90,23 +95,23 @@ export function renderCounter(carousel) {
     element.innerHTML = `${carousel.index + 1} / ${slides.length}`
 }
 
-function renderTimer(carousel) {
+function renderTimer(carousel: CarouselElementInterface) {
     const
         element = carousel.carousel.querySelector('[data-fsc-carousel-timer]')
    
     if(!element) return
 
-    element.innerHTML = carousel.timerSeconds
+    element.innerHTML = carousel.timerSeconds!.toString()
 }
 
-export function calculateCarouselProps(carouselList) {
+export function calculateCarouselProps(carouselList: HTMLElement) {
     const
         childrens = carouselList.querySelectorAll('[data-fsc-carousel-item]')
 
     const
-        length = childrens.length,
-        offset = childrens[0].getBoundingClientRect().width,
-        dimention = offset * length
+        length: number = childrens.length,
+        offset: number = childrens[0].getBoundingClientRect().width,
+        dimention: number = offset * length
 
     return { length, offset, dimention }
 }

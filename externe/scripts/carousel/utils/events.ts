@@ -47,8 +47,9 @@ export function carouselLeftClick(element: HTMLElement) {
 
     if(!root) return
 
-    const 
-        carousel = carouselElements.find(e => e.carousel === root)
+    const carousel = carouselElements.find(e => e.carousel === root)
+
+    if(!carousel) return
     
     carousel.timerNext = Date.now() + carousel.timerInterval
     carousel.direction = 'right'
@@ -61,6 +62,8 @@ export function carouselRightClick(element: HTMLElement) {
     if(!root) return
 
     const carousel = carouselElements.find(e => e.carousel === root)
+
+    if(!carousel) return
     
     carousel.timerNext = Date.now() + carousel.timerInterval
     carousel.direction = 'left'
@@ -74,7 +77,9 @@ export function carouselDotClick(element: HTMLElement) {
 
     const
         carousel = carouselElements.find(e => e.carousel === root),
-        offset = Array.from(element.parentNode.children).indexOf(element)
+        offset = Array.from(element.parentNode!.children).indexOf(element)
+
+    if(!carousel) return
     
     carousel.timerNext = Date.now() + carousel.timerInterval
     carousel.direction = 'step'
@@ -82,7 +87,7 @@ export function carouselDotClick(element: HTMLElement) {
     step(carousel)
 }
 
-export function carouselOnResize({ isHeightResized }) {
+export function carouselOnResize({ isHeightResized }: { isHeightResized: boolean }) {
     if(isHeightResized) return
 
     for (const carousel of carouselElements) {
