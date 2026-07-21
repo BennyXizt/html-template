@@ -306,7 +306,7 @@
         }
     }
     &--skeleton {
-        $mainColor: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
+        $mainColor: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background_default));
         $backgroundColor: if(map.get($SETTINGS, theme), getThemeTag(primary-text-color), map.get($COLORS, default));
 
         width: 360px;
@@ -342,7 +342,7 @@
         }
     }
     &--skeleton-2 {
-        $mainColor: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
+        $mainColor: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background_default));
         $backgroundColor: if(map.get($SETTINGS, theme), getThemeTag(primary-text-color), map.get($COLORS, default));
 
         width: 360px;
@@ -365,7 +365,7 @@
         }
     }
     &--skeleton-3 {
-        $mainColor: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
+        $mainColor: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background_default));
         $accentColor: gray;
         $backgroundColor: if(map.get($SETTINGS, theme), getThemeTag(primary-text-color), map.get($COLORS, default));
 

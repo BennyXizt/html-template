@@ -36,8 +36,11 @@ $BASE: (
 );
 
 $COLORS: (
+    // text
     default: map.get($BASE, main_color),
-    background: map.get($BASE, background_color),
+
+    // background
+    background_default: map.get($BASE, background_color),
 );
 
 $ANIMATIONSPEEDS: (
@@ -51,7 +54,7 @@ $THEMEPREFIX: '--';
 $THEME: (
     default: (
         primary-text-color: map.get($COLORS, default),
-        primary-background-color: map.get($COLORS, background),
+        primary-background-color: map.get($COLORS, background_default),
     ),
     dark: (
         primary-text-color: white,
