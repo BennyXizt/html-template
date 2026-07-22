@@ -25,6 +25,16 @@
                 object-position: center;
             }
         }
+
+        &__control {
+            cursor: pointer;
+        }
+    }
+
+    .dots-slider {
+        &__button {
+            cursor: pointer;
+        }
     }
 
     // .dots-slider {
@@ -41,7 +51,7 @@
     //     &__dot {
     //         display: block;
     //         border-radius: 100%;
-    //         background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background_default));
+    //         background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
     //         opacity: .5;
 
     //         @include transition(background-color, opacity);
@@ -59,7 +69,7 @@
     //             .dots-slider {
     //                 &__dot {
     //                     opacity: 1;
-    //                     background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background_default));
+    //                     background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-background-color), map.get($COLORS, background));
     //                 }
     //             }
     //         }

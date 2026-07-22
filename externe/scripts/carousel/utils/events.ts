@@ -87,13 +87,13 @@ export function carouselDotClick(element: HTMLElement) {
     step(carousel)
 }
 
-export function carouselOnResize({ isHeightResized }: { isHeightResized: boolean }) {
-    if(isHeightResized) return
+export function carouselOnResize(observer: ResizeObserverEntry) {
+    const carousel = carouselElements.find(e => e.carousel === observer.target)
+    
+    if(!carousel) return
 
-    for (const carousel of carouselElements) {
-        const { dimention, offset } = calculateCarouselProps(carousel.carouselList)
+    const { dimention, offset } = calculateCarouselProps(carousel.carouselList)
 
-        carousel.dimention = dimention
-        carousel.offset = offset
-    }
+    carousel.dimention = dimention
+    carousel.offset = offset
 }

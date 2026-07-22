@@ -6,7 +6,7 @@
  * 
 */
 
-// export { emptyAutoload, emptyOnSubmit, emptyOnResize } from './utils/events.js'
+// export { emptyAutoload, emptyOnSubmit } from './utils/events.js'
 
 // const intersectionOptions: IntersectionObserverInit = {rootMargin: '50px 0px 50px 0px',}
 
@@ -15,3 +15,4 @@
 // export const emptyClickArray = [emptyItemClick, '[data-fsc-empty-item]']
 // export const emptyHoverArray = [emptyHovered, '[data-fsc-empty]']
 // export const emptyUnhoverArray = [emptyUnhovered, '[data-fsc-empty]']
+// export const emptyOnResizeArray = [emptyOnResize, '[data-fsc-empty]']
