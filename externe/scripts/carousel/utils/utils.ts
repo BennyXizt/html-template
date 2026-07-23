@@ -66,7 +66,7 @@ export function step(carousel: CarouselElementInterface) {
 export function toggleDotActive(carousel: CarouselElementInterface) {
     const 
         slides = carousel.carouselList.children,
-        slide = Array.from(slides)[carousel.index],
+        slide = Array.from(slides)[carousel.index] as HTMLElement,
         dotsHTML = carousel.carousel.querySelector('[data-fsc-carousel-dots]')
 
     if(!dotsHTML) return
@@ -81,12 +81,14 @@ export function toggleDotActive(carousel: CarouselElementInterface) {
 
     slide.classList.toggle('active')
     dot.classList.toggle('active')
+
+    carousel.carouselList.style.height = `${slide.offsetHeight}px`
 }
 
 export function toggleButtonDisabled(carousel: CarouselElementInterface) {
     if(!carousel.isDisabledAllowed) return
 
-    if(carousel.length === 1 && carousel.index === 0) {
+    if(carousel.index === 0 && carousel.length === 1) {
         carousel.buttonLeft?.setAttribute('disabled', '')
         carousel.buttonRight?.setAttribute('disabled', '')
     }

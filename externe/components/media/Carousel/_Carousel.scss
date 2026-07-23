@@ -26,18 +26,22 @@
             }
         }
 
+       
+    }
+
+    .controls-carousel {
         &__control {
             cursor: pointer;
         }
     }
 
-    .dots-slider {
+    .dots-carousel {
         &__button {
             cursor: pointer;
         }
     }
 
-    // .dots-slider {
+    // .dots-carousel {
     //     &__list {
     //         display: flex;
     //         flex-flow: row nowrap;
