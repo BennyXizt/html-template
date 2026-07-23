@@ -86,8 +86,11 @@ export function toggleDotActive(carousel: CarouselElementInterface) {
 export function toggleButtonDisabled(carousel: CarouselElementInterface) {
     if(!carousel.isDisabledAllowed) return
 
-    
-    if(carousel.index === 0 && carousel.buttonLeft) 
+    if(carousel.length === 1 && carousel.index === 0) {
+        carousel.buttonLeft?.setAttribute('disabled', '')
+        carousel.buttonRight?.setAttribute('disabled', '')
+    }
+    else if(carousel.index === 0 && carousel.buttonLeft) 
         carousel.buttonLeft.setAttribute('disabled', '')
     else if(carousel.index === carousel.length - 1 && carousel.buttonRight)
         carousel.buttonRight.setAttribute('disabled', '')

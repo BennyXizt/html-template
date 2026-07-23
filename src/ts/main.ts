@@ -2,10 +2,9 @@
 import '@/assets/styles/main.scss'
 // @ts-ignore
 import { autoloader } from '~/scripts/autoloader/autoloader'
-// @ts-ignore
-import { ClickedModule, ResizedModule } from './types/plugin.type'
-// @ts-ignore
-import { IntersectionObserverElements } from './types/plugin.interface'
+
+import type { ClickedModule, ResizedModule } from './types/plugin.type.js'
+import { IntersectionObserverElements } from './types/plugin.interface.js'
 
 // window.addEventListener('pointerdown', function(event) {
 //     const target = event.target

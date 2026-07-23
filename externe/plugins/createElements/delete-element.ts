@@ -2,7 +2,6 @@ import readline from 'node:readline'
 import fs from 'fs'
 import { resolve, parse } from 'path'
 import { readdir } from 'fs/promises'
-// @ts-ignore
 import { deleteFile, deleteUpdatedRecordFromHeaderEJSFile, deleteUpdatedRecordFromMainScss, deleteUpdatedRecordFromTestEJSFile } from './utils/utils.js'
 
 type EJSTypes = keyof typeof types

@@ -1,9 +1,7 @@
-// @ts-ignore
-import { SearchType } from '../types/plugin.enum'
-// @ts-ignore
-import type { FilterList, HTMLCombobox } from '../types/plugin.interface'
-// @ts-ignore
-import { actionFilterList } from './utils'
+
+import { SearchType } from '../types/plugin.enum.js'
+import type { FilterList, HTMLCombobox } from '../types/plugin.interface.js'
+import { actionFilterList } from './utils.js'
 import { actionCloseComboBoxOnClick } from './utils.js'
 
 const 
