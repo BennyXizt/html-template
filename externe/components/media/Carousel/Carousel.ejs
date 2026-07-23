@@ -40,22 +40,7 @@
 
 					<% if(carousel.content) { content = carousel.content %>
 						<div class="<%=blockClass%>__container container">
-							<h1 class="<%=blockClass%>__title">
-								<%= content.title%>
-							</h1>
-
-							<div class="<%=blockClass%>__body">
-								<div class="<%=blockClass%>__text">
-									<% for (var text of content.text) { %>
-										<p><%=text%></p>
-									<% } %>
-								</div>
-
-								<%- include('src/ejs/components/button.ejs', {
-									button_component: content.button_component
-								}) %>
-							</div>
-
+							
 						</div>
 					<% } %>
 					
@@ -63,8 +48,6 @@
 						image_component: carousel.image_component
 					}) %>
 
-					
-				
 				</li>
 			<% } %>
 		</ul>
