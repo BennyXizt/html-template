@@ -3,10 +3,10 @@
  * Компонент бесшовной карусели/marquee с горизонтальным скроллом.
  *
  * Поддерживаемые атрибуты `data-fsc-carousel-*`:
- * - data-fsc-carousel              — инициализирует элемент как карусель
- * - data-fsc-carousel-direction    — направление карусели
- * - data-fsc-carousel-interval     — тик смены слайдера
- * - data-fsc-carousel-allow-disabled     — тик смены слайдера
+ * - data-fsc-carousel                    — инициализирует элемент как карусель
+ * - data-fsc-carousel-direction          — направление карусели
+ * - data-fsc-carousel-interval           — тик смены слайдера
+ * - data-fsc-carousel-allow-disabled     — выключить кнопку, если дальше нет доступного слайдера (default: перейти на первый слайд)
  */
 
 import { carouselDotClick, carouselLeftClick, carouselObserver, carouselRightClick, carouselOnResize } from "./utils/events.js";
