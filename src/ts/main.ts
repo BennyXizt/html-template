@@ -197,6 +197,6 @@ document.fonts.ready.then(async() => {
     if (process.env.NODE_ENV === 'development') {
         console.log(`Mode: ${process.env.NODE_ENV}`)
         
-        console.log(`Активные модули: ${[...loadedModules.keys()]}`)
+        console.log(`Активные модули: ${[...loadedModules.keys()].filter(e => e != 'dummyaside')}`)
     }
 })

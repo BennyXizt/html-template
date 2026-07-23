@@ -5,8 +5,11 @@ export interface CarouselElementInterface {
     originalDirection: string
     direction: string
     dimention: number
+    buttonLeft: HTMLElement | null
+    buttonRight: HTMLElement | null
     offset: number
     length: number
+    isDisabledAllowed: boolean
     position: number
     index: number
     timerInterval: number

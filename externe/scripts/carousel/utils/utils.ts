@@ -58,9 +58,9 @@ export function step(carousel: CarouselElementInterface) {
 
     toggleDotActive(carousel)
     renderCounter(carousel)
+    toggleButtonDisabled(carousel)
 
     carousel.carouselList.style.transform = `translate3d(${carousel.position}px, 0, 0)`
-    
 }
 
 export function toggleDotActive(carousel: CarouselElementInterface) {
@@ -81,6 +81,22 @@ export function toggleDotActive(carousel: CarouselElementInterface) {
 
     slide.classList.toggle('active')
     dot.classList.toggle('active')
+}
+
+export function toggleButtonDisabled(carousel: CarouselElementInterface) {
+    if(!carousel.isDisabledAllowed) return
+
+    
+    if(carousel.index === 0 && carousel.buttonLeft) 
+        carousel.buttonLeft.setAttribute('disabled', '')
+    else if(carousel.index === carousel.length - 1 && carousel.buttonRight)
+        carousel.buttonRight.setAttribute('disabled', '')
+    else {
+        if(carousel.buttonLeft && carousel.buttonLeft.hasAttribute('disabled'))
+            carousel.buttonLeft.removeAttribute('disabled')
+        if(carousel.buttonRight && carousel.buttonRight.hasAttribute('disabled'))
+            carousel.buttonRight.removeAttribute('disabled')
+    }
 }
 
 export function renderCounter(carousel: CarouselElementInterface) {

@@ -1,5 +1,6 @@
-import { animate, calculateCarouselProps, renderCounter, step, toggleDotActive } from "./utils.js"
+import { animate, calculateCarouselProps, renderCounter, step, toggleDotActive, toggleButtonDisabled } from "./utils.js"
 import { CarouselElementInterface } from "../types/plugin.interface.js";
+import { isDirection, type Direction } from "../types/plugin.type.js";
 
 const carouselElements: CarouselElementInterface[] = []
 
@@ -13,19 +14,31 @@ export function carouselAutoload() {
         if (!carouselList || carouselList.getAttribute('data-fsc-carousel-initialized')) continue
 
         const
-            direction = carousel.getAttribute('data-fsc-carousel-direction') ?? 'left',
-            interval = carousel.getAttribute('data-fsc-carousel-interval') ?
-                parseInt(carousel.getAttribute('data-fsc-carousel-interval')!) : 3000
+            pureDirection = carousel.getAttribute('data-fsc-carousel-direction'),
+            pureInterval = carousel.getAttribute('data-fsc-carousel-interval'),
+            pureIsDisabledAllowed = carousel.getAttribute('data-fsc-carousel-allow-disabled'),
+            buttonLeft = carousel.querySelector<HTMLElement>('[data-fsc-carousel-button-left]'),
+            buttonRight = carousel.querySelector<HTMLElement>('[data-fsc-carousel-button-right]')
+
+        const
+            formattedDirection: Direction = 
+                isDirection(pureDirection) ? pureDirection : 'left',
+            formattedInterval: number = pureInterval ? Number.parseInt(pureInterval) : 3000,
+            formattedIsDisabledAllowed = 
+                pureIsDisabledAllowed === 'true' || pureIsDisabledAllowed === ''
+                    ? true : false
+                    
 
         const { dimention, offset, length } = calculateCarouselProps(carouselList)
 
         const carouselElement = 
-            {carousel, carouselList, originalDirection: direction, direction, dimention, offset, length, position: 0, index: 0, timerInterval: interval, timerNext: undefined, timerSeconds: undefined, step: undefined, visible: false, animationID: undefined}
+            {carousel, carouselList, originalDirection: formattedDirection, direction: formattedDirection, dimention, buttonLeft, buttonRight, offset, length, isDisabledAllowed: formattedIsDisabledAllowed, position: 0, index: 0, timerInterval: formattedInterval, timerNext: undefined, timerSeconds: undefined, step: undefined, visible: false, animationID: undefined}
 
         carouselElements.push(carouselElement)
 
         renderCounter(carouselElement)
         toggleDotActive(carouselElement)
+        toggleButtonDisabled(carouselElement)  
 
         carouselList.setAttribute('data-fsc-carousel-initialized', 'true')
     }
@@ -43,6 +56,8 @@ export function carouselObserver(entry: IntersectionObserverEntry, _: Intersecti
 }
 
 export function carouselLeftClick(element: HTMLElement) {
+    if(element.hasAttribute('disabled')) return
+
     const root = element.closest('[data-fsc-carousel]')
 
     if(!root) return
@@ -57,6 +72,8 @@ export function carouselLeftClick(element: HTMLElement) {
 }
 
 export function carouselRightClick(element: HTMLElement) {
+    if(element.hasAttribute('disabled')) return
+
     const root = element.closest('[data-fsc-carousel]')
 
     if(!root) return
