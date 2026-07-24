@@ -1,21 +1,34 @@
 
 export interface CarouselElementInterface {
+    // base
     carousel: HTMLElement
     carouselList: HTMLElement
     originalDirection: string
     direction: string
     dimention: number
-    buttonLeft: HTMLElement | null
-    buttonRight: HTMLElement | null
     offset: number
     length: number
-    isDisabledAllowed: boolean
     position: number
     index: number
+    step: number | undefined
+    
+    // intersection
+    visible: boolean
+    animationID: number | undefined
+
+    // drag
+    isDragging: boolean
+    draggingStartX: number | undefined
+    draggingMoveX: number | undefined
+    draggingIsMoved: boolean
+
+    // timer
     timerInterval: number
     timerNext: number | undefined
     timerSeconds: number | undefined
-    step: number | undefined
-    visible: boolean
-    animationID: number | undefined
+
+    // disabled
+    buttonLeft: HTMLElement | null
+    buttonRight: HTMLElement | null
+    isDisabledAllowed: boolean
 }

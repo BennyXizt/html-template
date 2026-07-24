@@ -2,9 +2,10 @@
 import '@/assets/styles/main.scss'
 // @ts-ignore
 import { autoloader } from '~/scripts/autoloader/autoloader'
-
-import type { ClickedModule, ResizedModule } from './types/plugin.type.js'
-import { IntersectionObserverElements } from './types/plugin.interface.js'
+// @ts-ignore
+import { ClickedModule, ResizedModule } from './types/plugin.type'
+// @ts-ignore
+import { IntersectionObserverElements } from './types/plugin.interface'
 
 // window.addEventListener('pointerdown', function(event) {
 //     const target = event.target
@@ -88,7 +89,23 @@ document.fonts.ready.then(async() => {
                     .filter(([key]) => key.endsWith('UnhoverArray'))
                     .map(([, value]) => value)
             )
-    
+
+    const
+        onPointerMoveModules = Array.from(loadedModules)
+            .flatMap(([_, e]) =>
+                Object.entries(e)
+                    .filter(([key]) => key.endsWith('PointerMoveArray'))
+                    .map(([, value]) => value)
+            )
+
+    const
+        onPointerUpModules = Array.from(loadedModules)
+            .flatMap(([_, e]) =>
+                Object.entries(e)
+                    .filter(([key]) => key.endsWith('PointerUpArray'))
+                    .map(([, value]) => value)
+            )
+            
     // Click Event
     window.addEventListener('pointerdown', function(event) {
         const target = event.target
@@ -193,9 +210,46 @@ document.fonts.ready.then(async() => {
         }))
     })
 
-    if (process.env.NODE_ENV === 'development') {
-        console.log(`Mode: ${process.env.NODE_ENV}`)
+    // PointerMove Event
+    onPointerMoveModules.forEach(e => {
+        if(!Array.isArray(e)) return
         
-        console.log(`Активные модули: ${[...loadedModules.keys()].filter(e => e != 'dummyaside')}`)
+        const [func, query] = e
+
+        const HTMLElements = document.querySelectorAll<HTMLElement>(query)
+
+        HTMLElements.forEach(el => el.addEventListener('pointermove', function(event: PointerEvent) {
+            func(event)
+        }))
+    })
+
+    // PointerUp Event
+    onPointerUpModules.forEach(e => {
+        if(!Array.isArray(e)) return
+        
+        const [func, query] = e
+
+        const HTMLElements = document.querySelectorAll<HTMLElement>(query)
+
+        HTMLElements.forEach(el => el.addEventListener('pointerup', function(event: PointerEvent) {
+            func(event)
+        }))
+    })
+
+    if (process.env.NODE_ENV === 'development') {
+        const 
+            activeModules = [...loadedModules.keys()]
+                .filter(e => e != 'dummyaside'),
+            eventListeners = [...loadedModules.values()]
+                .flatMap(e => Object.keys(e))
+                .filter(e => !e.startsWith('dummyaside'))
+            
+        console.log('-- Статистика Сайта --');
+        
+        console.log(`Активные модули: ${activeModules}`)
+        
+        console.log(eventListeners);
+
+        console.log('-- Статистика Сайта --');
     }
 })

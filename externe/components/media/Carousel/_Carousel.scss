@@ -3,6 +3,10 @@
 [data-fsc-carousel] {
     overflow: hidden;
 
+    a, img {
+        -webkit-user-drag: none;
+    }
+    
     .carousel {
         &__list {
             display: grid;
@@ -10,8 +14,22 @@
             grid-auto-columns: 100%;
             align-items: start;
             will-change: transform;
+            touch-action: pan-y;
+            user-select: none;
 
             @include transition(transform, height);
+
+            &.dragging {
+                @include transition(height);
+            }
+
+            @media (pointer: fine) {
+                cursor: grab;
+
+                &.dragging {
+                    cursor: grabbing;
+                }
+            }
         }
 
         &__element {

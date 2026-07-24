@@ -32,7 +32,40 @@ export function carouselAutoload() {
         const { dimention, offset, length } = calculateCarouselProps(carouselList)
 
         const carouselElement = 
-            {carousel, carouselList, originalDirection: formattedDirection, direction: formattedDirection, dimention, buttonLeft, buttonRight, offset, length, isDisabledAllowed: formattedIsDisabledAllowed, position: 0, index: 0, timerInterval: formattedInterval, timerNext: undefined, timerSeconds: undefined, step: undefined, visible: false, animationID: undefined}
+            {
+                // base
+                carousel,
+                carouselList,
+                originalDirection: formattedDirection,
+                direction: formattedDirection, 
+                dimention, 
+                offset, 
+                length, 
+                position: 0, 
+                index: 0, 
+                step: undefined, 
+
+                // intersection
+                visible: false, 
+                animationID: undefined,
+
+                // drag
+                isDragging: false,
+                draggingStartX: undefined,
+                draggingMoveXPlusPointer: undefined,
+                draggingMoveX: undefined,
+                draggingIsMoved: false,
+
+                // timer
+                timerInterval: formattedInterval, 
+                timerNext: undefined, 
+                timerSeconds: undefined, 
+
+                // disabled
+                buttonLeft, 
+                buttonRight, 
+                isDisabledAllowed: formattedIsDisabledAllowed, 
+            }
 
         carouselElements.push(carouselElement)
 
@@ -113,4 +146,81 @@ export function carouselOnResize(observer: ResizeObserverEntry) {
 
     carousel.dimention = dimention
     carousel.offset = offset
+    carousel.index -= 1
+
+    step(carousel)
+}
+
+export function carouselDragEventClick(element: HTMLElement, event: PointerEvent) {
+    const root = element.closest('[data-fsc-carousel]') 
+
+    if(!root) return
+
+    const carousel = carouselElements.find(e => e.carousel === root)
+
+    if(!carousel) return
+
+    carousel.isDragging = true
+    carousel.draggingStartX = event.clientX
+}
+
+export function carouselDragEventPointerMove(event: PointerEvent) {
+    const 
+        element = event.currentTarget! as HTMLElement,
+        root = element.closest('[data-fsc-carousel]')
+
+    if(!root) return
+
+    const carousel = carouselElements.find(e => e.carousel === root)
+
+    if (!carousel || !carousel.isDragging || carousel.draggingStartX === undefined) return
+
+    carousel.draggingMoveX = event.clientX - carousel.draggingStartX
+
+    if (Math.abs(carousel.draggingMoveX) <= 5)  return
+
+    if (!carousel.draggingIsMoved) {
+        carousel.carouselList.classList.add('dragging')
+        carousel.draggingIsMoved = true
+    } 
+
+    carousel.carouselList.style.transform =
+        `translate3d(${carousel.draggingMoveX + carousel.position}px, 0, 0)`
+}
+
+export function carouselDragEventPointerUp(event: PointerEvent) {
+    const 
+        element = event.currentTarget! as HTMLElement,
+        root = element.closest('[data-fsc-carousel]')
+
+    if(!root) return
+
+    const carousel = carouselElements.find(e => e.carousel === root)
+
+    if (!carousel || !carousel.isDragging) return
+
+    if (carousel.draggingIsMoved && carousel.draggingMoveX) {
+        carousel.carouselList.classList.remove('dragging')
+
+        if (Math.abs(carousel.draggingMoveX) <= 100)  {
+            carousel.carouselList.style.transform = ''
+
+            carousel.index -= 1
+        }
+        else {
+            carousel.timerNext = Date.now() + carousel.timerInterval
+
+            if(carousel.draggingMoveX > 0) {
+                carousel.direction = 'right'
+            } else {
+                carousel.direction = 'left'
+            }
+        }
+
+        step(carousel)
+    }
+
+    carousel.isDragging = false
+    carousel.draggingIsMoved = false
+    carousel.draggingMoveX = undefined
 }
