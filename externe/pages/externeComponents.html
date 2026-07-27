@@ -107,8 +107,9 @@
                     <h6>Burger</h6>
                     <%- include('externe/components/menu/Burger/Burger.ejs', {
                         burger_component: {
-                            title: 'Accordion Summary',
-                            body: 'Accordion Body'
+                            this: {
+                                parent: 'header'
+                            }
                         }
                     })%>
                 </article>
@@ -197,20 +198,24 @@
                 carousel_component: {
                     list: [
                         {
-                            img: {
-                                src: 'https://shorthand.com/the-craft/raster-images/assets/5kVrMqC0wp/sh-unsplash_5qt09yibrok-4096x2731.jpeg',
-                                alt: 'image here',
-                                width: '230px',
-                                height: '230px'
+                            image_component: {
+                                img: {
+                                    src: 'https://shorthand.com/the-craft/raster-images/assets/5kVrMqC0wp/sh-unsplash_5qt09yibrok-4096x2731.jpeg',
+                                    alt: 'image here',
+                                    width: '230px',
+                                    height: '230px'
+                                }
                             }
                         },
                         {
-                            img: {
-                                src: 'https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg',
-                                alt: 'image here',
-                                width: '230px',
-                                height: '230px'
-                            }
+                           image_component: {
+                                img: {
+                                    src: 'https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg',
+                                    alt: 'image here',
+                                    width: '230px',
+                                    height: '230px'
+                                }
+                           }
                         },
                     ]
                 }

@@ -88,7 +88,7 @@ export function carouselObserver(entry: IntersectionObserverEntry, _: Intersecti
     }
 }
 
-export function carouselLeftClick(element: HTMLElement) {
+export function carouselLeftPointerClick(element: HTMLElement) {
     if(element.hasAttribute('disabled')) return
 
     const root = element.closest('[data-fsc-carousel]')
@@ -104,7 +104,7 @@ export function carouselLeftClick(element: HTMLElement) {
     step(carousel)
 }
 
-export function carouselRightClick(element: HTMLElement) {
+export function carouselRightPointerClick(element: HTMLElement) {
     if(element.hasAttribute('disabled')) return
 
     const root = element.closest('[data-fsc-carousel]')
@@ -120,7 +120,7 @@ export function carouselRightClick(element: HTMLElement) {
     step(carousel)
 }
 
-export function carouselDotClick(element: HTMLElement) {
+export function carouselDotPointerClick(element: HTMLElement) {
     const root = element.closest('[data-fsc-carousel]')
 
     if(!root) return
@@ -151,7 +151,7 @@ export function carouselOnResize(observer: ResizeObserverEntry) {
     step(carousel)
 }
 
-export function carouselDragEventClick(element: HTMLElement, event: PointerEvent) {
+export function carouselDragEventPointerClick(element: HTMLElement, event: PointerEvent) {
     const root = element.closest('[data-fsc-carousel]') 
 
     if(!root) return

@@ -62,7 +62,7 @@ export function comboboxOnKeyUp(event: KeyboardEvent) {
     }
     actionFilterList(filteredList)
 }
-export function comboboxInputClick(target: HTMLElement, _: Event) {
+export function comboboxInputPointerClick(target: HTMLElement, _?: PointerEvent) {
     if(isHoverSupported) return
 
     const root = target.closest<HTMLElement>('[data-fsc-combobox-id]')
@@ -84,7 +84,7 @@ export function comboboxInputClick(target: HTMLElement, _: Event) {
 
     combobox.combobox.dataset['fscComboboxCollapsed'] = 'true'
 }
-export function comboboxItemClick(target: HTMLElement, _: Event) {
+export function comboboxItemPointerClick(target: HTMLElement, _?: PointerEvent) {
     const root = target.closest('[data-fsc-combobox-id]')
 
     if(!root) return
@@ -108,7 +108,7 @@ export function comboboxItemClick(target: HTMLElement, _: Event) {
     actionCloseComboBoxOnClick(HTMLElements)
     isBlankExist = false
 }
-export function comboboxCloseClick(target: HTMLElement, _: Event) {
+export function comboboxClosePointerClick(target: HTMLElement, _?: PointerEvent) {
     const root = target.closest('[data-fsc-combobox-id]')
 
     if(!root) return
@@ -122,13 +122,13 @@ export function comboboxCloseClick(target: HTMLElement, _: Event) {
     actionCloseComboBoxOnClick(HTMLElements)
     isBlankExist = false
 }
-export function comboboxBlankClick(target: HTMLElement, _: Event) {
+export function comboboxBlankPointerClick(target: HTMLElement, _?: PointerEvent) {
     actionCloseComboBoxOnClick(HTMLElements)
     isBlankExist = false
 }
 export function comboboxHovered(target: HTMLElement, _: Event) {
-    comboboxInputClick(target, _)
+    comboboxInputPointerClick(target)
 }
 export function comboboxUnhovered(target: HTMLElement, _: Event) {
-    comboboxBlankClick(target, _)
+    comboboxBlankPointerClick(target)
 }

@@ -12,6 +12,7 @@
 
 // export const emptyObserverArray                 = [emptyObserver, '[data-fsc-empty]', intersectionOptions]
 // export const emptyOnKeyUpArray                  = [emptyOnKeyUp, '[data-fsc-empty]']
+// export const emptyPointerClickArray             = [emptyItemPointerClick, '[data-fsc-empty]']
 // export const emptyClickArray                    = [emptyItemClick, '[data-fsc-empty]']
 // export const emptyHoverArray                    = [emptyHovered, '[data-fsc-empty]']
 // export const emptyUnhoverArray                  = [emptyUnhovered, '[data-fsc-empty]']

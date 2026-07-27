@@ -27,7 +27,15 @@ document.fonts.ready.then(async() => {
         onClickedModules: ClickedModule[] = Array.from(loadedModules)
             .flatMap(([_, e]) =>
                 Object.entries(e)
-                    .filter(([key]) => key.endsWith('ClickArray'))
+                    .filter(([key]) => !key.endsWith('PointerClickArray') && key.endsWith('ClickArray'))
+                    .map(([, value]) => value as ClickedModule)
+            )
+
+    const
+        onPointerClickedModules: ClickedModule[] = Array.from(loadedModules)
+            .flatMap(([_, e]) =>
+                Object.entries(e)
+                    .filter(([key]) => key.endsWith('PointerClickArray'))
                     .map(([, value]) => value as ClickedModule)
             )
             
@@ -103,14 +111,29 @@ document.fonts.ready.then(async() => {
                     .filter(([key]) => key.endsWith('PointerUpArray'))
                     .map(([, value]) => value)
             )
-            
+        
     // Click Event
-    window.addEventListener('pointerdown', function(event) {
+    window.addEventListener('click', function(event) {
         const target = event.target
 
         if (!(target instanceof Element)) return
 
         onClickedModules.forEach(([func, query]) => {
+            const 
+                DOMElement: HTMLElement | null = (target as HTMLElement).closest(query)
+                
+            if(DOMElement)
+                func(DOMElement, event)
+        })
+    })
+
+    // PointerClick Event
+    window.addEventListener('pointerdown', function(event) {
+        const target = event.target
+
+        if (!(target instanceof Element)) return
+
+        onPointerClickedModules.forEach(([func, query]) => {
             const 
                 DOMElement: HTMLElement | null = (target as HTMLElement).closest(query)
                 
