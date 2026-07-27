@@ -1,6 +1,6 @@
 
 const BEHAVIOUR = [ 'auto', 'instant', 'smooth' ] as const
-const POSITION = [ 'center', 'end', 'nearest', 'start' ] as const
+const POSITION = [ 'center', 'end', 'nearest', 'start', 'bottom' ] as const
 
 export type ScrollBehaviour =  typeof BEHAVIOUR[number]
 export type ScrollLogicalPosition = typeof POSITION[number]

@@ -1,12 +1,12 @@
 import { isScrollBehaviour, isScrollLogicalPosition, type ScrollBehaviour, type ScrollLogicalPosition } from "../types/plugin.type.js"
 
-export function scrolltoClick(target: HTMLElement, event: PointerEvent) {
+export function scrolltoClick(target: HTMLElement, event: Event) {
     const destinationSelector = 
         target.getAttribute('data-fsc-scrollto-to') || 
         target.getAttribute('href') || 
         'main'
-
-    if (target instanceof HTMLAnchorElement && destinationSelector.startsWith('#')) {
+        
+    if (target instanceof HTMLAnchorElement) {
         event.preventDefault()
     }
 
@@ -80,6 +80,12 @@ export function scrolltoClick(target: HTMLElement, event: PointerEvent) {
             break
         }
 
+        case 'bottom': {
+            // верхний край элемента у нижнего края окна
+            targetY = elementTop - viewportHeight
+            break
+        }
+
         case 'start':
         default:
             // верхний край элемента у верхнего края окна
@@ -88,11 +94,6 @@ export function scrolltoClick(target: HTMLElement, event: PointerEvent) {
 
     // применяем offset
     targetY -= offset
-
-
-    
-    console.log(destination);
-    console.log(`Behaviour: ${behaviour}, block: ${block}`);
 
     // скроллим к рассчитанной позиции
     window.scrollTo({
