@@ -1,17 +1,9 @@
 // @ts-ignore
-import '@/assets/styles/main.scss'
-// @ts-ignore
 import { autoloader } from '~/scripts/autoloader/autoloader'
-import { ClickedModule, ResizedModule } from './types/plugin.type.js'
-import { IntersectionObserverElements } from './types/plugin.interface.js'
+import type { EventOneParamsModule, EventTwoParamsModule, PointerEventModule, ResizeEventModule } from '../types/plugin.type.js'
+import { IntersectionObserverElements } from '../types/plugin.interface.js'
 
-// window.addEventListener('pointerdown', function(event) {
-//     const target = event.target
-
-//     if (!(target instanceof Element)) return
-// })
-
-document.fonts.ready.then(async() => {
+export default async () => {
     const 
         loadedModules = new Map<string, any>()
 
@@ -24,19 +16,19 @@ document.fonts.ready.then(async() => {
             .forEach(func => func())
 
     const
-        onClickedModules: ClickedModule[] = Array.from(loadedModules)
+        onClickedModules: EventTwoParamsModule[] = Array.from(loadedModules)
             .flatMap(([_, e]) =>
                 Object.entries(e)
                     .filter(([key]) => !key.endsWith('PointerClickArray') && key.endsWith('ClickArray'))
-                    .map(([, value]) => value as ClickedModule)
+                    .map(([, value]) => value as EventTwoParamsModule)
             )
 
     const
-        onPointerClickedModules: ClickedModule[] = Array.from(loadedModules)
+        onPointerClickedModules: PointerEventModule[] = Array.from(loadedModules)
             .flatMap(([_, e]) =>
                 Object.entries(e)
                     .filter(([key]) => key.endsWith('PointerClickArray'))
-                    .map(([, value]) => value as ClickedModule)
+                    .map(([, value]) => value as PointerEventModule)
             )
             
     const
@@ -62,11 +54,11 @@ document.fonts.ready.then(async() => {
             .map(e => [e[0], e[1][`${e[0]}OnSubmit`]])
 
     const
-        onResizeModules = Array.from(loadedModules)
+        onResizeModules: ResizeEventModule[] = Array.from(loadedModules)
             .flatMap(([_, e]) =>
                 Object.entries(e)
                     .filter(([key]) => key.endsWith('OnResizeArray'))
-                    .map(([, value]) => value as ResizedModule)
+                    .map(([, value]) => value as ResizeEventModule)
             )
 
     const
@@ -81,19 +73,19 @@ document.fonts.ready.then(async() => {
             .filter(e => typeof e !== 'undefined')
 
     const
-        onHoverModules = Array.from(loadedModules)
+        onHoverModules: EventTwoParamsModule[] = Array.from(loadedModules)
             .flatMap(([_, e]) =>
                 Object.entries(e)
                     .filter(([key]) => key.endsWith('HoverArray'))
-                    .map(([, value]) => value)
+                    .map(([, value]) => value as EventTwoParamsModule)
             )
 
     const
-        onUnhoverModules = Array.from(loadedModules)
+        onUnhoverModules: EventTwoParamsModule[] = Array.from(loadedModules)
             .flatMap(([_, e]) =>
                 Object.entries(e)
                     .filter(([key]) => key.endsWith('UnhoverArray'))
-                    .map(([, value]) => value)
+                    .map(([, value]) => value as EventTwoParamsModule)
             )
 
     const
@@ -110,6 +102,14 @@ document.fonts.ready.then(async() => {
                 Object.entries(e)
                     .filter(([key]) => key.endsWith('PointerUpArray'))
                     .map(([, value]) => value)
+            )
+
+    const
+        onScrolleddModules: EventOneParamsModule[] = Array.from(loadedModules)
+            .flatMap(([_, e]) =>
+                Object.entries(e)
+                    .filter(([key]) => key.endsWith('ScrollArray'))
+                    .map(([, value]) => value as EventOneParamsModule)
             )
         
     // Click Event
@@ -257,6 +257,48 @@ document.fonts.ready.then(async() => {
         }))
     })
 
+    // Scroll Event 
+    const scrolledElements = new Map<EventTarget, Function[]>()
+
+    onScrolleddModules.forEach(e => {
+        if(!Array.isArray(e)) return
+        
+        const [func, query] = e
+
+        if(typeof query === 'string') {
+            const HTMLElements = document.querySelectorAll<HTMLElement>(query)
+
+            HTMLElements.forEach(el => {
+                const funcArray = scrolledElements.get(el) ?? []
+
+                funcArray.push(func)
+
+                scrolledElements.set(el, funcArray)
+            })
+
+        } else if(query instanceof Window) {
+            const funcArray = scrolledElements.get(query) ?? []
+
+            funcArray.push(func)
+
+            scrolledElements.set(query, funcArray)
+        }
+        
+    })
+    
+    scrolledElements.forEach((funcs, target) => {
+        target.addEventListener('scroll', event => {
+            funcs.forEach(func => {
+                func(event)
+            })
+        })
+    })
+
+
+
+
+
+
     if (process.env.NODE_ENV === 'development') {
         const 
             activeModules = [...loadedModules.keys()]
@@ -265,12 +307,12 @@ document.fonts.ready.then(async() => {
                 .flatMap(e => Object.keys(e))
                 .filter(e => !e.startsWith('dummyaside'))
             
-        console.log('-- Статистика Сайта --');
+        console.log('-- Статистика Сайта --')
         
-        console.log(`Активные модули: ${activeModules}`)
+        console.log('Активные модули', activeModules)
         
-        console.log(eventListeners);
+        console.log('Всего', eventListeners)
 
-        console.log('-- Статистика Сайта --');
+        console.log('-- Статистика Сайта --')
     }
-})
+}

@@ -11,7 +11,7 @@ export function scrolltoClick(target: HTMLElement, event: Event) {
     }
 
     if(destinationSelector === '#') {
-        console.warn('[SCROLL]: Destination cannot be a', destinationSelector)
+        console.warn('[SCROLLTO]: Destination cannot be a', destinationSelector)
         return
     } 
 
@@ -22,7 +22,7 @@ export function scrolltoClick(target: HTMLElement, event: Event) {
         offsetAttr = target.getAttribute('data-fsc-scrollto-offset')
 
     if (!destination) {
-        console.warn('[SCROLL]: Destination not found', destinationSelector)
+        console.warn('[SCROLLTO]: Destination not found', destinationSelector)
         return
     }
     

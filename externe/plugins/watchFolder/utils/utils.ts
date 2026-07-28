@@ -35,7 +35,7 @@ export function updateDummySVGPage({watchedFile, dummyFile, id, translation}: {w
                         </ul>
 
                         <script type="module" src="../temporary/html/fontIcons.ts"></script>
-                        <script type="module" src="/src/ts/main.ts"></script>
+                        <script type="module" src="/src/ts/index.ts"></script>
                     </body>
                     </html>
                 `
