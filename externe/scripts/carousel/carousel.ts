@@ -7,6 +7,7 @@
  * - data-fsc-carousel-direction          — направление карусели
  * - data-fsc-carousel-interval           — тик смены слайдера
  * - data-fsc-carousel-allow-disabled     — выключить кнопку, если дальше нет доступного слайдера (default: перейти на первый слайд)
+ * - data-fsc-carousel-allow-draggable    — разрешить перетаскивание слайдов (default: нет)
  */
 
 import { carouselDotPointerClick, carouselLeftPointerClick, carouselObserver, carouselRightPointerClick, carouselOnResize, carouselDragEventPointerClick, carouselDragEventPointerMove, carouselDragEventPointerUp } from "./utils/events.js";
