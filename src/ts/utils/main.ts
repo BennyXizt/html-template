@@ -258,7 +258,10 @@ export default async () => {
     })
 
     // Scroll Event 
-    const scrolledElements = new Map<EventTarget, Function[]>()
+    const scrolledElements = new Map<EventTarget, {
+        ticking: boolean
+        funcs: Function[]
+    }>()
 
     onScrolleddModules.forEach(e => {
         if(!Array.isArray(e)) return
@@ -269,28 +272,44 @@ export default async () => {
             const HTMLElements = document.querySelectorAll<HTMLElement>(query)
 
             HTMLElements.forEach(el => {
-                const funcArray = scrolledElements.get(el) ?? []
+                const data = scrolledElements.get(el) ?? {
+                    ticking: false,
+                    funcs: []
+                }
 
-                funcArray.push(func)
+                data.funcs.push(func)
 
-                scrolledElements.set(el, funcArray)
+                scrolledElements.set(el, data)
             })
 
         } else if(query instanceof Window) {
-            const funcArray = scrolledElements.get(query) ?? []
+            const data = scrolledElements.get(query) ?? {
+                    ticking: false,
+                    funcs: []
+                }
 
-            funcArray.push(func)
+            data.funcs.push(func)
 
-            scrolledElements.set(query, funcArray)
+            scrolledElements.set(query, data)
         }
         
     })
     
-    scrolledElements.forEach((funcs, target) => {
+    scrolledElements.forEach((data, target) => {
         target.addEventListener('scroll', event => {
-            funcs.forEach(func => {
-                func(event)
+            if (data.ticking) return
+
+            data.ticking = true
+            
+            requestAnimationFrame(() => {
+                data.funcs.forEach(func => {
+                    func(event)
+                })
+
+                data.ticking = false
             })
+        }, {
+            passive: true
         })
     })
 

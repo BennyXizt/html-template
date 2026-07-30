@@ -1,7 +1,12 @@
 <% 
 	var pages = []
+
+    var dataAttributes = [
+        'data-fsc-scroll',
+        'data-fsc-scroll-type=hideOnDown'
+    ]
 %>
-<header class="header">
+<header class="header" <%=dataAttributes.join(' ')%>>
     <div class="header__container container">
         <div class="header__body">
            <%- include('externe/components/menu/Logo/Logo.ejs', {

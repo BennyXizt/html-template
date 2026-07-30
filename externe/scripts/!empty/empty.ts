@@ -19,3 +19,4 @@
 // export const emptyOnResizeArray                 = [emptyOnResize, '[data-fsc-empty]']
 // export const emptyDragEventPointerMoveArray     = [emptyDragEventPointerMove, '[data-fsc-empty]']
 // export const emptyDragEventPointerUpArray       = [emptyDragEventPointerUp, '[data-fsc-empty]']
+// export const emptyScrollArray                   = [emptyScroll, window]
