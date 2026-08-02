@@ -1,4 +1,32 @@
 
+@function getMedia($breakpoint, $type: min) {
+    @if $type == min or $type == max {
+        $size: map.get(map.get($CONTAINER, $breakpoint), media);
+
+        @return $size;
+    } @else {
+        @return undefined;
+    }
+}
+
+@function getTheme($theme, $value) {
+    @return map.get(map.get($THEME, $theme), $value);
+}
+
+@function getThemeTag($target) {
+    @if not map.get($SETTINGS, theme) {
+        @return null;
+    }
+
+    @each $key, $value in map.get($THEME, default) {
+        @if $key == $target {
+            @return #{'var(#{$THEMEPREFIX}#{$key})'};
+        }
+    }
+
+    @return null;
+}
+
 /// @return {Number|List} - Returns a Maximum Number or List of Numbers
 @function list-max($list) {
     $stringError: 'FUNCTION list-max(($list): ';
@@ -119,24 +147,6 @@
 
         @return $mins;
     }
-}
-
-@function getTheme($theme, $value) {
-    @return map.get(map.get($THEME, $theme), $value);
-}
-
-@function getThemeTag($target) {
-    @if not map.get($SETTINGS, theme) {
-        @return null;
-    }
-
-    @each $key, $value in map.get($THEME, default) {
-        @if $key == $target {
-            @return #{'var(#{$THEMEPREFIX}#{$key})'};
-        }
-    }
-
-    @return null;
 }
 
 /// Fluid sizing function for responsive values.
