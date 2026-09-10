@@ -1,0 +1,15 @@
+<div class="gallery-lightbox" >
+    <button class="gallery-lightbox__overlay"></button>
+    <div class="gallery-lightbox__top">
+        <span class="gallery-lightbox__counter"></span>
+        <div class="gallery-lightbox__tools">
+            <button class="gallery-lightbox__download icons-download-solid-full"></button>
+            <button class="gallery-lightbox__close icons-x-solid-full"></button>
+        </div>
+    </div>
+    <div class="gallery-lightbox__content">
+        <button data-fsc-gallery-button-left class="gallery-lightbox__button icons-arrow-left-solid-full"></button>
+        <div class="gallery-lightbox__images"></div>
+        <button data-fsc-gallery-button-right class="gallery-lightbox__button icons-arrow-right-solid-full"></button>
+    </div>
+</div>
