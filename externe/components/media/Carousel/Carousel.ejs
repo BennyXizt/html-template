@@ -14,14 +14,19 @@
 //		},
 //		list: [
 //			{image_component: {}, content: {}}
-//		]
+//		],
+//		buttons: {
+//		  left: 'HTMLButton',
+//		  right: 'HTMLButton',
+//		},
+//		dot: 'HTMLDot'
 //	}
 //}) %>
 %>
 <%
 	if(
 		(typeof carousel_component === 'undefined' || !carousel_component) || 
-		(typeof carousel_component.list === 'undefined' && !carousel_component.list)
+		(typeof carousel_component.list === 'undefined' || !carousel_component.list)
 	) {
 		return
 	}
@@ -30,7 +35,7 @@
 	
 	thisTag = 'article'
 
-    var isContent = false
+    isContent = carousel_component.list.length > 1
 %>
 
 <<%=thisTag%> data-fsc-carousel <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
@@ -39,7 +44,7 @@
 			<% for (var carousel of carousel_component.list) { %>
 				<li class="<%=blockClass%>__element" data-fsc-carousel-item>
 
-					<% if(carousel.content) { isContent = true %>
+					<% if(carousel.content) { %>
 						<div class="<%=blockClass%>__container container">
                             <% if(Array.isArray(carousel.content)) { %>
                                 <% for(const content of carousel.content) { %>
@@ -56,31 +61,40 @@
 				</li>
 			<% } %>
 		</ul>
-		
-		<% if(!isContent) { %>
-            <% subBlockClass = 'controls-carousel' %> 
+        
+        
+		<% if(isContent && (typeof carousel_component.buttons !== 'undefined' && carousel_component.buttons)) { %>
+            <% subBlockClass = `controls-${blockClass}` %> 
             <div class="<%=blockClass%>__controls <%=subBlockClass%>">
                 <div class="<%=subBlockClass%>__wrapper">
-                    <button class="<%=subBlockClass%>__control" data-fsc-carousel-button-left>
-
-                    </button>
-                    <button class="<%=subBlockClass%>__control" data-fsc-carousel-button-right>
-
-                    </button>
+                    <% if(typeof carousel_component.buttons.left !== undefined && carousel_component.buttons.left) { %>
+                        <button class="<%=subBlockClass%>__control" data-fsc-carousel-button-left>
+                            <%-carousel_component.buttons.left%>
+                        </button>
+                    <% } %>
+                    <% if(typeof carousel_component.buttons.right !== undefined && carousel_component.buttons.right) { %>
+                        <button class="<%=subBlockClass%>__control" data-fsc-carousel-button-right>
+                            <%-carousel_component.buttons.right%>
+                        </button>
+                    <% } %>
                 </div>
             </div>
         <% } %>
 
-        <% if(!isContent) { %>
-		    <% subBlockClass = 'dots-carousel' %> 
+        <% if(isContent) { %>
+		    <% subBlockClass = `dots-${blockClass}` %> 
             <div class="<%=blockClass%>__dots <%=subBlockClass%>">
                 <ul class="<%=subBlockClass%>__list" data-fsc-carousel-dots>
                     <% for (var i = 0; i < carousel_component.list.length; i++) { %>
                         <li class="<%=subBlockClass%>__element" data-fsc-carousel-dot>
                             <button class="<%=subBlockClass%>__button">
-                                <span class="<%=subBlockClass%>__dot">
-                                    <%= i + 1%>
-                                </span>
+                                <% if(typeof carousel_component.dot !== 'undefined' && carousel_component.dot) { %>
+                                    <%- carousel_component.dot%>
+                                <% } else { %>
+                                    <span class="<%=subBlockClass%>__dot">
+                                        <%= i + 1%>
+                                    </span>
+                                <% } %>
                             </button>
                         </li>
                     <% } %>
@@ -88,7 +102,7 @@
             </div>
          <% } %>
 		
-        <% if(!isContent) { %>
+        <% if(isContent) { %>
             <div class="<%=blockClass%>__counter">
                 <span data-fsc-carousel-timer></span>
                 <span data-fsc-carousel-counter></span>
