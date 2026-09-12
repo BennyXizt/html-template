@@ -65,7 +65,7 @@
         
 		<% if(isContent && (typeof carousel_component.buttons !== 'undefined' && carousel_component.buttons)) { %>
             <% subBlockClass = `controls-${blockClass}` %> 
-            <div class="<%=blockClass%>__controls <%=subBlockClass%>">
+            <div class="<%=blockClass%>__controls <%=subBlockClass%>" data-fsc-carousel-controls>
                 <div class="<%=subBlockClass%>__wrapper">
                     <% if(typeof carousel_component.buttons.left !== undefined && carousel_component.buttons.left) { %>
                         <button class="<%=subBlockClass%>__control" data-fsc-carousel-button-left>
@@ -83,7 +83,7 @@
 
         <% if(isContent) { %>
 		    <% subBlockClass = `dots-${blockClass}` %> 
-            <div class="<%=blockClass%>__dots <%=subBlockClass%>">
+            <div class="<%=blockClass%>__dots <%=subBlockClass%>" data-fsc-carousel-dots-div>
                 <ul class="<%=subBlockClass%>__list" data-fsc-carousel-dots>
                     <% for (var i = 0; i < carousel_component.list.length; i++) { %>
                         <li class="<%=subBlockClass%>__element" data-fsc-carousel-dot>

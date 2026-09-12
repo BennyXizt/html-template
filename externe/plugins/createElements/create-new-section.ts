@@ -2,7 +2,8 @@ import readline from 'node:readline';
 import fs from 'fs'
 import { readdir } from 'fs/promises'
 import { resolve } from 'path';
-import { createEJSFile, createSCSSFile, updateMainEJSFile, updateMainSCSS } from './utils/utils.js';
+// @ts-ignore
+import { createEJSFile, createSCSSFile, updateMainEJSFile, updateMainSCSS } from './utils/utils';
 
 const rl = readline.createInterface({
   input: process.stdin,
