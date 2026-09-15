@@ -39,20 +39,25 @@
     isContent = carousel_component.list.length > 1
 
     isCounterDisabled = false
-    isDotDisabled = false
-
-    dotTypes = ['bullet', 'number']
-    dotType = 'number'
 
     if(typeof carousel_component.counter !== 'undefined' && carousel_component.counter) {
         carousel_component.counter === 'disabled' ? isCounterDisabled = true : isCounterDisabled = false
     }
+
+    isDotDisabled = false
+
+    dotTypes = ['bullet', 'number']
+    dotType = 'number'
+    dotBlockClass = `dots-${blockClass}`
+    dotBlockClassModificator = ''
 
     if(typeof carousel_component.dot !== 'undefined' && carousel_component.dot) { 
         carousel_component.dot === 'disabled' ? isDotDisabled = true : isDotDisabled = false
 
         if(dotTypes.includes(carousel_component.dot)) {
             dotType = carousel_component.dot
+
+            dotBlockClassModificator = `dots-carousel--${carousel_component.dot}`
         } else {
             dotType = 'custom'
         }
@@ -103,18 +108,17 @@
         <% } %>
 
         <% if(!isDotDisabled && isContent) { %>
-		    <% subBlockClass = `dots-${blockClass}` %> 
-            <div class="<%=blockClass%>__dots <%=subBlockClass%>" data-fsc-carousel-dots-div>
-                <ul class="<%=subBlockClass%>__list" data-fsc-carousel-dots>
+            <div class="<%=blockClass%>__dots <%=dotBlockClass%> <%=dotBlockClassModificator%>" data-fsc-carousel-dots-div>
+                <ul class="<%=dotBlockClass%>__list" data-fsc-carousel-dots>
                     <% for (var i = 0; i < carousel_component.list.length; i++) { %>
-                        <li class="<%=subBlockClass%>__element" data-fsc-carousel-dot>
-                            <button class="<%=subBlockClass%>__button">
+                        <li class="<%=dotBlockClass%>__element" data-fsc-carousel-dot>
+                            <button class="<%=dotBlockClass%>__button">
                                 <% if(dotType === 'number') { %>
-                                    <span class="<%=subBlockClass%>__dot">
+                                    <span class="<%=dotBlockClass%>__dot">
                                         <%= i + 1%>
                                     </span>
                                 <% } else if(dotType === 'bullet') { %>
-                                    <span class="<%=subBlockClass%>__dot"></span>
+                                    <span class="<%=dotBlockClass%>__dot"></span>
                                 <% } else { %>
                                     <%- carousel_component.dot%>
                                 <% } %>
@@ -123,7 +127,7 @@
                     <% } %>
                 </ul>
             </div>
-         <% } %>
+        <% } %>
 		
         <% if(!isCounterDisabled && isContent) { %>
             <div class="<%=blockClass%>__counter">
