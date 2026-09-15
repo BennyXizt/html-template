@@ -19,7 +19,8 @@
 //		  left: 'HTMLButton',
 //		  right: 'HTMLButton',
 //		},
-//		dot: 'HTMLDot'
+//		dot: 'HTMLDot',
+//		counter: 'disable',
 //	}
 //}) %>
 %>
@@ -36,6 +37,12 @@
 	thisTag = 'article'
 
     isContent = carousel_component.list.length > 1
+
+    isCounterDisabled = false
+
+    if(typeof carousel_component.counter !== 'undefined' && carousel_component.counter) {
+        carousel_component.counter === 'disabled' ? isCounterDisabled = true : isCounterDisabled = false
+    }
 %>
 
 <<%=thisTag%> data-fsc-carousel <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
@@ -102,7 +109,7 @@
             </div>
          <% } %>
 		
-        <% if(isContent) { %>
+        <% if(!isCounterDisabled && isContent) { %>
             <div class="<%=blockClass%>__counter">
                 <span data-fsc-carousel-timer></span>
                 <span data-fsc-carousel-counter></span>
