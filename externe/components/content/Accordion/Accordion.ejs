@@ -32,20 +32,20 @@
 // 		},
 //         summary: {
 //             this: {
-//                 wrapperNeeded: 'false', 
+//                 wrapperNeeded: boolean, 
 //             },
-//             content: ['']
+//             content: ['' + svg]
 //         },
 //         body: {
 //             this: {
-//                 wrapperNeeded: 'false', 
+//                 wrapperNeeded: boolean, 
 //             },
 //             content: ['']
 //         },
 //         behaviour: 'default',
 //         media: {
 //             type:'min-width',
-//             label: '999px'
+//             label: '999px',
 //         }     
 //     }
 // }) %>
@@ -95,13 +95,16 @@
         <% if(isWrapperNeeded) { %>
             <<%=summaryThisTag%> data-fsc-accordion-summary <%-summaryThisDataAttributes%> class='<%=summaryThisClass%>' <%-summaryThisID%> <%-summaryThisStyles%>>
         <% } %>
+            <% var regEx = /(<svg\s+)(class=)/ %>
 
-            <% for (var content of accordion_component.summary.content) { 
-                var regEx = /(<svg\s+)(class=)/
-                
-                content = content.replace(regEx, `$1data-fsc-accordion-touch $2`)
-            %>
-                <%-content%>
+            <% if(Array.isArray(accordion_component.summary.content)) { %>
+
+                <% for (var content of accordion_component.summary.content) { content = content.replace(regEx, `$1data-fsc-accordion-touch $2`) %>
+                    <%-content%>
+                <% } %>
+
+            <% } else { accordion_component.summary.content = accordion_component.summary.content.replace(regEx, `$1data-fsc-accordion-touch $2`) %>
+                <%-accordion_component.summary.content%>
             <% } %>
 
         <% if(isWrapperNeeded) { %>
@@ -115,8 +118,12 @@
             <<%=bodyThisTag%> data-fsc-accordion-body <%-bodyThisDataAttributes%> class='<%=bodyThisClass%>' <%-bodyThisID%> <%-bodyThisStyles%>>
         <% } %>
 
-            <% for (var content of accordion_component.body.content) { %>
-                <%-content%>
+            <% if(Array.isArray(accordion_component.body.content)) { %>
+                <% for (var content of accordion_component.body.content) { %>
+                    <%-content%>
+                <% } %>
+            <% } else { %>
+                <%-accordion_component.body.content%>
             <% } %>
 
         <% if(isWrapperNeeded) { %>
