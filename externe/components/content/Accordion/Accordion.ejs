@@ -19,7 +19,7 @@
 //     }  
 //     summary:   {this: {wrapperNeeded: 'true' | 'false'}, content: ['']},                       // заголовок аккордиона
 //     body:      {this: {wrapperNeeded: 'true' | 'false'}, content: ['']},                       // контент
-//     behaviour: 'default' | 'alternative' | 'active',                                           // режим поведения (например: default - одиночное раскрытие, alternative - один раскрытый аккордион на сайт, active - изначально раскрыт)                                                                                  
+//     behaviour: 'default' | 'alternative' | 'active'                                            // режим поведения (например: default - одиночное раскрытие, alternative - один раскрытый аккордион на сайт, active - изначально раскрыт)                                                                                  
 //     media:     {type:'min-width' | 'max-width' | 'min-height' | 'max-height', label: '999px'}  // с какого диапазона в пикселях будет работать аккордион
 // })
 //
@@ -55,6 +55,11 @@
 	if (typeof accordion_component === 'undefined' || !accordion_component) {
 		return
 	}
+
+    accordion_component.this = {
+        ...accordion_component.this,
+        tag: accordion_component.this?.tag ? accordion_component.this?.tag : 'article',
+    }
 
     var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...accordion_component.this, componentName: 'accordion'})
 

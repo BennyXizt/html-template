@@ -11,7 +11,7 @@
  * data-fsc-accordion-touch - Элемент, при нажатии которого откроется скрытая внутрянка (если хавер не доступен)
  * 
  * Аттрибуты настройки
- * data-fsc-accordion-nohover - Скрипт выполняется даже с доступным хавером
+ * data-fsc-accordion-allow-nohover - Скрипт выполняется даже с доступным хавером
  * data-fsc-accordion-active - Accordion активен
  * data-fsc-accordion-behaviour - 
  *   - default (каждый Accordion закрывается независимо друг от друга)
