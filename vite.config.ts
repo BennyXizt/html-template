@@ -97,7 +97,8 @@ export default defineConfig({
         additionalData: `$BUILD_ENV: "${process.env.NODE_ENV}";`,
         silenceDeprecations: [
           'import',
-          'mixed-decls'
+          'mixed-decls',
+          'if-function',
         ]
       }
     }
