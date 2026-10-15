@@ -22,11 +22,11 @@ export function toggleScrollVisibility(scroll: ScrollElementInterface, delta: nu
     if (scroll.timer)
         clearTimeout(scroll.timerID)
     
-    const 
-        barrier = 100,
-        isHideNeeded = toggleHideNeeded(scroll.trigger, delta)
+    const isHideNeeded = toggleHideNeeded(scroll.trigger, delta)
         
-    if(window.scrollY >= barrier) {
+    if(window.scrollY >= scroll.scrollBarrier) {
+        if(scroll.isBarrier) scroll.element.classList.remove('scrollbarrier')
+
         if (scroll.hidden !== isHideNeeded) {
             scroll.hidden = isHideNeeded
             scroll.element.classList.toggle('scrolling', isHideNeeded)
@@ -51,6 +51,8 @@ export function toggleScrollVisibility(scroll: ScrollElementInterface, delta: nu
         scroll.hidden = false
         scroll.element.classList.remove('scrolled')
         scroll.element.classList.remove('scrolling')
+        
+        if(scroll.isBarrier) scroll.element.classList.add('scrollbarrier')
     }
 }
 

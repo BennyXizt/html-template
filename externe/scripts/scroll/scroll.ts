@@ -13,6 +13,7 @@
  *   - down (вниз)
  *   - none (без)
  * - data-fsc-scroll-timer      - через сколько событие после конечного скролла сработает (По умолчанию: 1000)
+ * - data-fsc-scroll-barrier    - порог для работы скрипта (По умолчанию: 100)
 */
 
 export { scrollAutoload } from './utils/events.js'

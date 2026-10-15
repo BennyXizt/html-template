@@ -13,14 +13,20 @@ export function scrollAutoload() {
             rawType = HTMLElement.getAttribute('data-fsc-scroll-type'),
             rawTrigger = HTMLElement.getAttribute('data-fsc-scroll-trigger'),
             timer = HTMLElement.hasAttribute('data-fsc-scroll-timer'),
-            rawTimerInterval = HTMLElement.getAttribute('data-fsc-scroll-timer')
+            rawTimerInterval = HTMLElement.getAttribute('data-fsc-scroll-timer'),
+            isBarrier = HTMLElement.hasAttribute('data-fsc-scroll-barrier'),
+            rawBarrier = HTMLElement.getAttribute('data-fsc-scroll-barrier')
         
-
         const
             type = isScrollType(rawType) ? rawType : 'base',
             trigger = isScrollTrigger(rawTrigger) ? rawTrigger : 'both',
-            timerInterval = Number.parseInt(rawTimerInterval || '1000', 10)
-            
+            timerInterval = Number.parseInt(rawTimerInterval || '1000', 10),
+            barrier = Number.parseInt(rawBarrier || '100')
+        
+        if(isBarrier && window.scrollY <= barrier) {
+            HTMLElement.classList.add('scrollbarrier')
+        }
+
         ScrollElements.push(
             {
                 element: HTMLElement,
@@ -32,6 +38,8 @@ export function scrollAutoload() {
                 scrollY: window.scrollY,
                 hidden: false,
                 offset: 0,
+                scrollBarrier: barrier,
+                isBarrier,
 
                 // intersection
                 isVisible: true,

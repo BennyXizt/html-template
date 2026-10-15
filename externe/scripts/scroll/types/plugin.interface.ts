@@ -10,6 +10,8 @@ export interface ScrollElementInterface {
     scrollY: number
     hidden: boolean
     offset: number
+    scrollBarrier: number
+    isBarrier: boolean
 
     // intersection
     isVisible: boolean
