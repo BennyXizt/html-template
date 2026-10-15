@@ -28,20 +28,23 @@ $BASE: (
     font_weight: 400,
     line_height: 1,
     // font_family: ('FontFamilyName', sans-serif),
-    main_color: rgb(0, 0, 0),
-    background_color: #ffffff,
     // page_max_width: 1920px,
     container_padding_x: (15px * 2),
     container_min_width: 320px,
     container_max_width: 1920px,
 );
 
+$PALLETE: (
+    black: #000,
+    white: #fff,
+);
+
 $COLORS: (
     // text
-    default: map.get($BASE, main_color),
+    default: map.get($PALLETE, black),
 
     // background
-    background_default: map.get($BASE, background_color),
+    background_default: map.get($PALLETE, white),
 );
 
 $ANIMATIONSPEEDS: (
