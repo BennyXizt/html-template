@@ -1,10 +1,4 @@
 <% 
-// Пример вызова в шаблоне (EJS):
-//
-// include('externe/components/layout/Flex/Flex.ejs', {
-// 	content: page_includes // 
-// })
-// 
 // Необходимые данные - [Массив элементов]:
 //    page_includes = []
 // 
@@ -13,14 +7,40 @@
 // 		  component: {}
 // 	    }))
 //    }
+// 
+// Пример вызова в шаблоне (EJS):
+//
+// <\%- include('externe/components/layout/Flex/Flex.ejs', {
+// 	flex_component: {
+// 		this: {
+// 			parent: 'parentClass',
+// 			component: 'childBlockComponent',
+// 			block: 'childBlockClass',
+// 			class: ['childClass'],
+// 			id: ['childID'],
+// 			tag: 'div',
+// 			style: ['customStyle'],
+// 			dataAttribute: ['customDataAttributes'], 
+// 		},  
+// 		content: page_includes
+// 	}
+// }) %>
 %>
+
 <%
-	blockClass = 'flex'
+	flex_component.this = {
+		...flex_component.this,
+		tag: flex_component.this?.tag ? flex_component.this?.tag : 'div'
+	}
+
+	var {blockClass, thisClass, thisID, thisTag, thisStyles, thisDataAttributes} = externe.setupEJSComponent({...flex_component.this, componentName: 'flex'})
 	
 %>
 
-<article class='layout__<%=blockClass%> <%=blockClass%>'>
-	<% for (var element of content) { %>
+<<%=thisTag%> <%-thisDataAttributes%> class='<%=thisClass%>' <%-thisID%> <%-thisStyles%>>
+
+	<% for (var element of flex_component.content) { %>
 		<%- element %>
 	<% } %>
-</article>
+
+</<%=thisTag%>>

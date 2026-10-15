@@ -30,31 +30,6 @@ input {
   }
 }
 
-a {
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    width: 0;
-    height: .5px;
-    background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-text-color), map.get($COLORS, default));
-
-    @include transition(width, left);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      &::after {
-        width: 100%;
-        left: 0;
-      }
-    }
-  }
-}
-
 body {
   &.active {
     overflow: hidden;
@@ -96,34 +71,67 @@ body {
   }
 }
 
-.container {
-    $padding_x: map.get($BASE, container_padding_x);
+.link {
+  @media (hover: hover) and (pointer: fine) {
+    &-underline {
+      position: relative;
 
-    width: 100%;
-    margin: 0 auto;
-    @include rem(min-width, map.get($BASE, container_min_width));
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        width: 0;
+        height: .5px;
+        background-color: if(map.get($SETTINGS, theme), getThemeTag(primary-text-color), map.get($COLORS, default));
 
-    @if map.get($SETTINGS, responsive_type) == 1 {
-      @include rem((
-        padding: 0 math.div($padding_x, 2),
-        max-width: map.get($BASE, container_max_width)
-      ));
-    }
-    @else if map.get($SETTINGS, responsive_type) == 2 {
-      max-width: 100%;
-      @include rem(padding, 0 math.div($padding_x, 2));
+        @include transition(width, left);
+      }
 
-      @each $type, $props in $CONTAINER {
-        @include media($type, double) {
-          $padding_x: map.get($props, padding-x);
-          $max_width: map.get($props, max-width);
-
-          @include rem((
-            max-width: ($max_width + $padding_x),
-            padding: 0 math.div($padding_x, 2)
-          ))
+      &:hover {
+        &::after {
+          width: 100%;
+          left: 0;
         }
       }
     }
-   
+
+    &-decoration {
+      &:hover {
+        text-decoration: underline 2px;
+        text-underline-offset: 2px;
+      }
+    }
+  }
+}
+
+.container {
+  $padding_x: map.get($BASE, container_padding_x);
+
+  width: 100%;
+  margin: 0 auto;
+  @include rem(min-width, map.get($BASE, container_min_width));
+
+  @if map.get($SETTINGS, responsive_type) == 1 {
+    @include rem((
+      padding: 0 math.div($padding_x, 2),
+      max-width: map.get($BASE, container_max_width)
+    ));
+  }
+  @else if map.get($SETTINGS, responsive_type) == 2 {
+    max-width: 100%;
+    @include rem(padding, 0 math.div($padding_x, 2));
+
+    @each $type, $props in $CONTAINER {
+      @include media($type, double) {
+        $padding_x: map.get($props, padding-x);
+        $max_width: map.get($props, max-width);
+
+        @include rem((
+          max-width: ($max_width + $padding_x),
+          padding: 0 math.div($padding_x, 2)
+        ))
+      }
+    }
+  }
 }
